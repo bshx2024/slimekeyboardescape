@@ -1213,13 +1213,16 @@
                 playCover.style.display = 'none';
                 gameBox.style.display = 'block';
 
-                const script = document.createElement('script');
-                script.src = './bundle.js';
-                script.async = true;
-                script.onload = () => {
-                    console.log('Slime Keyboard Escape bundle.js loaded successfully!');
-                };
-                document.body.appendChild(script);
+                const iframe = document.createElement('iframe');
+                // Use Vercel Edge Proxy to strip X-Frame-Options headers
+                const isLocal = location.hostname === '127.0.0.1' || location.hostname === 'localhost';
+                iframe.src = isLocal ? 'https://topgames.gg/embed/1-speed-keyboard-escape-obby' : '/api/proxy';
+                iframe.style.width = '100%';
+                iframe.style.height = '100%';
+                iframe.style.border = 'none';
+                iframe.allow = 'autoplay; fullscreen; gamepad; keyboard-map; accelerometer; gyroscope';
+                iframe.allowFullscreen = true;
+                gameBox.appendChild(iframe);
             }
 
             if (btnPlayHero) {
