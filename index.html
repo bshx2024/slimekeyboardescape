@@ -19,6 +19,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
     <!-- JSON-LD FAQ Schema & Game Schema -->
     <script type="application/ld+json">
@@ -1764,7 +1765,7 @@
 
             if (btnPlayHero) {
                 btnPlayHero.addEventListener('click', () => {
-                    startGame();
+                    window.location.href = 'play.html';
                 });
             }
 
