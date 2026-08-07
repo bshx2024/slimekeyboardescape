@@ -1764,10 +1764,7 @@
 
             if (btnPlayHero) {
                 btnPlayHero.addEventListener('click', () => {
-                    modalOverlay.classList.add('active');
-                    if (modalIframe.src === 'about:blank' || !modalIframe.src || modalIframe.src.endsWith('about:blank')) {
-                        modalIframe.src = '/api/proxy';
-                    }
+                    window.location.href = 'play.html';
                 });
             }
 
