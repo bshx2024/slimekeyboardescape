@@ -6,7 +6,7 @@ export default async function handler(req) {
   const url = new URL(req.url);
   const targetParam = url.searchParams.get('url');
   
-  // Directly proxy the Yandex game application with TopGames partner referer token
+  // Directly proxy Yandex game application
   const targetUrl = targetParam || 'https://yandex.com/games/app/541802?utm_source=distrib&is-united-page=1&skip-guard=1&header=no&utm_medium=topgames.gg&clid=10575041&flags=%7B%22adv_sticky_banner_disabled%22%3Atrue%7D';
   
   try {
@@ -20,14 +20,37 @@ export default async function handler(req) {
 
     let bodyText = await response.text();
     
-    // Neutralize frame-busting & window.top checks in JS
+    // Inject SDK Auto-Responder to resolve stuck Loading spinner
+    const sdkMockScript = `
+    <script>
+      (function() {
+        // Auto-respond to Yandex SDK postMessage handshake
+        window.addEventListener('message', function(e) {
+          try {
+            if (e.data && (typeof e.data === 'object' || typeof e.data === 'string')) {
+              var str = typeof e.data === 'string' ? e.data : JSON.stringify(e.data);
+              if (str.includes('ysdk') || str.includes('init') || str.includes('sdk')) {
+                window.postMessage({ type: 'ysdk:init:success', status: 'ok', data: {} }, '*');
+              }
+            }
+          } catch(err) {}
+        });
+
+        // Bypass frame checks
+        try {
+          Object.defineProperty(window, 'top', { get: function() { return window.self; } });
+          Object.defineProperty(window, 'parent', { get: function() { return window.self; } });
+        } catch(e) {}
+      })();
+    </script>
+    `;
+
+    bodyText = bodyText.replace('<head>', '<head>' + sdkMockScript);
     bodyText = bodyText.replace(/window\.top/g, 'window.self');
     bodyText = bodyText.replace(/top\.location/g, 'self.location');
     bodyText = bodyText.replace(/parent\.location/g, 'self.location');
 
     const modifiedHeaders = new Headers();
-    
-    // Strip X-Frame-Options, CSP, and Frame-Ancestors that block browser rendering
     modifiedHeaders.set('Access-Control-Allow-Origin', '*');
     modifiedHeaders.set('Content-Type', 'text/html; charset=utf-8');
     modifiedHeaders.set('Cache-Control', 'no-cache, no-store, must-revalidate');
