@@ -397,6 +397,160 @@
             display: block;
         }
 
+        /* Option B: Click to Play Glassmorphic Hero Cover Card */
+        .game-play-cover {
+            position: absolute;
+            inset: 0;
+            z-index: 10;
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(9, 13, 22, 0.98));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .cover-mesh-bg {
+            position: absolute;
+            inset: 0;
+            background: 
+                radial-gradient(circle at 50% 40%, rgba(16, 185, 129, 0.25) 0%, transparent 65%),
+                radial-gradient(circle at 80% 20%, rgba(163, 230, 53, 0.15) 0%, transparent 40%);
+            pointer-events: none;
+            animation: mesh-pulse 4s infinite alternate;
+        }
+
+        .cover-content {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            max-width: 520px;
+        }
+
+        .cover-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.25rem 0.85rem;
+            background: rgba(16, 185, 129, 0.15);
+            border: 1px solid rgba(16, 185, 129, 0.35);
+            border-radius: 30px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--primary-glow);
+            letter-spacing: 0.05em;
+            margin-bottom: 1.25rem;
+        }
+
+        .pulse-dot {
+            width: 7px;
+            height: 7px;
+            background-color: var(--primary-glow);
+            border-radius: 50%;
+            box-shadow: 0 0 8px var(--primary-glow);
+            animation: blink 1.5s infinite;
+        }
+
+        .cover-icon-box {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, var(--primary), var(--accent-lime));
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 30px rgba(16, 185, 129, 0.5);
+            margin-bottom: 1rem;
+            animation: float-icon 3s ease-in-out infinite alternate;
+        }
+
+        .slime-hero-icon {
+            width: 44px;
+            height: 44px;
+            fill: #090d16;
+        }
+
+        .cover-title {
+            font-family: var(--font-head);
+            font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+            font-weight: 800;
+            color: #ffffff;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.02em;
+        }
+
+        .cover-subtitle {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            margin-bottom: 1.75rem;
+        }
+
+        /* Pulsing CTA Play Button */
+        .btn-play-hero {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            font-family: var(--font-head);
+            font-weight: 800;
+            font-size: 1.15rem;
+            padding: 0.95rem 2.5rem;
+            border-radius: 40px;
+            background: linear-gradient(135deg, var(--primary-glow), var(--primary-dark));
+            color: #090d16;
+            text-decoration: none;
+            box-shadow: 0 0 35px rgba(16, 185, 129, 0.6), 0 8px 25px rgba(0, 0, 0, 0.4);
+            border: 2px solid var(--accent-lime);
+            transition: all 0.3s ease;
+            animation: pulse-button 2s infinite;
+        }
+
+        .btn-play-hero:hover {
+            transform: scale(1.06);
+            box-shadow: 0 0 50px rgba(16, 185, 129, 0.85), 0 10px 30px rgba(0, 0, 0, 0.5);
+            background: linear-gradient(135deg, var(--accent-lime), var(--primary));
+        }
+
+        .play-icon {
+            font-size: 1.1rem;
+        }
+
+        .cover-features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            justify-content: center;
+            margin-top: 1.75rem;
+        }
+
+        .cover-tag {
+            font-size: 0.78rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            background: rgba(255, 255, 255, 0.05);
+            padding: 0.25rem 0.7rem;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        @keyframes mesh-pulse {
+            0% { opacity: 0.7; transform: scale(1); }
+            100% { opacity: 1; transform: scale(1.1); }
+        }
+
+        @keyframes float-icon {
+            0% { transform: translateY(0px); }
+            100% { transform: translateY(-8px); }
+        }
+
+        @keyframes pulse-button {
+            0%, 100% { box-shadow: 0 0 25px rgba(16, 185, 129, 0.5); }
+            50% { box-shadow: 0 0 45px rgba(16, 185, 129, 0.85); }
+        }
+
         .overlay-card {
             max-width: 480px;
             background: rgba(15, 23, 42, 0.8);
@@ -827,13 +981,36 @@
 
             <!-- 16:9 Responsive Game Frame -->
             <div class="game-frame-container" id="iframe-holder">
-                <iframe 
-                    id="game-iframe"
-                    src="https://topgames.gg/embed/1-speed-keyboard-escape-obby" 
-                    title="Slime Keyboard Escape Game Frame"
-                    allow="autoplay; fullscreen; gamepad; keyboard-map; accelerometer; gyroscope" 
-                    allowfullscreen>
-                </iframe>
+                <!-- Option B: High-Conversion Glassmorphic Click-to-Play Hero Cover Card -->
+                <div class="game-play-cover" id="game-play-cover">
+                    <div class="cover-mesh-bg"></div>
+                    <div class="cover-content">
+                        <div class="cover-badge">
+                            <span class="pulse-dot"></span>
+                            <span>POPULAR HTML5 UNBLOCKED GAME</span>
+                        </div>
+                        
+                        <div class="cover-icon-box">
+                            <svg viewBox="0 0 24 24" class="slime-hero-icon">
+                                <path d="M12 3c-4.97 0-9 3.58-9 8 0 2.92 1.76 5.47 4.41 6.83A6.97 6.97 0 0 0 12 21c3.87 0 7-3.13 7-7 0-4.42-4.03-8-9-8zm-3 7a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm6 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/>
+                            </svg>
+                        </div>
+
+                        <h3 class="cover-title">Slime Keyboard Escape</h3>
+                        <p class="cover-subtitle">Squish, leap, and dodge mechanical key switch traps!</p>
+
+                        <a href="https://topgames.gg/embed/1-speed-keyboard-escape-obby" target="_blank" rel="noopener noreferrer" class="btn-play-hero" id="btn-play-hero">
+                            <span class="play-icon">▶</span>
+                            <span>PLAY ONLINE FREE</span>
+                        </a>
+
+                        <div class="cover-features">
+                            <span class="cover-tag">⚡ 0 Sec Load Time</span>
+                            <span class="cover-tag">🔒 100% Unblocked</span>
+                            <span class="cover-tag">🎮 PC & Mobile Compatible</span>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <!-- Quick Action & Highlights Bar -->
