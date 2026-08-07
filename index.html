@@ -1214,9 +1214,8 @@
                 gameBox.style.display = 'block';
 
                 const iframe = document.createElement('iframe');
-                // Use Vercel Edge Proxy to strip X-Frame-Options headers
-                const isLocal = location.hostname === '127.0.0.1' || location.hostname === 'localhost';
-                iframe.src = isLocal ? 'https://topgames.gg/embed/1-speed-keyboard-escape-obby' : '/api/proxy';
+                // Open HTML5 Game Source with zero domain restrictions / sitelocks
+                iframe.src = 'https://html5.gamedistribution.com/rvvASSC9767a14fa8d9e4a86b97b0a726715b948/';
                 iframe.style.width = '100%';
                 iframe.style.height = '100%';
                 iframe.style.border = 'none';
