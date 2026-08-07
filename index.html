@@ -981,8 +981,8 @@
 
             <!-- 16:9 Responsive Game Frame -->
             <div class="game-frame-container" id="iframe-holder">
-                <!-- Native Game Mounting Container for bundle.js -->
-                <div id="game" style="width: 100%; height: 100%; position: relative; display: none;"></div>
+                <!-- Native 3D Perspective HTML5 Slime Canvas Engine -->
+                <canvas id="slime-canvas" style="width: 100%; height: 100%; display: none; background: #070a12;"></canvas>
 
                 <!-- High-Conversion Glassmorphic Click-to-Play Cover Card -->
                 <div class="game-play-cover" id="game-play-cover">
@@ -1008,8 +1008,8 @@
                         </button>
 
                         <div class="cover-features">
-                            <span class="cover-tag">⚡ Instant Native Load</span>
-                            <span class="cover-tag">🔒 100% Unblocked</span>
+                            <span class="cover-tag">⚡ 100% Native Engine</span>
+                            <span class="cover-tag">🔒 0 Sec Load • Unblocked</span>
                             <span class="cover-tag">🎮 PC & Mobile Compatible</span>
                         </div>
                     </div>
@@ -1198,44 +1198,427 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const gameContainer = document.getElementById('game-container');
-            const gameBox = document.getElementById('game');
             const playCover = document.getElementById('game-play-cover');
             const btnPlayHero = document.getElementById('btn-play-hero');
             const btnFullscreen = document.getElementById('btn-fullscreen');
             const btnRestart = document.getElementById('btn-restart');
             const faqItems = document.querySelectorAll('.faq-item');
+            const canvas = document.getElementById('slime-canvas');
+            const ctx = canvas.getContext('2d');
 
-            let isGameLoaded = false;
+            let isGameRunning = false;
+            let animationFrameId = null;
 
-            function loadNativeGame() {
-                if (isGameLoaded) return;
-                isGameLoaded = true;
-                playCover.style.display = 'none';
-                gameBox.style.display = 'block';
-
-                const iframe = document.createElement('iframe');
-                // Open HTML5 Game Source with zero domain restrictions / sitelocks
-                iframe.src = 'https://html5.gamedistribution.com/rvvASSC9767a14fa8d9e4a86b97b0a726715b948/';
-                iframe.style.width = '100%';
-                iframe.style.height = '100%';
-                iframe.style.border = 'none';
-                iframe.allow = 'autoplay; fullscreen; gamepad; keyboard-map; accelerometer; gyroscope';
-                iframe.allowFullscreen = true;
-                gameBox.appendChild(iframe);
+            // Audio Synth
+            const AudioContext = window.AudioContext || window.webkitAudioContext;
+            let audioCtx = null;
+            function playSynthSound(freq, duration, type = 'sine') {
+                try {
+                    if (!audioCtx) audioCtx = new AudioContext();
+                    if (audioCtx.state === 'suspended') audioCtx.resume();
+                    const osc = audioCtx.createOscillator();
+                    const gain = audioCtx.createGain();
+                    osc.type = type;
+                    osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+                    gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+                    osc.connect(gain);
+                    gain.connect(audioCtx.destination);
+                    osc.start();
+                    osc.stop(audioCtx.currentTime + duration);
+                } catch(e){}
             }
+
+            // Game State
+            const state = {
+                lane: 1, // 0: Left, 1: Center, 2: Right
+                targetX: 0,
+                x: 0,
+                y: 0,
+                vy: 0,
+                isJumping: false,
+                squishX: 1,
+                squishY: 1,
+                speed: 8,
+                distance: 0,
+                score: 0,
+                stage: 1,
+                gameOver: false,
+                keysPressed: {},
+                keycaps: [],
+                particles: []
+            };
+
+            function resizeCanvas() {
+                const rect = canvas.getBoundingClientRect();
+                canvas.width = rect.width || 800;
+                canvas.height = rect.height || 450;
+            }
+
+            const KEYCAP_NAMES = ['SPACE', 'ENTER', 'ESC', 'SHIFT', 'CTRL', 'ALT', 'TAB', 'W', 'A', 'S', 'D', 'DEL'];
+
+            function spawnKeycap() {
+                const lane = Math.floor(Math.random() * 3);
+                const isTrap = Math.random() < 0.35;
+                state.keycaps.push({
+                    lane: lane,
+                    z: 1000,
+                    label: KEYCAP_NAMES[Math.floor(Math.random() * KEYCAP_NAMES.length)],
+                    isTrap: isTrap,
+                    pressed: false
+                });
+            }
+
+            function initGame() {
+                resizeCanvas();
+                state.lane = 1;
+                state.x = 0;
+                state.y = 0;
+                state.vy = 0;
+                state.isJumping = false;
+                state.speed = 9;
+                state.distance = 0;
+                state.score = 0;
+                state.gameOver = false;
+                state.keycaps = [];
+                state.particles = [];
+                for(let i=0; i<6; i++) {
+                    state.keycaps.push({
+                        lane: Math.floor(Math.random() * 3),
+                        z: 300 + i * 150,
+                        label: KEYCAP_NAMES[i % KEYCAP_NAMES.length],
+                        isTrap: i % 2 === 0,
+                        pressed: false
+                    });
+                }
+            }
+
+            function update() {
+                if (state.gameOver) return;
+
+                state.distance += state.speed * 0.1;
+                state.score = Math.floor(state.distance * 10);
+                state.speed += 0.002; // Gradually accelerate
+
+                // Lane X Position Smoothing
+                const laneWidth = canvas.width * 0.22;
+                state.targetX = (state.lane - 1) * laneWidth;
+                state.x += (state.targetX - state.x) * 0.25;
+
+                // Jump Physics
+                if (state.isJumping) {
+                    state.y += state.vy;
+                    state.vy -= 1.1; // Gravity
+                    if (state.y <= 0) {
+                        state.y = 0;
+                        state.isJumping = false;
+                        state.vy = 0;
+                        // Squish animation on landing
+                        state.squishX = 1.35;
+                        state.squishY = 0.65;
+                        playSynthSound(180, 0.1, 'triangle');
+                    }
+                }
+
+                // Recover Squish
+                state.squishX += (1 - state.squishX) * 0.15;
+                state.squishY += (1 - state.squishY) * 0.15;
+
+                // Keycaps Update
+                for (let i = state.keycaps.length - 1; i >= 0; i--) {
+                    const k = state.keycaps[i];
+                    k.z -= state.speed * 12;
+
+                    // Collision Check
+                    if (k.z < 80 && k.z > -20 && k.lane === state.lane) {
+                        if (k.isTrap && state.y < 35) {
+                            // Hit a mechanical key switch trap!
+                            state.gameOver = true;
+                            playSynthSound(120, 0.4, 'sawtooth');
+                        } else if (!k.pressed && state.y < 35) {
+                            k.pressed = true;
+                            playSynthSound(440, 0.1, 'sine');
+                            // Add score burst particles
+                            for (let p = 0; p < 8; p++) {
+                                state.particles.push({
+                                    x: state.x + (Math.random() - 0.5) * 40,
+                                    y: 50 + Math.random() * 20,
+                                    vx: (Math.random() - 0.5) * 6,
+                                    vy: Math.random() * 6 + 2,
+                                    life: 1
+                                });
+                            }
+                        }
+                    }
+
+                    if (k.z < -100) {
+                        state.keycaps.splice(i, 1);
+                        spawnKeycap();
+                    }
+                }
+
+                // Particles Update
+                for (let i = state.particles.length - 1; i >= 0; i--) {
+                    const p = state.particles[i];
+                    p.x += p.vx;
+                    p.y += p.vy;
+                    p.life -= 0.04;
+                    if (p.life <= 0) state.particles.splice(i, 1);
+                }
+            }
+
+            function draw() {
+                const w = canvas.width;
+                const h = canvas.height;
+                ctx.clearRect(0, 0, w, h);
+
+                // 1. Background Cyber Dark Gradient
+                const bgGrad = ctx.createLinearGradient(0, 0, 0, h);
+                bgGrad.addColorStop(0, '#04070d');
+                bgGrad.addColorStop(0.6, '#0b1120');
+                bgGrad.addColorStop(1, '#070a12');
+                ctx.fillStyle = bgGrad;
+                ctx.fillRect(0, 0, w, h);
+
+                // 2. Perspective 3D Keyboard Track Grid
+                const horizonY = h * 0.35;
+                const vanishingX = w * 0.5;
+
+                // Perspective grid lines
+                ctx.strokeStyle = 'rgba(16, 185, 129, 0.2)';
+                ctx.lineWidth = 1.5;
+
+                for (let l = -2.5; l <= 2.5; l += 1) {
+                    const startX = vanishingX + l * 20;
+                    const endX = vanishingX + l * (w * 0.32);
+                    ctx.beginPath();
+                    ctx.moveTo(startX, horizonY);
+                    ctx.lineTo(endX, h);
+                    ctx.stroke();
+                }
+
+                // Horizon neon glow bar
+                ctx.strokeStyle = 'rgba(16, 185, 129, 0.8)';
+                ctx.lineWidth = 3;
+                ctx.shadowColor = '#10b981';
+                ctx.shadowBlur = 15;
+                ctx.beginPath();
+                ctx.moveTo(0, horizonY);
+                ctx.lineTo(w, horizonY);
+                ctx.stroke();
+                ctx.shadowBlur = 0;
+
+                // 3. Render 3D Perspective Keycaps
+                state.keycaps.sort((a, b) => b.z - a.z); // Render back to front
+
+                state.keycaps.forEach(k => {
+                    const scale = 300 / (300 + k.z);
+                    const laneOffset = (k.lane - 1) * (w * 0.25);
+                    const kx = vanishingX + laneOffset * scale;
+                    const ky = horizonY + (h - horizonY) * (1 - scale);
+                    const kw = 110 * scale;
+                    const kh = 60 * scale;
+
+                    ctx.save();
+                    ctx.translate(kx, ky);
+
+                    // Keycap shadow
+                    ctx.fillStyle = 'rgba(0, 0, 0, 0.6)';
+                    ctx.beginPath();
+                    ctx.ellipse(0, kh * 0.5, kw * 0.6, kh * 0.25, 0, 0, Math.PI * 2);
+                    ctx.fill();
+
+                    // Keycap Body
+                    if (k.isTrap) {
+                        ctx.fillStyle = k.pressed ? '#ef4444' : '#b91c1c';
+                        ctx.strokeStyle = '#f87171';
+                    } else {
+                        ctx.fillStyle = k.pressed ? '#10b981' : '#1e293b';
+                        ctx.strokeStyle = k.pressed ? '#34d399' : '#334155';
+                    }
+                    ctx.lineWidth = Math.max(1, 3 * scale);
+
+                    ctx.beginPath();
+                    ctx.roundRect(-kw * 0.5, -kh * 0.5, kw, kh, 8 * scale);
+                    ctx.fill();
+                    ctx.stroke();
+
+                    // Keycap Label
+                    ctx.fillStyle = k.isTrap ? '#ffffff' : (k.pressed ? '#090d16' : '#94a3b8');
+                    ctx.font = `bold ${Math.max(10, Math.floor(18 * scale))}px Outfit, sans-serif`;
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'middle';
+                    ctx.fillText(k.label, 0, 0);
+
+                    ctx.restore();
+                });
+
+                // 4. Render Slime Player
+                const slimeX = vanishingX + state.x;
+                const slimeY = h * 0.82 - state.y;
+                const slimeRadius = 26;
+
+                ctx.save();
+                ctx.translate(slimeX, slimeY);
+
+                // Slime Shadow
+                ctx.fillStyle = 'rgba(0,0,0,0.45)';
+                ctx.beginPath();
+                ctx.ellipse(0, state.y + slimeRadius * 0.8, slimeRadius * (1 + state.y * 0.01), slimeRadius * 0.3, 0, 0, Math.PI * 2);
+                ctx.fill();
+
+                // Slime Body with Squish Deformation
+                ctx.scale(state.squishX, state.squishY);
+
+                ctx.shadowColor = '#10b981';
+                ctx.shadowBlur = 25;
+
+                const slimeGrad = ctx.createRadialGradient(-6, -8, 2, 0, 0, slimeRadius);
+                slimeGrad.addColorStop(0, '#a3e635');
+                slimeGrad.addColorStop(0.45, '#34d399');
+                slimeGrad.addColorStop(1, '#059669');
+
+                ctx.fillStyle = slimeGrad;
+                ctx.beginPath();
+                ctx.arc(0, 0, slimeRadius, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.shadowBlur = 0;
+
+                // Slime Eyes
+                ctx.fillStyle = '#ffffff';
+                ctx.beginPath();
+                ctx.arc(-8, -6, 6, 0, Math.PI * 2);
+                ctx.arc(8, -6, 6, 0, Math.PI * 2);
+                ctx.fill();
+
+                ctx.fillStyle = '#090d16';
+                ctx.beginPath();
+                ctx.arc(-7, -5, 3, 0, Math.PI * 2);
+                ctx.arc(9, -5, 3, 0, Math.PI * 2);
+                ctx.fill();
+
+                // Eye Highlights
+                ctx.fillStyle = '#ffffff';
+                ctx.beginPath();
+                ctx.arc(-8, -7, 1.2, 0, Math.PI * 2);
+                ctx.arc(8, -7, 1.2, 0, Math.PI * 2);
+                ctx.fill();
+
+                ctx.restore();
+
+                // 5. Render Particles
+                state.particles.forEach(p => {
+                    ctx.fillStyle = `rgba(52, 211, 153, ${p.life})`;
+                    ctx.beginPath();
+                    ctx.arc(vanishingX + p.x, h * 0.82 - p.y, 4 * p.life, 0, Math.PI * 2);
+                    ctx.fill();
+                });
+
+                // 6. HUD Overlay
+                ctx.fillStyle = '#ffffff';
+                ctx.font = '700 18px Outfit, sans-serif';
+                ctx.textAlign = 'left';
+                ctx.fillText(`⚡ SPEED: ${Math.floor(state.speed * 15)} KM/H`, 20, 35);
+
+                ctx.textAlign = 'right';
+                ctx.fillText(`SCORE: ${state.score}`, w - 20, 35);
+
+                // Game Over Overlay
+                if (state.gameOver) {
+                    ctx.fillStyle = 'rgba(9, 13, 22, 0.85)';
+                    ctx.fillRect(0, 0, w, h);
+
+                    ctx.fillStyle = '#ef4444';
+                    ctx.font = '800 32px Outfit, sans-serif';
+                    ctx.textAlign = 'center';
+                    ctx.fillText('CRASHED ON KEY SWITCH!', w * 0.5, h * 0.4);
+
+                    ctx.fillStyle = '#ffffff';
+                    ctx.font = '600 18px Inter, sans-serif';
+                    ctx.fillText(`Final Score: ${state.score} Points`, w * 0.5, h * 0.52);
+
+                    ctx.fillStyle = '#10b981';
+                    ctx.font = '700 16px Inter, sans-serif';
+                    ctx.fillText('Press SPACEBAR or Click Restart to Play Again', w * 0.5, h * 0.65);
+                }
+            }
+
+            function gameLoop() {
+                if (isGameRunning) {
+                    update();
+                    draw();
+                    animationFrameId = requestAnimationFrame(gameLoop);
+                }
+            }
+
+            function startGame() {
+                if (isGameRunning) return;
+                isGameRunning = true;
+                playCover.style.display = 'none';
+                canvas.style.display = 'block';
+                initGame();
+                gameLoop();
+            }
+
+            // Controls
+            function handleJump() {
+                if (!state.isJumping && !state.gameOver) {
+                    state.isJumping = true;
+                    state.vy = 18; // Jump impulse
+                    state.squishX = 0.7;
+                    state.squishY = 1.3;
+                    playSynthSound(320, 0.15, 'sine');
+                } else if (state.gameOver) {
+                    initGame();
+                }
+            }
+
+            function handleMoveLeft() {
+                if (state.lane > 0 && !state.gameOver) {
+                    state.lane--;
+                    playSynthSound(240, 0.08, 'triangle');
+                }
+            }
+
+            function handleMoveRight() {
+                if (state.lane < 2 && !state.gameOver) {
+                    state.lane++;
+                    playSynthSound(240, 0.08, 'triangle');
+                }
+            }
+
+            window.addEventListener('keydown', (e) => {
+                if (['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName)) return;
+                if (e.key === 'a' || e.key === 'A' || e.key === 'ArrowLeft') handleMoveLeft();
+                if (e.key === 'd' || e.key === 'D' || e.key === 'ArrowRight') handleMoveRight();
+                if (e.key === 'w' || e.key === 'W' || e.key === 'ArrowUp' || e.key === ' ') handleJump();
+            });
+
+            // Touch / Mouse controls
+            canvas.addEventListener('click', (e) => {
+                const rect = canvas.getBoundingClientRect();
+                const clickX = e.clientX - rect.left;
+                if (clickX < rect.width * 0.35) handleMoveLeft();
+                else if (clickX > rect.width * 0.65) handleMoveRight();
+                else handleJump();
+            });
 
             if (btnPlayHero) {
-                btnPlayHero.addEventListener('click', loadNativeGame);
+                btnPlayHero.addEventListener('click', startGame);
             }
+
+            window.addEventListener('resize', () => {
+                if (isGameRunning) resizeCanvas();
+            });
 
             // 1. Fullscreen Toggle Handler
             function toggleFullscreen() {
                 if (!document.fullscreenElement) {
                     if (gameContainer.requestFullscreen) {
                         gameContainer.requestFullscreen();
-                    } else if (gameContainer.webkitRequestFullscreen) { /* Safari */
+                    } else if (gameContainer.webkitRequestFullscreen) {
                         gameContainer.webkitRequestFullscreen();
-                    } else if (gameContainer.msRequestFullscreen) { /* IE11 */
+                    } else if (gameContainer.msRequestFullscreen) {
                         gameContainer.msRequestFullscreen();
                     }
                 } else {
@@ -1247,18 +1630,18 @@
 
             btnFullscreen.addEventListener('click', toggleFullscreen);
 
-            // Update fullscreen button state visually
             document.addEventListener('fullscreenchange', () => {
                 const isFS = !!document.fullscreenElement;
                 btnFullscreen.querySelector('span').textContent = isFS ? 'Exit Fullscreen' : 'Fullscreen';
+                if (isGameRunning) setTimeout(resizeCanvas, 100);
             });
 
             // 2. Restart Game Session Handler
             btnRestart.addEventListener('click', () => {
-                if (!isGameLoaded) {
-                    loadNativeGame();
+                if (!isGameRunning) {
+                    startGame();
                 } else {
-                    location.reload();
+                    initGame();
                 }
             });
 
@@ -1276,15 +1659,6 @@
                         questionBtn.setAttribute('aria-expanded', 'true');
                     }
                 });
-            });
-
-            // 4. Keyboard Shortcuts: 'F' for Fullscreen, 'R' for Restart
-            document.addEventListener('keydown', (e) => {
-                if (['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName)) return;
-                if (e.key === 'f' || e.key === 'F') toggleFullscreen();
-                if (e.key === 'r' || e.key === 'R') {
-                    if (!e.ctrlKey && !e.metaKey) btnRestart.click();
-                }
             });
         });
     </script>
