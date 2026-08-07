@@ -1764,8 +1764,10 @@
 
             if (btnPlayHero) {
                 btnPlayHero.addEventListener('click', () => {
-                    window.open('https://topgames.gg/embed/1-speed-keyboard-escape-obby', 'GamePlayerWindow', 'width=1280,height=720,toolbar=no,menubar=no,location=no,status=no');
-                    btnPlayHero.innerHTML = '<span class="play-icon">▶</span><span>RE-OPEN 3D GAME WINDOW</span>';
+                    modalOverlay.classList.add('active');
+                    if (modalIframe.src === 'about:blank' || !modalIframe.src || modalIframe.src.endsWith('about:blank')) {
+                        modalIframe.src = '/api/proxy';
+                    }
                 });
             }
 
