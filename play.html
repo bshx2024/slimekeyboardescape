@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-    <title>Play Slime Keyboard Escape 3D Online Free - Ultra 3D WebGL Obby</title>
-    <meta name="description" content="Play +1 Speed Roblox Keyboard Escape 3D online! Features ASMR Mechanical Switch Audio, Real Word Combos, Free Rainbow 3D Trails, and Social Code redemption. 100% Free Unblocked.">
+    <title>Play Slime Keyboard Escape 3D Online Free - Flamingo Roblox Edition</title>
+    <meta name="description" content="Play the exact +1 Speed Roblox Keyboard Escape 3D game as seen on Flamingo's YouTube! Run across giant pastel mechanical keyboards, trigger speed warps, collect +1 SPEED and Wins 100% free unblocked.">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://slimekeyboardescape.vercel.app/play.html">
 
     <!-- Open Graph / Social Media -->
     <meta property="og:title" content="Play Slime Keyboard Escape 3D Online Free">
-    <meta property="og:description" content="Play +1 Speed Roblox Keyboard Escape 3D online with ASMR switch audio and free rainbow 3D trails!">
+    <meta property="og:description" content="Play the exact +1 Speed Roblox Keyboard Escape 3D game as seen on Flamingo's YouTube!">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://slimekeyboardescape.vercel.app/play.html">
 
@@ -25,7 +25,7 @@
     <!-- Styles -->
     <style>
         :root {
-            --bg-dark: #090d16;
+            --bg-dark: #070a14;
             --primary: #10b981;
             --primary-glow: #34d399;
             --accent-lime: #a3e635;
@@ -130,7 +130,7 @@
             width: 100%;
             height: calc(100vh - 60px);
             position: relative;
-            background: #090d16;
+            background: #070a14;
         }
 
         #webgl-canvas {
@@ -139,7 +139,7 @@
             display: block;
         }
 
-        /* Top HUD Bar */
+        /* Flamingo Roblox HUD */
         .hud-overlay {
             position: absolute;
             top: 15px;
@@ -182,7 +182,6 @@
             text-shadow: 0 0 10px rgba(163, 230, 53, 0.6);
         }
 
-        /* ASMR Switch Selector & Controls Toolbar */
         .switch-selector {
             background: rgba(15, 23, 42, 0.88);
             border: 1px solid rgba(255, 255, 255, 0.2);
@@ -231,10 +230,8 @@
 
         .btn-code-trigger:hover {
             transform: scale(1.05);
-            box-shadow: 0 0 25px rgba(255, 0, 127, 0.8);
         }
 
-        /* Combo Surge Banner */
         .combo-surge-banner {
             position: absolute;
             top: 80px;
@@ -260,7 +257,6 @@
             transform: translateX(-50%) scale(1);
         }
 
-        /* Code Redemption Modal */
         .modal-wrapper {
             position: absolute;
             inset: 0;
@@ -314,11 +310,6 @@
             outline: none;
         }
 
-        .code-input-box:focus {
-            border-color: var(--primary-glow);
-            box-shadow: 0 0 15px rgba(52, 211, 153, 0.4);
-        }
-
         .btn-submit-code {
             width: 100%;
             padding: 0.85rem;
@@ -331,14 +322,8 @@
             border: none;
             cursor: pointer;
             box-shadow: 0 0 20px rgba(16, 185, 129, 0.5);
-            transition: all 0.2s ease;
         }
 
-        .btn-submit-code:hover {
-            transform: scale(1.03);
-        }
-
-        /* Game Over Modal */
         .gameover-modal {
             position: absolute;
             inset: 0;
@@ -387,19 +372,13 @@
             border: none;
             cursor: pointer;
             box-shadow: 0 0 30px rgba(16, 185, 129, 0.7);
-            transition: all 0.2s ease;
-        }
-
-        .btn-restart-game:hover {
-            transform: scale(1.06);
-            box-shadow: 0 0 45px rgba(16, 185, 129, 0.95);
         }
     </style>
 </head>
 <body>
 
     <div class="player-container">
-        <!-- Header Toolbar -->
+        <!-- Header -->
         <header class="player-header">
             <a href="index.html" class="btn-back" id="btn-return-main">
                 <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
@@ -408,7 +387,7 @@
 
             <div class="player-title">
                 <span class="live-indicator"></span>
-                <span>+1 Speed Roblox Keyboard Escape 3D Pro</span>
+                <span>+1 Speed Roblox Keyboard Escape 3D (Flamingo Edition)</span>
             </div>
 
             <button type="button" class="btn-head-action" id="btn-fullscreen-toggle">
@@ -417,14 +396,13 @@
             </button>
         </header>
 
-        <!-- Main Body -->
+        <!-- Body -->
         <main class="player-body" id="player-body">
-            <!-- HUD -->
             <div class="hud-overlay">
                 <div class="hud-group">
                     <div class="hud-card">
-                        <span>⚡ MULTIPLIER:</span>
-                        <span class="value" id="hud-speed">x1</span>
+                        <span>⚡ SPEED:</span>
+                        <span class="value" id="hud-speed">+1</span>
                     </div>
                     <div class="hud-card">
                         <span>🏆 WINS:</span>
@@ -433,34 +411,28 @@
                 </div>
 
                 <div class="hud-group">
-                    <!-- ASMR Switch Audio Customizer -->
                     <div class="switch-selector">
-                        <button type="button" class="switch-btn active" data-type="blue" title="Cherry MX Blue Clicky Switch">🔊 Blue Switch</button>
-                        <button type="button" class="switch-btn" data-type="red" title="Cherry MX Red Linear Switch">🔴 Red Switch</button>
-                        <button type="button" class="switch-btn" data-type="brown" title="Cherry MX Brown Tactile Switch">🟤 Brown Switch</button>
+                        <button type="button" class="switch-btn active" data-type="blue">🔊 Blue Switch</button>
+                        <button type="button" class="switch-btn" data-type="red">🔴 Red Switch</button>
+                        <button type="button" class="switch-btn" data-type="brown">🟤 Brown Switch</button>
                     </div>
-
-                    <!-- Code Redeem Button -->
                     <button type="button" class="btn-code-trigger" id="btn-open-code">🎁 Redeem Code</button>
                 </div>
             </div>
 
-            <!-- Combo Surge Banner -->
             <div class="combo-surge-banner" id="combo-banner">
                 ⚡ KEYBOARD COMBO SURGE! +5X SPEED BOOST!
             </div>
 
-            <!-- Code Modal -->
             <div class="modal-wrapper" id="code-modal">
                 <div class="modal-card">
                     <h3>Redeem Social Code</h3>
-                    <p>Enter official code <strong>BYP4SS1</strong> to get instant +15,000 Speed Boost!</p>
+                    <p>Enter Flamingo code <strong>BYP4SS1</strong> to get instant +15,000 Speed Boost!</p>
                     <input type="text" class="code-input-box" id="code-input" placeholder="ENTER CODE" value="BYP4SS1">
                     <button type="button" class="btn-submit-code" id="btn-claim-code">CLAIM REWARD</button>
                 </div>
             </div>
 
-            <!-- Game Over Modal -->
             <div class="gameover-modal" id="gameover-modal">
                 <div class="gameover-card">
                     <div class="gameover-title">FELL OFF KEYBOARD!</div>
@@ -473,7 +445,7 @@
         </main>
     </div>
 
-    <!-- Three.js 3D WebGL Engine with ASMR & Combo Surge -->
+    <!-- Flamingo Roblox 1:1 High-Fidelity 3D WebGL Engine Script -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const container = document.getElementById('player-body');
@@ -509,15 +481,11 @@
                 }
             });
 
-            // Code Redemption Handler
-            btnOpenCode.addEventListener('click', () => {
-                codeModal.style.display = 'flex';
-            });
-
+            btnOpenCode.addEventListener('click', () => codeModal.style.display = 'flex');
             btnClaimCode.addEventListener('click', () => {
                 const val = codeInput.value.trim().toUpperCase();
                 if (val === 'BYP4SS1') {
-                    speedMultiplier += 50; // Massively boost speed
+                    speedMultiplier += 50;
                     playASMRSwitchSound(880, 0.4);
                     codeModal.style.display = 'none';
                     triggerComboSurgeBanner('🎁 CODE CLAIMED! +15,000 SPEED!');
@@ -525,10 +493,7 @@
                     alert('Invalid Code! Try BYP4SS1');
                 }
             });
-
-            codeModal.addEventListener('click', (e) => {
-                if (e.target === codeModal) codeModal.style.display = 'none';
-            });
+            codeModal.addEventListener('click', (e) => { if (e.target === codeModal) codeModal.style.display = 'none'; });
 
             // Web Audio ASMR Switch Synthesizer
             const AudioContext = window.AudioContext || window.webkitAudioContext;
@@ -544,13 +509,13 @@
 
                     if (!overrideFreq) {
                         if (currentSwitchType === 'blue') {
-                            freq = 750; // Sharp click
+                            freq = 750;
                             type = 'square';
                         } else if (currentSwitchType === 'red') {
-                            freq = 320; // Soft linear thock
+                            freq = 320;
                             type = 'sine';
                         } else {
-                            freq = 520; // Tactile bump
+                            freq = 520;
                             type = 'triangle';
                         }
                     }
@@ -594,8 +559,8 @@
 
             // Three.js 3D WebGL Engine Setup
             const scene = new THREE.Scene();
-            scene.background = new THREE.Color(0x090d16);
-            scene.fog = new THREE.FogExp2(0x090d16, 0.006);
+            scene.background = new THREE.Color(0x070a14);
+            scene.fog = new THREE.FogExp2(0x070a14, 0.005);
 
             const camera = new THREE.PerspectiveCamera(60, window.innerWidth / (window.innerHeight - 60), 0.1, 1000);
             camera.position.set(0, 8, 15);
@@ -611,7 +576,7 @@
             const ambientLight = new THREE.AmbientLight(0xffffff, 0.7);
             scene.add(ambientLight);
 
-            const dirLight = new THREE.DirectionalLight(0xffffff, 1.2);
+            const dirLight = new THREE.DirectionalLight(0xffffff, 1.3);
             dirLight.position.set(15, 30, 15);
             dirLight.castShadow = true;
             scene.add(dirLight);
@@ -620,10 +585,10 @@
             pointLight.position.set(0, 6, 0);
             scene.add(pointLight);
 
-            // Roblox Blocky Character Model
+            // Roblox Blocky Character Model (Flamingo Style)
             const playerGroup = new THREE.Group();
 
-            // Head
+            // Head (Yellow Block with Face)
             const headGeo = new THREE.BoxGeometry(1.2, 1.2, 1.2);
             const headMat = new THREE.MeshPhongMaterial({ color: 0xfacc15 });
             const headMesh = new THREE.Mesh(headGeo, headMat);
@@ -631,7 +596,7 @@
             headMesh.castShadow = true;
             playerGroup.add(headMesh);
 
-            // Eyes
+            // Face Eyes
             const eyeGeo = new THREE.BoxGeometry(0.2, 0.2, 0.05);
             const eyeMat = new THREE.MeshBasicMaterial({ color: 0x000000 });
             const eyeL = new THREE.Mesh(eyeGeo, eyeMat);
@@ -641,7 +606,7 @@
             playerGroup.add(eyeL);
             playerGroup.add(eyeR);
 
-            // Torso
+            // Torso (Blue Shirt)
             const torsoGeo = new THREE.BoxGeometry(1.4, 1.4, 0.8);
             const torsoMat = new THREE.MeshPhongMaterial({ color: 0x0284c7 });
             const torsoMesh = new THREE.Mesh(torsoGeo, torsoMat);
@@ -673,7 +638,7 @@
             playerGroup.add(legL);
             playerGroup.add(legR);
 
-            // 3D Rainbow Trail Ring Aura behind character
+            // 3D Rainbow Trail Ring Aura
             const auraGeo = new THREE.TorusGeometry(1.6, 0.1, 16, 32);
             const auraMat = new THREE.MeshBasicMaterial({ color: 0x34d399 });
             const auraMesh = new THREE.Mesh(auraGeo, auraMat);
@@ -692,10 +657,10 @@
             let playerVy = 0;
             let isJumping = false;
 
-            // Roblox Keyboard Track Creation
+            // Roblox Keyboard Track Creation (Pastel Colors as seen in Flamingo's Video)
             const keycaps = [];
             const KEY_LABELS = ['+1', 'SPEED', 'WIN', 'ALT', 'CTRL', 'SHIFT', 'W', 'A', 'S', 'D', 'SPACE', 'ENTER', '99', 'x2'];
-            const ROBLOX_COLORS = [0xff2a6d, 0x05d9e8, 0xffb800, 0x01c775, 0x9b51e0, 0xff7000];
+            const ROBLOX_PASTEL_COLORS = [0xff75c3, 0x8ea5ff, 0xffd166, 0x06d6a0, 0xb8860b, 0xff9f1c];
 
             function createKeyCapLabelTexture(text, isTrap) {
                 const canvas = document.createElement('canvas');
@@ -752,7 +717,7 @@
             for (let i = 0; i < 22; i++) {
                 const laneIdx = Math.floor(Math.random() * 3);
                 const isTrap = Math.random() < 0.24 && i > 4;
-                const colorHex = ROBLOX_COLORS[i % ROBLOX_COLORS.length];
+                const colorHex = ROBLOX_PASTEL_COLORS[i % ROBLOX_PASTEL_COLORS.length];
                 const keyMesh = createKeycapMesh(KEY_LABELS[i % KEY_LABELS.length], isTrap, colorHex);
 
                 keyMesh.position.set(LANES[laneIdx], 0, -i * 8.5);
@@ -760,8 +725,30 @@
                 keycaps.push(keyMesh);
             }
 
-            // 3D Particle Sparks System
+            // 3D Floating +1 Text & Particle Sparks
             const particles = [];
+            const floatingTexts = [];
+
+            function spawnFloatingText(x, y, z, textStr) {
+                const canvas = document.createElement('canvas');
+                canvas.width = 256;
+                canvas.height = 128;
+                const ctx = canvas.getContext('2d');
+                ctx.fillStyle = '#a3e635';
+                ctx.font = '900 54px Outfit, sans-serif';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(textStr, 128, 64);
+
+                const tex = new THREE.CanvasTexture(canvas);
+                const mat = new THREE.SpriteMaterial({ map: tex, transparent: true });
+                const sprite = new THREE.Sprite(mat);
+                sprite.scale.set(3, 1.5, 1);
+                sprite.position.set(x, y + 2.5, z);
+                scene.add(sprite);
+
+                floatingTexts.push({ sprite: sprite, life: 1.0 });
+            }
 
             function spawnSparks(x, z) {
                 for (let i = 0; i < 18; i++) {
@@ -797,7 +784,7 @@
                 score = 0;
                 runningDistance = 0;
 
-                hudSpeed.textContent = `x${speedMultiplier.toFixed(0)}`;
+                hudSpeed.textContent = `+${speedMultiplier.toFixed(0)}`;
                 hudScore.textContent = '0';
                 gameOverModal.style.display = 'none';
 
@@ -864,8 +851,13 @@
                     score = Math.floor(runningDistance * 10);
                     speedMultiplier += 0.0006;
 
-                    hudSpeed.textContent = `x${Math.floor(speedMultiplier)}`;
+                    hudSpeed.textContent = `+${Math.floor(speedMultiplier)}`;
                     hudScore.textContent = score.toString();
+
+                    // Flamingo Speed Warp Effect (Dynamic FOV Expansion)
+                    const targetFOV = Math.min(85, 60 + (speedMultiplier * 0.35));
+                    camera.fov += (targetFOV - camera.fov) * 0.1;
+                    camera.updateProjectionMatrix();
 
                     // Smooth Lane Steering
                     targetX = LANES[currentLane];
@@ -909,6 +901,7 @@
                                 speedMultiplier += 0.3; // +1 Speed gain
                                 playASMRSwitchSound();
                                 spawnSparks(k.position.x, k.position.z);
+                                spawnFloatingText(k.position.x, playerGroup.position.y, k.position.z, '+1 SPEED!');
                                 k.position.y = -0.4;
                             }
                         }
@@ -926,6 +919,18 @@
                             k.position.y = 0;
                         }
                     });
+
+                    // Update Floating Text
+                    for (let i = floatingTexts.length - 1; i >= 0; i--) {
+                        const ft = floatingTexts[i];
+                        ft.sprite.position.y += 0.08;
+                        ft.life -= 0.04;
+                        ft.sprite.material.opacity = ft.life;
+                        if (ft.life <= 0) {
+                            scene.remove(ft.sprite);
+                            floatingTexts.splice(i, 1);
+                        }
+                    }
 
                     // Update Particle Sparks
                     for (let i = particles.length - 1; i >= 0; i--) {
