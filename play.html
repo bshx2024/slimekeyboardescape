@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-    <title>Play Slime Keyboard Escape 3D Online Free - Fullscreen HTML5 Game</title>
-    <meta name="description" content="Play the original 3D Slime Keyboard Escape Obby online in your browser! Run over giant 3D rainbow keyboard keys, dodge traps, and level up speed 100% free unblocked.">
+    <title>Play Slime Keyboard Escape 3D Online Free - Ultra 3D WebGL Obby</title>
+    <meta name="description" content="Play +1 Speed Roblox Keyboard Escape 3D online! Features ASMR Mechanical Switch Audio, Real Word Combos, Free Rainbow 3D Trails, and Social Code redemption. 100% Free Unblocked.">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://slimekeyboardescape.vercel.app/play.html">
 
     <!-- Open Graph / Social Media -->
     <meta property="og:title" content="Play Slime Keyboard Escape 3D Online Free">
-    <meta property="og:description" content="Play the original 3D Slime Keyboard Escape Obby online in your browser! Run over giant 3D rainbow keyboard keys, dodge traps, and level up speed.">
+    <meta property="og:description" content="Play +1 Speed Roblox Keyboard Escape 3D online with ASMR switch audio and free rainbow 3D trails!">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://slimekeyboardescape.vercel.app/play.html">
 
@@ -19,7 +19,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@600;700;800;900&display=swap" rel="stylesheet">
 
-    <!-- Three.js 3D WebGL Library -->
+    <!-- Three.js 3D WebGL Engine -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
     <!-- Styles -->
@@ -29,6 +29,8 @@
             --primary: #10b981;
             --primary-glow: #34d399;
             --accent-lime: #a3e635;
+            --accent-pink: #ff007f;
+            --accent-cyan: #00f0ff;
             --text-main: #f3f4f6;
             --font-head: 'Outfit', sans-serif;
             --font-body: 'Inter', sans-serif;
@@ -71,11 +73,11 @@
             flex-shrink: 0;
         }
 
-        .btn-back, .btn-fs {
+        .btn-back, .btn-head-action {
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
-            padding: 0.5rem 1.1rem;
+            padding: 0.45rem 1.1rem;
             border-radius: 30px;
             background: rgba(255, 255, 255, 0.08);
             border: 1px solid rgba(255, 255, 255, 0.18);
@@ -93,6 +95,10 @@
             border-color: var(--primary-glow);
             color: var(--primary-glow);
             transform: translateX(-3px);
+        }
+
+        .btn-head-action:hover {
+            background: rgba(255, 255, 255, 0.2);
         }
 
         .player-title {
@@ -133,37 +139,203 @@
             display: block;
         }
 
-        /* HUD Overlay */
+        /* Top HUD Bar */
         .hud-overlay {
             position: absolute;
-            top: 20px;
-            left: 20px;
-            right: 20px;
+            top: 15px;
+            left: 15px;
+            right: 15px;
             display: flex;
+            align-items: center;
             justify-content: space-between;
             pointer-events: none;
             z-index: 100;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .hud-group {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            pointer-events: auto;
         }
 
         .hud-card {
-            background: rgba(15, 23, 42, 0.85);
+            background: rgba(15, 23, 42, 0.88);
             border: 2px solid rgba(52, 211, 153, 0.5);
             backdrop-filter: blur(12px);
-            padding: 0.6rem 1.4rem;
-            border-radius: 16px;
+            padding: 0.5rem 1.1rem;
+            border-radius: 14px;
             font-family: var(--font-head);
             font-weight: 900;
-            font-size: 1.25rem;
+            font-size: 1.15rem;
             color: #ffffff;
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
             display: flex;
             align-items: center;
-            gap: 0.6rem;
+            gap: 0.5rem;
         }
 
         .hud-card span.value {
             color: #a3e635;
             text-shadow: 0 0 10px rgba(163, 230, 53, 0.6);
+        }
+
+        /* ASMR Switch Selector & Controls Toolbar */
+        .switch-selector {
+            background: rgba(15, 23, 42, 0.88);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(12px);
+            padding: 0.3rem 0.5rem;
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            pointer-events: auto;
+        }
+
+        .switch-btn {
+            background: transparent;
+            border: none;
+            color: #9ca3af;
+            padding: 0.35rem 0.75rem;
+            border-radius: 20px;
+            font-family: var(--font-body);
+            font-size: 0.82rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .switch-btn.active {
+            background: rgba(16, 185, 129, 0.25);
+            color: var(--primary-glow);
+            border: 1px solid var(--primary-glow);
+        }
+
+        .btn-code-trigger {
+            background: linear-gradient(135deg, #ff007f, #7000ff);
+            border: none;
+            color: #ffffff;
+            font-family: var(--font-head);
+            font-weight: 800;
+            font-size: 0.9rem;
+            padding: 0.55rem 1.2rem;
+            border-radius: 30px;
+            cursor: pointer;
+            box-shadow: 0 0 15px rgba(255, 0, 127, 0.5);
+            transition: all 0.2s ease;
+            pointer-events: auto;
+        }
+
+        .btn-code-trigger:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 25px rgba(255, 0, 127, 0.8);
+        }
+
+        /* Combo Surge Banner */
+        .combo-surge-banner {
+            position: absolute;
+            top: 80px;
+            left: 50%;
+            transform: translateX(-50%) scale(0.8);
+            background: linear-gradient(135deg, #ff007f, #ffb800);
+            border: 2px solid #ffffff;
+            padding: 0.6rem 2rem;
+            border-radius: 40px;
+            font-family: var(--font-head);
+            font-weight: 900;
+            font-size: 1.4rem;
+            color: #ffffff;
+            box-shadow: 0 0 40px rgba(255, 0, 127, 0.8);
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 200;
+        }
+
+        .combo-surge-banner.active {
+            opacity: 1;
+            transform: translateX(-50%) scale(1);
+        }
+
+        /* Code Redemption Modal */
+        .modal-wrapper {
+            position: absolute;
+            inset: 0;
+            background: rgba(7, 10, 18, 0.85);
+            backdrop-filter: blur(14px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 600;
+        }
+
+        .modal-card {
+            background: rgba(15, 23, 42, 0.95);
+            border: 2px solid var(--primary-glow);
+            padding: 2rem 2.5rem;
+            border-radius: 24px;
+            text-align: center;
+            box-shadow: 0 0 50px rgba(16, 185, 129, 0.4);
+            max-width: 420px;
+            width: 90%;
+        }
+
+        .modal-card h3 {
+            font-family: var(--font-head);
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: #ffffff;
+            margin-bottom: 0.5rem;
+        }
+
+        .modal-card p {
+            font-size: 0.9rem;
+            color: #9ca3af;
+            margin-bottom: 1.25rem;
+        }
+
+        .code-input-box {
+            width: 100%;
+            padding: 0.85rem 1.2rem;
+            border-radius: 12px;
+            background: rgba(30, 41, 59, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #ffffff;
+            font-family: var(--font-head);
+            font-size: 1.2rem;
+            font-weight: 800;
+            text-align: center;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            margin-bottom: 1.25rem;
+            outline: none;
+        }
+
+        .code-input-box:focus {
+            border-color: var(--primary-glow);
+            box-shadow: 0 0 15px rgba(52, 211, 153, 0.4);
+        }
+
+        .btn-submit-code {
+            width: 100%;
+            padding: 0.85rem;
+            border-radius: 30px;
+            background: linear-gradient(135deg, var(--primary-glow), var(--primary));
+            color: #090d16;
+            font-family: var(--font-head);
+            font-size: 1.05rem;
+            font-weight: 900;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 0 20px rgba(16, 185, 129, 0.5);
+            transition: all 0.2s ease;
+        }
+
+        .btn-submit-code:hover {
+            transform: scale(1.03);
         }
 
         /* Game Over Modal */
@@ -227,7 +399,7 @@
 <body>
 
     <div class="player-container">
-        <!-- Top Navigation Header -->
+        <!-- Header Toolbar -->
         <header class="player-header">
             <a href="index.html" class="btn-back" id="btn-return-main">
                 <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
@@ -236,28 +408,59 @@
 
             <div class="player-title">
                 <span class="live-indicator"></span>
-                <span>+1 Speed Roblox Keyboard Escape 3D</span>
+                <span>+1 Speed Roblox Keyboard Escape 3D Pro</span>
             </div>
 
-            <button type="button" class="btn-fs" id="btn-fullscreen-toggle">
+            <button type="button" class="btn-head-action" id="btn-fullscreen-toggle">
                 <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>
                 <span>Fullscreen</span>
             </button>
         </header>
 
-        <!-- Main Game Body Area -->
+        <!-- Main Body -->
         <main class="player-body" id="player-body">
+            <!-- HUD -->
             <div class="hud-overlay">
-                <div class="hud-card">
-                    <span>⚡ MULTIPLIER:</span>
-                    <span class="value" id="hud-speed">x1</span>
+                <div class="hud-group">
+                    <div class="hud-card">
+                        <span>⚡ MULTIPLIER:</span>
+                        <span class="value" id="hud-speed">x1</span>
+                    </div>
+                    <div class="hud-card">
+                        <span>🏆 WINS:</span>
+                        <span class="value" id="hud-score">0</span>
+                    </div>
                 </div>
-                <div class="hud-card">
-                    <span>🏆 WINS:</span>
-                    <span class="value" id="hud-score">0</span>
+
+                <div class="hud-group">
+                    <!-- ASMR Switch Audio Customizer -->
+                    <div class="switch-selector">
+                        <button type="button" class="switch-btn active" data-type="blue" title="Cherry MX Blue Clicky Switch">🔊 Blue Switch</button>
+                        <button type="button" class="switch-btn" data-type="red" title="Cherry MX Red Linear Switch">🔴 Red Switch</button>
+                        <button type="button" class="switch-btn" data-type="brown" title="Cherry MX Brown Tactile Switch">🟤 Brown Switch</button>
+                    </div>
+
+                    <!-- Code Redeem Button -->
+                    <button type="button" class="btn-code-trigger" id="btn-open-code">🎁 Redeem Code</button>
                 </div>
             </div>
 
+            <!-- Combo Surge Banner -->
+            <div class="combo-surge-banner" id="combo-banner">
+                ⚡ KEYBOARD COMBO SURGE! +5X SPEED BOOST!
+            </div>
+
+            <!-- Code Modal -->
+            <div class="modal-wrapper" id="code-modal">
+                <div class="modal-card">
+                    <h3>Redeem Social Code</h3>
+                    <p>Enter official code <strong>BYP4SS1</strong> to get instant +15,000 Speed Boost!</p>
+                    <input type="text" class="code-input-box" id="code-input" placeholder="ENTER CODE" value="BYP4SS1">
+                    <button type="button" class="btn-submit-code" id="btn-claim-code">CLAIM REWARD</button>
+                </div>
+            </div>
+
+            <!-- Game Over Modal -->
             <div class="gameover-modal" id="gameover-modal">
                 <div class="gameover-card">
                     <div class="gameover-title">FELL OFF KEYBOARD!</div>
@@ -270,16 +473,33 @@
         </main>
     </div>
 
-    <!-- Roblox 1:1 High-Fidelity 3D WebGL Engine Script -->
+    <!-- Three.js 3D WebGL Engine with ASMR & Combo Surge -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const container = document.getElementById('player-body');
             const canvas = document.getElementById('webgl-canvas');
             const hudSpeed = document.getElementById('hud-speed');
             const hudScore = document.getElementById('hud-score');
+            const comboBanner = document.getElementById('combo-banner');
+            const codeModal = document.getElementById('code-modal');
+            const btnOpenCode = document.getElementById('btn-open-code');
+            const btnClaimCode = document.getElementById('btn-claim-code');
+            const codeInput = document.getElementById('code-input');
             const gameOverModal = document.getElementById('gameover-modal');
             const btnRestart = document.getElementById('btn-restart-3d');
             const btnFs = document.getElementById('btn-fullscreen-toggle');
+            const switchBtns = document.querySelectorAll('.switch-btn');
+
+            let currentSwitchType = 'blue';
+
+            switchBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    switchBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    currentSwitchType = btn.dataset.type;
+                    playASMRSwitchSound();
+                });
+            });
 
             btnFs.addEventListener('click', () => {
                 if (!document.fullscreenElement) {
@@ -289,18 +509,57 @@
                 }
             });
 
-            // Web Audio Synthesizer for ASMR Key Pressing Sounds
+            // Code Redemption Handler
+            btnOpenCode.addEventListener('click', () => {
+                codeModal.style.display = 'flex';
+            });
+
+            btnClaimCode.addEventListener('click', () => {
+                const val = codeInput.value.trim().toUpperCase();
+                if (val === 'BYP4SS1') {
+                    speedMultiplier += 50; // Massively boost speed
+                    playASMRSwitchSound(880, 0.4);
+                    codeModal.style.display = 'none';
+                    triggerComboSurgeBanner('🎁 CODE CLAIMED! +15,000 SPEED!');
+                } else {
+                    alert('Invalid Code! Try BYP4SS1');
+                }
+            });
+
+            codeModal.addEventListener('click', (e) => {
+                if (e.target === codeModal) codeModal.style.display = 'none';
+            });
+
+            // Web Audio ASMR Switch Synthesizer
             const AudioContext = window.AudioContext || window.webkitAudioContext;
             let audioCtx = null;
-            function playSound(freq, duration, type = 'sine') {
+
+            function playASMRSwitchSound(overrideFreq, duration = 0.08) {
                 try {
                     if (!audioCtx) audioCtx = new AudioContext();
                     if (audioCtx.state === 'suspended') audioCtx.resume();
+
+                    let freq = overrideFreq;
+                    let type = 'sine';
+
+                    if (!overrideFreq) {
+                        if (currentSwitchType === 'blue') {
+                            freq = 750; // Sharp click
+                            type = 'square';
+                        } else if (currentSwitchType === 'red') {
+                            freq = 320; // Soft linear thock
+                            type = 'sine';
+                        } else {
+                            freq = 520; // Tactile bump
+                            type = 'triangle';
+                        }
+                    }
+
                     const osc = audioCtx.createOscillator();
                     const gain = audioCtx.createGain();
                     osc.type = type;
                     osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
-                    gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
+                    gain.gain.setValueAtTime(0.25, audioCtx.currentTime);
                     gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
                     osc.connect(gain);
                     gain.connect(audioCtx.destination);
@@ -309,10 +568,34 @@
                 } catch(e){}
             }
 
-            // Three.js Scene Setup
+            // Real Keyboard Word Combo Detector
+            let typedBuffer = '';
+            window.addEventListener('keydown', (e) => {
+                if (['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName)) return;
+                const char = e.key.toUpperCase();
+                if (/^[A-Z]$/.test(char)) {
+                    typedBuffer += char;
+                    if (typedBuffer.length > 10) typedBuffer = typedBuffer.slice(-10);
+
+                    if (typedBuffer.includes('SPEED') || typedBuffer.includes('ESCAPE')) {
+                        typedBuffer = '';
+                        speedMultiplier += 15;
+                        triggerComboSurgeBanner('⚡ KEYBOARD COMBO SURGE! +5X SPEED!');
+                        playASMRSwitchSound(900, 0.3);
+                    }
+                }
+            });
+
+            function triggerComboSurgeBanner(text) {
+                comboBanner.textContent = text;
+                comboBanner.classList.add('active');
+                setTimeout(() => comboBanner.classList.remove('active'), 2500);
+            }
+
+            // Three.js 3D WebGL Engine Setup
             const scene = new THREE.Scene();
-            scene.background = new THREE.Color(0x0f172a);
-            scene.fog = new THREE.FogExp2(0x0f172a, 0.006);
+            scene.background = new THREE.Color(0x090d16);
+            scene.fog = new THREE.FogExp2(0x090d16, 0.006);
 
             const camera = new THREE.PerspectiveCamera(60, window.innerWidth / (window.innerHeight - 60), 0.1, 1000);
             camera.position.set(0, 8, 15);
@@ -331,26 +614,24 @@
             const dirLight = new THREE.DirectionalLight(0xffffff, 1.2);
             dirLight.position.set(15, 30, 15);
             dirLight.castShadow = true;
-            dirLight.shadow.mapSize.width = 1024;
-            dirLight.shadow.mapSize.height = 1024;
             scene.add(dirLight);
 
-            const pointLight = new THREE.PointLight(0xa3e635, 1.5, 35);
+            const pointLight = new THREE.PointLight(0xa3e635, 1.6, 40);
             pointLight.position.set(0, 6, 0);
             scene.add(pointLight);
 
             // Roblox Blocky Character Model
             const playerGroup = new THREE.Group();
 
-            // Head (Yellow Block with Face)
+            // Head
             const headGeo = new THREE.BoxGeometry(1.2, 1.2, 1.2);
-            const headMat = new THREE.MeshPhongMaterial({ color: 0xfacc15 }); // Yellow Roblox Head
+            const headMat = new THREE.MeshPhongMaterial({ color: 0xfacc15 });
             const headMesh = new THREE.Mesh(headGeo, headMat);
             headMesh.position.y = 2.4;
             headMesh.castShadow = true;
             playerGroup.add(headMesh);
 
-            // Face Eyes & Smile
+            // Eyes
             const eyeGeo = new THREE.BoxGeometry(0.2, 0.2, 0.05);
             const eyeMat = new THREE.MeshBasicMaterial({ color: 0x000000 });
             const eyeL = new THREE.Mesh(eyeGeo, eyeMat);
@@ -360,15 +641,15 @@
             playerGroup.add(eyeL);
             playerGroup.add(eyeR);
 
-            // Torso (Blue Shirt)
+            // Torso
             const torsoGeo = new THREE.BoxGeometry(1.4, 1.4, 0.8);
-            const torsoMat = new THREE.MeshPhongMaterial({ color: 0x0284c7 }); // Blue Torso
+            const torsoMat = new THREE.MeshPhongMaterial({ color: 0x0284c7 });
             const torsoMesh = new THREE.Mesh(torsoGeo, torsoMat);
             torsoMesh.position.y = 1.1;
             torsoMesh.castShadow = true;
             playerGroup.add(torsoMesh);
 
-            // Left & Right Arms
+            // Arms
             const armGeo = new THREE.BoxGeometry(0.5, 1.3, 0.6);
             const armMat = new THREE.MeshPhongMaterial({ color: 0x0284c7 });
             const armL = new THREE.Mesh(armGeo, armMat);
@@ -380,9 +661,9 @@
             playerGroup.add(armL);
             playerGroup.add(armR);
 
-            // Left & Right Legs (Green Pants)
+            // Legs
             const legGeo = new THREE.BoxGeometry(0.65, 1.3, 0.65);
-            const legMat = new THREE.MeshPhongMaterial({ color: 0x16a34a }); // Green Legs
+            const legMat = new THREE.MeshPhongMaterial({ color: 0x16a34a });
             const legL = new THREE.Mesh(legGeo, legMat);
             legL.position.set(-0.35, -0.2, 0);
             legL.castShadow = true;
@@ -391,6 +672,14 @@
             legR.castShadow = true;
             playerGroup.add(legL);
             playerGroup.add(legR);
+
+            // 3D Rainbow Trail Ring Aura behind character
+            const auraGeo = new THREE.TorusGeometry(1.6, 0.1, 16, 32);
+            const auraMat = new THREE.MeshBasicMaterial({ color: 0x34d399 });
+            const auraMesh = new THREE.Mesh(auraGeo, auraMat);
+            auraMesh.rotation.x = Math.PI / 2;
+            auraMesh.position.y = 0.1;
+            playerGroup.add(auraMesh);
 
             playerGroup.position.set(0, 0, 0);
             scene.add(playerGroup);
@@ -444,7 +733,7 @@
                 keyMesh.receiveShadow = true;
                 group.add(keyMesh);
 
-                // Top Switch Cap with Texture Label
+                // Top Switch Cap with Label
                 const labelTex = createKeyCapLabelTexture(label, isTrap);
                 const topGeo = new THREE.BoxGeometry(3.0, 0.4, 3.0);
                 const topMat = new THREE.MeshPhongMaterial({
@@ -462,7 +751,7 @@
             // Initial Keycaps Track
             for (let i = 0; i < 22; i++) {
                 const laneIdx = Math.floor(Math.random() * 3);
-                const isTrap = Math.random() < 0.25 && i > 4;
+                const isTrap = Math.random() < 0.24 && i > 4;
                 const colorHex = ROBLOX_COLORS[i % ROBLOX_COLORS.length];
                 const keyMesh = createKeycapMesh(KEY_LABELS[i % KEY_LABELS.length], isTrap, colorHex);
 
@@ -471,7 +760,7 @@
                 keycaps.push(keyMesh);
             }
 
-            // 3D Floating Particle Sparks & +1 Floating Text
+            // 3D Particle Sparks System
             const particles = [];
 
             function spawnSparks(x, z) {
@@ -527,18 +816,18 @@
                 if (['ArrowLeft', 'KeyA'].includes(e.code)) {
                     if (currentLane > 0) {
                         currentLane--;
-                        playSound(320, 0.05);
+                        playASMRSwitchSound();
                     }
                 } else if (['ArrowRight', 'KeyD'].includes(e.code)) {
                     if (currentLane < 2) {
                         currentLane++;
-                        playSound(320, 0.05);
+                        playASMRSwitchSound();
                     }
                 } else if (['Space', 'ArrowUp', 'KeyW'].includes(e.code)) {
                     if (!isJumping) {
                         isJumping = true;
                         playerVy = 0.48;
-                        playSound(480, 0.1);
+                        playASMRSwitchSound(800, 0.1);
                     }
                 }
             });
@@ -590,16 +879,19 @@
                             playerY = 0;
                             playerVy = 0;
                             isJumping = false;
-                            playSound(200, 0.08, 'triangle');
+                            playASMRSwitchSound(200, 0.08);
                         }
                     }
                     playerGroup.position.y = playerY;
 
-                    // Roblox Character Limb Running Motion
+                    // Roblox Limb Running Motion
                     armL.rotation.x = Math.sin(time * 16) * 0.8;
                     armR.rotation.x = -Math.sin(time * 16) * 0.8;
                     legL.rotation.x = -Math.sin(time * 16) * 0.8;
                     legR.rotation.x = Math.sin(time * 16) * 0.8;
+
+                    // Rotate Aura Ring
+                    auraMesh.rotation.z += 0.05;
 
                     // Keycaps Scrolling Motion
                     keycaps.forEach(k => {
@@ -609,15 +901,14 @@
                         if (k.position.z > -1.5 && k.position.z < 1.5 && Math.abs(k.position.x - playerGroup.position.x) < 1.8) {
                             if (k.userData.isTrap && playerY < 0.8) {
                                 isGameOver = true;
-                                playSound(100, 0.5, 'sawtooth');
+                                playASMRSwitchSound(100, 0.5);
                                 document.getElementById('gameover-score-text').textContent = `Final Wins: ${score}`;
                                 gameOverModal.style.display = 'flex';
                             } else if (!k.userData.pressed) {
                                 k.userData.pressed = true;
                                 speedMultiplier += 0.3; // +1 Speed gain
-                                playSound(640, 0.1, 'sine');
+                                playASMRSwitchSound();
                                 spawnSparks(k.position.x, k.position.z);
-                                // Key Press Down bounce
                                 k.position.y = -0.4;
                             }
                         }
@@ -650,7 +941,6 @@
                         }
                     }
 
-                    // Move Point Light with player
                     pointLight.position.x = playerGroup.position.x;
                 }
 
