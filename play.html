@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-    <title>Play Slime Keyboard Escape 3D Online Free - 1:1 Exact Roblox Screenshot Replica</title>
-    <meta name="description" content="Play the exact 1:1 replica of +1 Speed Roblox Keyboard Escape 3D! Features Mint Green & Emerald keycaps, Electric Blue Roblox character, Safe Zone gateway, and ASMR switch audio. 100% Free Unblocked.">
+    <title>Play Slime Keyboard Escape 3D Online Free - 1:1 Roblox Obby</title>
+    <meta name="description" content="Play the exact +1 Speed Roblox Keyboard Escape 3D! Easy smooth starting speed, safe spawn zone, Mint Green keycaps, and ASMR switch audio. 100% Free Unblocked.">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://slimekeyboardescape.vercel.app/play.html">
 
     <!-- Open Graph / Social Media -->
     <meta property="og:title" content="Play Slime Keyboard Escape 3D Online Free">
-    <meta property="og:description" content="Play the exact 1:1 replica of +1 Speed Roblox Keyboard Escape 3D with Mint Green keycaps & Electric Blue character!">
+    <meta property="og:description" content="Play the exact +1 Speed Roblox Keyboard Escape 3D online with easy starting speed and safe spawn zone!">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://slimekeyboardescape.vercel.app/play.html">
 
@@ -392,7 +392,6 @@
 <body>
 
     <div class="player-container">
-        <!-- Header -->
         <header class="player-header">
             <a href="index.html" class="btn-back" id="btn-return-main">
                 <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
@@ -401,7 +400,7 @@
 
             <div class="player-title">
                 <span class="live-indicator"></span>
-                <span>+1 Speed Roblox Keyboard Escape 3D (1:1 Screenshot Exact Replica)</span>
+                <span>+1 Speed Roblox Keyboard Escape 3D (Smooth Difficulty Edition)</span>
             </div>
 
             <button type="button" class="btn-head-action" id="btn-fullscreen-toggle">
@@ -410,16 +409,15 @@
             </button>
         </header>
 
-        <!-- Body -->
         <main class="player-body" id="player-body">
             <div class="hud-overlay">
                 <div class="hud-group">
                     <div class="hud-card">
                         <span>⚡ SPEED:</span>
-                        <span class="value" id="hud-speed">937 Speed</span>
+                        <span class="value" id="hud-speed">1 Speed</span>
                     </div>
                     <div class="level-bar-card">
-                        <span>Level 18</span>
+                        <span id="hud-level">Level 1</span>
                     </div>
                 </div>
 
@@ -449,7 +447,7 @@
             <div class="gameover-modal" id="gameover-modal">
                 <div class="gameover-card">
                     <div class="gameover-title">FELL OFF KEYBOARD!</div>
-                    <div class="gameover-score" id="gameover-score-text">Final Level: 18</div>
+                    <div class="gameover-score" id="gameover-score-text">Final Level: 1</div>
                     <button type="button" class="btn-restart-game" id="btn-restart-3d">RESTART OBBY</button>
                 </div>
             </div>
@@ -458,12 +456,13 @@
         </main>
     </div>
 
-    <!-- 1:1 Screenshot Exact Replica Three.js 3D WebGL Script -->
+    <!-- Smooth Progressive Difficulty Engine Script -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const container = document.getElementById('player-body');
             const canvas = document.getElementById('webgl-canvas');
             const hudSpeed = document.getElementById('hud-speed');
+            const hudLevel = document.getElementById('hud-level');
             const comboBanner = document.getElementById('combo-banner');
             const codeModal = document.getElementById('code-modal');
             const btnOpenCode = document.getElementById('btn-open-code');
@@ -497,7 +496,7 @@
             btnClaimCode.addEventListener('click', () => {
                 const val = codeInput.value.trim().toUpperCase();
                 if (val === 'BYP4SS1') {
-                    speedMultiplier += 100;
+                    speedMultiplier += 50;
                     playASMRSwitchSound(880, 0.4);
                     codeModal.style.display = 'none';
                     triggerComboSurgeBanner('🎁 CODE CLAIMED! +15,000 SPEED!');
@@ -556,7 +555,7 @@
 
                     if (typedBuffer.includes('SPEED') || typedBuffer.includes('ESCAPE')) {
                         typedBuffer = '';
-                        speedMultiplier += 20;
+                        speedMultiplier += 10;
                         triggerComboSurgeBanner('⚡ KEYBOARD COMBO SURGE! +5X SPEED!');
                         playASMRSwitchSound(900, 0.3);
                     }
@@ -569,9 +568,9 @@
                 setTimeout(() => comboBanner.classList.remove('active'), 2500);
             }
 
-            // Three.js 3D WebGL Engine Setup (Matching Screenshot Scene)
+            // Three.js 3D WebGL Engine Setup
             const scene = new THREE.Scene();
-            scene.background = new THREE.Color(0x022c22); // Dark Emerald Green Fog
+            scene.background = new THREE.Color(0x022c22);
             scene.fog = new THREE.FogExp2(0x022c22, 0.006);
 
             const camera = new THREE.PerspectiveCamera(65, window.innerWidth / (window.innerHeight - 60), 0.1, 1000);
@@ -597,17 +596,17 @@
             pointLight.position.set(0, 6, 0);
             scene.add(pointLight);
 
-            // Screenshot 1:1 Roblox Character Model (Electric Cyan Jacket & Hair)
+            // Screenshot 1:1 Roblox Character Model
             const playerGroup = new THREE.Group();
 
-            // Hair (Black Hair)
+            // Hair
             const hairGeo = new THREE.BoxGeometry(1.3, 0.4, 1.3);
             const hairMat = new THREE.MeshPhongMaterial({ color: 0x0f172a });
             const hairMesh = new THREE.Mesh(hairGeo, hairMat);
             hairMesh.position.y = 3.0;
             playerGroup.add(hairMesh);
 
-            // Head (Yellow)
+            // Head
             const headGeo = new THREE.BoxGeometry(1.2, 1.2, 1.2);
             const headMat = new THREE.MeshPhongMaterial({ color: 0xfacc15 });
             const headMesh = new THREE.Mesh(headGeo, headMat);
@@ -615,7 +614,7 @@
             headMesh.castShadow = true;
             playerGroup.add(headMesh);
 
-            // Torso (Electric Cyan / Bright Blue Jacket from Screenshot)
+            // Torso (Electric Cyan Blue Jacket)
             const torsoGeo = new THREE.BoxGeometry(1.4, 1.4, 0.8);
             const torsoMat = new THREE.MeshPhongMaterial({ color: 0x00f0ff, emissive: 0x0284c7 });
             const torsoMesh = new THREE.Mesh(torsoGeo, torsoMat);
@@ -623,7 +622,7 @@
             torsoMesh.castShadow = true;
             playerGroup.add(torsoMesh);
 
-            // Arms (Cyan Sleeves)
+            // Arms
             const armGeo = new THREE.BoxGeometry(0.5, 1.3, 0.6);
             const armMat = new THREE.MeshPhongMaterial({ color: 0x00f0ff });
             const armL = new THREE.Mesh(armGeo, armMat);
@@ -635,7 +634,7 @@
             playerGroup.add(armL);
             playerGroup.add(armR);
 
-            // Legs (Black Pants)
+            // Legs
             const legGeo = new THREE.BoxGeometry(0.65, 1.3, 0.65);
             const legMat = new THREE.MeshPhongMaterial({ color: 0x0f172a });
             const legL = new THREE.Mesh(legGeo, legMat);
@@ -650,7 +649,7 @@
             playerGroup.position.set(0, 0, 0);
             scene.add(playerGroup);
 
-            // Background Emerald Slime Walls & Safe Zone Gate (From Screenshot 2 & 3)
+            // Background Emerald Slime Walls & Safe Zone Gate
             const wallGeo = new THREE.BoxGeometry(2, 25, 300);
             const wallMat = new THREE.MeshPhongMaterial({ color: 0x064e3b, shininess: 40 });
             const wallL = new THREE.Mesh(wallGeo, wallMat);
@@ -660,20 +659,18 @@
             scene.add(wallL);
             scene.add(wallR);
 
-            // Safe Zone Archway in Distance
+            // Safe Zone Archway
             const gateGeo = new THREE.BoxGeometry(26, 8, 2);
             const gateMat = new THREE.MeshPhongMaterial({ color: 0x22c55e, emissive: 0x15803d });
             const gateMesh = new THREE.Mesh(gateGeo, gateMat);
             gateMesh.position.set(0, 12, -180);
             scene.add(gateMesh);
 
-            // Screenshot 1:1 Keycap Color Palette (Mint Green, Forest Emerald, Slate Gray, Light Mint)
             const MINT_PALETTE = [0x2dd4bf, 0x059669, 0x1e293b, 0x6ee7b7, 0x34d399, 0x047857];
             const KEY_LETTERS = ['M', 'A', 'O', 'Z', 'Q', 'C', 'E', 'K', 'V', 'B', 'X', 'U', 'N', 'P', 'R'];
 
-            // 9-Column Wide Keyboard Matrix
             const LANES = [-12, -9, -6, -3, 0, 3, 6, 9, 12];
-            let currentLane = 4; // Center lane
+            let currentLane = 4;
             let targetX = 0;
             let playerY = 0;
             let playerVy = 0;
@@ -706,7 +703,6 @@
             function createKeycapMesh(label, isTrap, colorHex) {
                 const group = new THREE.Group();
 
-                // Sloped OEM Keycap Profile Geometry
                 const keyGeo = new THREE.BoxGeometry(2.7, 1.2, 2.7);
                 const keyMat = new THREE.MeshPhongMaterial({
                     color: isTrap ? 0xb91c1c : colorHex,
@@ -717,7 +713,6 @@
                 keyMesh.receiveShadow = true;
                 group.add(keyMesh);
 
-                // Top Switch Cap with Letter
                 const labelTex = createMintKeycapTexture(label, isTrap);
                 const topGeo = new THREE.BoxGeometry(2.3, 0.35, 2.3);
                 const topMat = new THREE.MeshPhongMaterial({
@@ -732,10 +727,10 @@
                 return group;
             }
 
-            // Spawn 9-Column Wide Keyboard Matrix
+            // Safe Spawn Zone: First 8 rows have 0 Traps!
             for (let row = 0; row < 25; row++) {
                 for (let col = 0; col < LANES.length; col++) {
-                    const isTrap = Math.random() < 0.15 && row > 3;
+                    const isTrap = row > 8 && Math.random() < 0.12; // 0 Traps at start!
                     const colorHex = MINT_PALETTE[(row + col) % MINT_PALETTE.length];
                     const letter = KEY_LETTERS[(row * 9 + col) % KEY_LETTERS.length];
                     const keyMesh = createKeycapMesh(letter, isTrap, colorHex);
@@ -746,7 +741,7 @@
                 }
             }
 
-            // Floating +1 Shoe Icon Sprites & Particle Sparks
+            // Floating +1 Shoe Sprites & Sparks
             const particles = [];
             const floatingTexts = [];
 
@@ -788,8 +783,9 @@
                 }
             }
 
-            // Game State
-            let speedMultiplier = 937; // Matching screenshot Speed 937
+            // Gentle Starting Speed: 1 Speed
+            let speedMultiplier = 1;
+            let playerLevel = 1;
             let isGameOver = false;
             let runningDistance = 0;
 
@@ -800,10 +796,12 @@
                 playerY = 0;
                 playerVy = 0;
                 isJumping = false;
-                speedMultiplier = 937;
+                speedMultiplier = 1;
+                playerLevel = 1;
                 runningDistance = 0;
 
-                hudSpeed.textContent = `937 Speed`;
+                hudSpeed.textContent = `1 Speed`;
+                hudLevel.textContent = `Level 1`;
                 gameOverModal.style.display = 'none';
 
                 keycaps.forEach(k => k.userData.pressed = false);
@@ -861,10 +859,11 @@
                 const time = clock.getElapsedTime();
 
                 if (!isGameOver) {
-                    runningDistance += speedMultiplier * 0.0003;
-                    speedMultiplier += 0.05;
+                    runningDistance += (speedMultiplier + 10) * 0.05;
+                    playerLevel = Math.floor(runningDistance / 80) + 1;
 
                     hudSpeed.textContent = `${Math.floor(speedMultiplier)} Speed`;
+                    hudLevel.textContent = `Level ${playerLevel}`;
 
                     // Dynamic Camera Steering
                     targetX = LANES[currentLane];
@@ -889,20 +888,22 @@
                     legL.rotation.x = -Math.sin(time * 16) * 0.8;
                     legR.rotation.x = Math.sin(time * 16) * 0.8;
 
-                    // Keycaps Scrolling Motion
+                    // Smooth Manageable Scroll Speed
+                    const scrollSpeed = (speedMultiplier + 12) * 0.015;
+
                     keycaps.forEach(k => {
-                        k.position.z += speedMultiplier * 0.003;
+                        k.position.z += scrollSpeed;
 
                         // Collision Check with Key Switch
                         if (k.position.z > -1.2 && k.position.z < 1.2 && Math.abs(k.position.x - playerGroup.position.x) < 1.4) {
                             if (k.userData.isTrap && playerY < 0.8) {
                                 isGameOver = true;
                                 playASMRSwitchSound(100, 0.5);
-                                document.getElementById('gameover-score-text').textContent = `Final Speed: ${Math.floor(speedMultiplier)}`;
+                                document.getElementById('gameover-score-text').textContent = `Final Level: ${playerLevel} (${Math.floor(speedMultiplier)} Speed)`;
                                 gameOverModal.style.display = 'flex';
                             } else if (!k.userData.pressed) {
                                 k.userData.pressed = true;
-                                speedMultiplier += 1;
+                                speedMultiplier += 1; // Gain +1 Speed smoothly
                                 playASMRSwitchSound();
                                 spawnSparks(k.position.x, k.position.z);
                                 spawnFloatingShoeSprite(k.position.x, playerGroup.position.y, k.position.z);
