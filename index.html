@@ -981,7 +981,10 @@
 
             <!-- 16:9 Responsive Game Frame -->
             <div class="game-frame-container" id="iframe-holder">
-                <!-- Option B: High-Conversion Glassmorphic Click-to-Play Hero Cover Card -->
+                <!-- Native Game Mounting Container for bundle.js -->
+                <div id="game" style="width: 100%; height: 100%; position: relative; display: none;"></div>
+
+                <!-- High-Conversion Glassmorphic Click-to-Play Cover Card -->
                 <div class="game-play-cover" id="game-play-cover">
                     <div class="cover-mesh-bg"></div>
                     <div class="cover-content">
@@ -999,13 +1002,13 @@
                         <h3 class="cover-title">Slime Keyboard Escape</h3>
                         <p class="cover-subtitle">Squish, leap, and dodge mechanical key switch traps!</p>
 
-                        <a href="https://topgames.gg/embed/1-speed-keyboard-escape-obby" target="_blank" rel="noopener noreferrer" class="btn-play-hero" id="btn-play-hero">
+                        <button type="button" class="btn-play-hero" id="btn-play-hero">
                             <span class="play-icon">▶</span>
                             <span>PLAY ONLINE FREE</span>
-                        </a>
+                        </button>
 
                         <div class="cover-features">
-                            <span class="cover-tag">⚡ 0 Sec Load Time</span>
+                            <span class="cover-tag">⚡ Instant Native Load</span>
                             <span class="cover-tag">🔒 100% Unblocked</span>
                             <span class="cover-tag">🎮 PC & Mobile Compatible</span>
                         </div>
@@ -1195,11 +1198,33 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const gameContainer = document.getElementById('game-container');
-            const iframe = document.getElementById('game-iframe');
-            const btnEngineIframe = document.getElementById('btn-engine-iframe');
+            const gameBox = document.getElementById('game');
+            const playCover = document.getElementById('game-play-cover');
+            const btnPlayHero = document.getElementById('btn-play-hero');
             const btnFullscreen = document.getElementById('btn-fullscreen');
             const btnRestart = document.getElementById('btn-restart');
             const faqItems = document.querySelectorAll('.faq-item');
+
+            let isGameLoaded = false;
+
+            function loadNativeGame() {
+                if (isGameLoaded) return;
+                isGameLoaded = true;
+                playCover.style.display = 'none';
+                gameBox.style.display = 'block';
+
+                const script = document.createElement('script');
+                script.src = './bundle.js';
+                script.async = true;
+                script.onload = () => {
+                    console.log('Slime Keyboard Escape bundle.js loaded successfully!');
+                };
+                document.body.appendChild(script);
+            }
+
+            if (btnPlayHero) {
+                btnPlayHero.addEventListener('click', loadNativeGame);
+            }
 
             // 1. Fullscreen Toggle Handler
             function toggleFullscreen() {
@@ -1228,13 +1253,11 @@
 
             // 2. Restart Game Session Handler
             btnRestart.addEventListener('click', () => {
-                const currentSrc = iframe.src;
-                iframe.src = '';
-                btnRestart.style.transform = 'scale(0.95)';
-                setTimeout(() => {
-                    iframe.src = currentSrc;
-                    btnRestart.style.transform = 'none';
-                }, 150);
+                if (!isGameLoaded) {
+                    loadNativeGame();
+                } else {
+                    location.reload();
+                }
             });
 
             // 3. FAQ Accordion Toggle
