@@ -6,7 +6,7 @@ export default async function handler(req) {
   const url = new URL(req.url);
   const targetParam = url.searchParams.get('url');
   
-  // Directly proxy Yandex game application
+  // Directly proxy Yandex game application with distribution tokens
   const targetUrl = targetParam || 'https://yandex.com/games/app/541802?utm_source=distrib&is-united-page=1&skip-guard=1&header=no&utm_medium=topgames.gg&clid=10575041&flags=%7B%22adv_sticky_banner_disabled%22%3Atrue%7D';
   
   try {
@@ -20,7 +20,7 @@ export default async function handler(req) {
 
     let bodyText = await response.text();
     
-    // Inject SDK Auto-Responder to resolve stuck Loading spinner
+    // 1. Inject Yandex SDK Auto-Responder script right in <head>
     const sdkMockScript = `
     <script>
       (function() {
@@ -36,7 +36,7 @@ export default async function handler(req) {
           } catch(err) {}
         });
 
-        // Bypass frame checks
+        // Neutralize frame checks
         try {
           Object.defineProperty(window, 'top', { get: function() { return window.self; } });
           Object.defineProperty(window, 'parent', { get: function() { return window.self; } });
@@ -46,6 +46,12 @@ export default async function handler(req) {
     `;
 
     bodyText = bodyText.replace('<head>', '<head>' + sdkMockScript);
+    
+    // 2. Patch appData flags to bypass framing checks
+    bodyText = bodyText.replace('"isFraming":true', '"isFraming":false');
+    bodyText = bodyText.replace('"isInternalEmbedder":false', '"isInternalEmbedder":true');
+    
+    // 3. Neutralize window.top references
     bodyText = bodyText.replace(/window\.top/g, 'window.self');
     bodyText = bodyText.replace(/top\.location/g, 'self.location');
     bodyText = bodyText.replace(/parent\.location/g, 'self.location');
