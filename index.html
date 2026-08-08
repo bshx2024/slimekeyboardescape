@@ -13,12 +13,13 @@
     <meta property="og:type" content="website">
     <meta property="og:title" content="Slime Keyboard Escape Online - Free HTML5 Unblocked Game">
     <meta property="og:description" content="Bounce, squish, and escape mechanical key traps! Play Slime Keyboard Escape instantly in your browser with zero downloads.">
+    <meta property="og:url" content="https://slimekeyboardescape.com/">
     <meta property="og:image" content="https://5515b0a5-cf28-4513-8a95-588b206fb79f.gdn.poki.com/372ecfd9-73a1-4190-8e77-1639db42ac1c/index.html">
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
     <!-- JSON-LD FAQ Schema & Game Schema -->
@@ -59,7 +60,7 @@
             },
             {
               "@type": "Question",
-              "name": "What is the goal of Slime Keyboard Escape?",
+              "name": "What is the main goal of Slime Keyboard Escape?",
               "acceptedAnswer": {
                 "@type": "Answer",
                 "text": "The main objective of Slime Keyboard Escape is to guide a cute gelatinous slime character across a treacherous grid of giant computer keycaps, avoiding crushing key presses and deadly spikes to reach the final exit door."
@@ -80,11 +81,11 @@
     </script>
 
     <style>
-        /* CSS Design System - Modern Dark Glassmorphism */
+        /* CSS Design System - Pokerogue Style Modern Glassmorphism */
         :root {
             --bg-main: #090d16;
             --bg-card: rgba(15, 23, 42, 0.65);
-            --bg-card-hover: rgba(30, 41, 59, 0.75);
+            --bg-card-hover: rgba(30, 41, 59, 0.8);
             --border-glass: rgba(255, 255, 255, 0.08);
             --border-glass-glow: rgba(16, 185, 129, 0.4);
             
@@ -92,17 +93,18 @@
             --primary-glow: #34d399;
             --primary-dark: #059669;
             --accent-lime: #a3e635;
+            --accent-cyan: #00f0ff;
             
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
             --text-dim: #64748b;
             
-            --radius-lg: 20px;
-            --radius-md: 12px;
+            --radius-lg: 24px;
+            --radius-md: 14px;
             --radius-sm: 8px;
             
             --shadow-glow: 0 0 35px rgba(16, 185, 129, 0.25);
-            --shadow-glow-intense: 0 0 50px rgba(16, 185, 129, 0.45);
+            --shadow-glow-intense: 0 0 55px rgba(16, 185, 129, 0.45);
             --shadow-card: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
             
             --font-head: 'Outfit', sans-serif;
@@ -137,10 +139,9 @@
             background-attachment: fixed;
         }
 
-        /* Container constraints */
         .container {
             width: 100%;
-            max-width: 1200px;
+            max-width: 1240px;
             margin: 0 auto;
             padding: 0 1.5rem;
         }
@@ -150,11 +151,11 @@
             position: sticky;
             top: 0;
             z-index: 100;
-            background: rgba(9, 13, 22, 0.75);
+            background: rgba(9, 13, 22, 0.85);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
             border-bottom: 1px solid var(--border-glass);
-            padding: 1rem 0;
+            padding: 0.9rem 0;
         }
 
         .header-inner {
@@ -200,26 +201,55 @@
             line-height: 1.2;
         }
 
-        .brand-badge {
-            display: inline-block;
-            font-size: 0.7rem;
-            font-weight: 700;
+        .nav-links {
+            display: none;
+            align-items: center;
+            gap: 1.75rem;
+            list-style: none;
+        }
+
+        @media (min-width: 900px) {
+            .nav-links { display: flex; }
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 600;
+            transition: color 0.2s ease;
+        }
+
+        .nav-links a:hover {
             color: var(--primary-glow);
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-            background: rgba(16, 185, 129, 0.12);
-            padding: 0.15rem 0.5rem;
-            border-radius: 20px;
-            border: 1px solid rgba(16, 185, 129, 0.3);
         }
 
         .header-actions {
             display: flex;
             align-items: center;
-            gap: 0.75rem;
+            gap: 0.85rem;
         }
 
-        /* Glassmorphism Buttons */
+        /* Language Selector Dropdown */
+        .lang-selector {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-glass);
+            color: var(--text-main);
+            font-family: var(--font-body);
+            font-size: 0.85rem;
+            font-weight: 600;
+            padding: 0.45rem 0.85rem;
+            border-radius: 20px;
+            outline: none;
+            cursor: pointer;
+            transition: border-color 0.2s ease;
+        }
+
+        .lang-selector:hover {
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        /* High Visibility Action Buttons */
         .btn {
             display: inline-flex;
             align-items: center;
@@ -227,9 +257,9 @@
             gap: 0.5rem;
             font-family: var(--font-head);
             font-weight: 700;
-            font-size: 0.9rem;
-            padding: 0.65rem 1.25rem;
-            border-radius: var(--radius-md);
+            font-size: 0.95rem;
+            padding: 0.65rem 1.4rem;
+            border-radius: 30px;
             cursor: pointer;
             transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
             text-decoration: none;
@@ -238,64 +268,51 @@
             user-select: none;
         }
 
-        .btn-glass {
-            background: rgba(255, 255, 255, 0.05);
-            color: var(--text-main);
-            backdrop-filter: blur(10px);
-        }
-
-        .btn-glass:hover {
-            background: rgba(255, 255, 255, 0.12);
-            border-color: rgba(255, 255, 255, 0.2);
-            transform: translateY(-2px);
-        }
-
         .btn-primary {
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            background: linear-gradient(135deg, var(--primary-glow), var(--primary-dark));
             color: #090d16;
-            border-color: var(--primary-glow);
-            box-shadow: 0 0 20px rgba(16, 185, 129, 0.3);
+            border-color: var(--accent-lime);
+            box-shadow: 0 0 25px rgba(16, 185, 129, 0.4);
         }
 
         .btn-primary:hover {
-            background: linear-gradient(135deg, var(--primary-glow), var(--primary));
-            box-shadow: 0 0 30px rgba(16, 185, 129, 0.5);
+            background: linear-gradient(135deg, var(--accent-lime), var(--primary));
+            box-shadow: 0 0 35px rgba(16, 185, 129, 0.7);
             transform: translateY(-2px);
         }
 
-        .btn svg {
-            width: 18px;
-            height: 18px;
-            transition: transform 0.3s ease;
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.06);
+            color: var(--text-main);
+            border-color: rgba(255, 255, 255, 0.15);
         }
 
-        .btn:hover svg {
-            transform: scale(1.1);
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.12);
+            border-color: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
         }
 
-        /* Main Section & Game Container */
-        main {
-            flex: 1;
-            padding: 2rem 0 4rem;
-        }
-
+        /* Hero Section (Pokerogue Style) */
         .hero-section {
+            padding: 3.5rem 0 2rem;
             text-align: center;
-            margin-bottom: 2rem;
+            position: relative;
         }
 
         .tagline-pill {
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
-            padding: 0.35rem 1rem;
-            background: rgba(16, 185, 129, 0.1);
-            border: 1px solid rgba(16, 185, 129, 0.25);
+            padding: 0.4rem 1.1rem;
+            background: rgba(16, 185, 129, 0.12);
+            border: 1px solid rgba(16, 185, 129, 0.35);
             border-radius: 30px;
             font-size: 0.85rem;
-            font-weight: 600;
+            font-weight: 700;
             color: var(--primary-glow);
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
+            letter-spacing: 0.04em;
         }
 
         .tagline-pill .dot {
@@ -309,12 +326,12 @@
 
         .game-title {
             font-family: var(--font-head);
-            font-size: clamp(2rem, 4vw, 3.2rem);
-            font-weight: 800;
+            font-size: clamp(2.2rem, 5vw, 3.8rem);
+            font-weight: 900;
             letter-spacing: -0.03em;
-            line-height: 1.15;
-            margin-bottom: 0.75rem;
-            background: linear-gradient(180deg, #ffffff 30%, #cbd5e1 100%);
+            line-height: 1.12;
+            margin-bottom: 1rem;
+            background: linear-gradient(180deg, #ffffff 40%, #cbd5e1 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
@@ -325,180 +342,40 @@
             -webkit-text-fill-color: transparent;
         }
 
-        .hero-desc {
-            max-width: 680px;
-            margin: 0 auto;
-            font-size: 1.05rem;
+        .hero-subtitle-box {
+            font-size: 1.15rem;
             color: var(--text-muted);
+            max-width: 720px;
+            margin: 0 auto 2.25rem;
+            min-height: 2.8rem;
         }
 
-        /* Main Game Screen Outer Container */
-        .game-wrapper {
-            position: relative;
-            width: 100%;
-            max-width: 1000px;
-            margin: 0 auto 2.5rem;
-            background: var(--bg-card);
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            border-radius: var(--radius-lg);
-            padding: 12px;
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            box-shadow: var(--shadow-card), var(--shadow-glow);
-            transition: box-shadow 0.4s ease, border-color 0.4s ease;
-        }
-
-        .game-wrapper:hover {
-            border-color: var(--border-glass-glow);
-            box-shadow: var(--shadow-card), var(--shadow-glow-intense);
-        }
-
-        .game-header-bar {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0.6rem 1rem 0.8rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            margin-bottom: 10px;
-        }
-
-        .game-status {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: var(--text-muted);
-        }
-
-        .game-status-icon {
-            width: 10px;
-            height: 10px;
-            background-color: var(--primary);
-            border-radius: 50%;
-            box-shadow: 0 0 8px var(--primary);
-        }
-
-        .game-frame-container {
-            position: relative;
-            width: 100%;
-            aspect-ratio: 16 / 9;
-            background-color: #000000;
-            border-radius: var(--radius-md);
-            overflow: hidden;
-        }
-
-        .game-frame-container iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border: none;
-            display: block;
-        }
-
-        /* Option B: Click to Play Glassmorphic Hero Cover Card */
-        .game-play-cover {
-            position: absolute;
-            inset: 0;
-            z-index: 10;
-            background: linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(9, 13, 22, 0.98));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 2rem;
-            text-align: center;
-            overflow: hidden;
-        }
-
-        .cover-mesh-bg {
-            position: absolute;
-            inset: 0;
-            background: 
-                radial-gradient(circle at 50% 40%, rgba(16, 185, 129, 0.25) 0%, transparent 65%),
-                radial-gradient(circle at 80% 20%, rgba(163, 230, 53, 0.15) 0%, transparent 40%);
-            pointer-events: none;
-            animation: mesh-pulse 4s infinite alternate;
-        }
-
-        .cover-content {
-            position: relative;
-            z-index: 2;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            max-width: 520px;
-        }
-
-        .cover-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.25rem 0.85rem;
-            background: rgba(16, 185, 129, 0.15);
-            border: 1px solid rgba(16, 185, 129, 0.35);
-            border-radius: 30px;
-            font-size: 0.75rem;
-            font-weight: 700;
+        .typewriter-text {
             color: var(--primary-glow);
-            letter-spacing: 0.05em;
-            margin-bottom: 1.25rem;
+            font-weight: 700;
+            border-right: 2px solid var(--primary-glow);
+            padding-right: 4px;
+            animation: cursor-blink 0.8s infinite;
         }
 
-        .pulse-dot {
-            width: 7px;
-            height: 7px;
-            background-color: var(--primary-glow);
-            border-radius: 50%;
-            box-shadow: 0 0 8px var(--primary-glow);
-            animation: blink 1.5s infinite;
-        }
-
-        .cover-icon-box {
-            width: 70px;
-            height: 70px;
-            background: linear-gradient(135deg, var(--primary), var(--accent-lime));
-            border-radius: 20px;
+        .hero-cta-group {
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 0 30px rgba(16, 185, 129, 0.5);
-            margin-bottom: 1rem;
-            animation: float-icon 3s ease-in-out infinite alternate;
+            gap: 1rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
         }
 
-        .slime-hero-icon {
-            width: 44px;
-            height: 44px;
-            fill: #090d16;
-        }
-
-        .cover-title {
-            font-family: var(--font-head);
-            font-size: clamp(1.6rem, 3.5vw, 2.2rem);
-            font-weight: 800;
-            color: #ffffff;
-            margin-bottom: 0.5rem;
-            letter-spacing: -0.02em;
-        }
-
-        .cover-subtitle {
-            font-size: 0.95rem;
-            color: var(--text-muted);
-            margin-bottom: 1.75rem;
-        }
-
-        /* Pulsing CTA Play Button */
         .btn-play-hero {
             display: inline-flex;
             align-items: center;
             justify-content: center;
             gap: 0.75rem;
             font-family: var(--font-head);
-            font-weight: 800;
-            font-size: 1.15rem;
-            padding: 0.95rem 2.5rem;
+            font-weight: 900;
+            font-size: 1.25rem;
+            padding: 1.1rem 3.2rem;
             border-radius: 40px;
             background: linear-gradient(135deg, var(--primary-glow), var(--primary-dark));
             color: #090d16;
@@ -506,53 +383,413 @@
             box-shadow: 0 0 35px rgba(16, 185, 129, 0.6), 0 8px 25px rgba(0, 0, 0, 0.4);
             border: 2px solid var(--accent-lime);
             transition: all 0.3s ease;
-            animation: pulse-button 2s infinite;
+            animation: pulse-button 2.5s infinite;
+            cursor: pointer;
         }
 
         .btn-play-hero:hover {
             transform: scale(1.06);
-            box-shadow: 0 0 50px rgba(16, 185, 129, 0.85), 0 10px 30px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 0 55px rgba(16, 185, 129, 0.85), 0 10px 30px rgba(0, 0, 0, 0.5);
             background: linear-gradient(135deg, var(--accent-lime), var(--primary));
         }
 
-        .play-icon {
-            font-size: 1.1rem;
+        /* Rotated Image Showcase Gallery (Pokerogue Style) */
+        .showcase-section {
+            padding: 2.5rem 0 4rem;
+            position: relative;
         }
 
-        .cover-features {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.75rem;
-            justify-content: center;
-            margin-top: 1.75rem;
+        .section-header {
+            text-align: center;
+            margin-bottom: 2.5rem;
         }
 
-        .cover-tag {
-            font-size: 0.78rem;
-            font-weight: 600;
+        .section-header h2 {
+            font-family: var(--font-head);
+            font-size: clamp(1.8rem, 3.5vw, 2.5rem);
+            font-weight: 800;
+            color: #ffffff;
+            margin-bottom: 0.5rem;
+        }
+
+        .section-header p {
             color: var(--text-muted);
-            background: rgba(255, 255, 255, 0.05);
-            padding: 0.25rem 0.7rem;
+            font-size: 1.05rem;
+            max-width: 620px;
+            margin: 0 auto;
+        }
+
+        .rotated-gallery {
+            display: flex;
+            justify-content: center;
+            gap: 1.25rem;
+            overflow-x: auto;
+            padding: 1.5rem 0.5rem 2.5rem;
+            scrollbar-width: none;
+        }
+
+        .rotated-gallery::-webkit-scrollbar { display: none; }
+
+        .gallery-card {
+            flex: 0 0 240px;
+            height: 320px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-glass);
+            border-radius: var(--radius-lg);
+            padding: 1.25rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            backdrop-filter: blur(14px);
+            box-shadow: var(--shadow-card);
+            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            user-select: none;
+        }
+
+        .gallery-card:nth-child(1) { transform: rotate(-3deg); }
+        .gallery-card:nth-child(2) { transform: rotate(2deg); }
+        .gallery-card:nth-child(3) { transform: rotate(-2deg); }
+        .gallery-card:nth-child(4) { transform: rotate(3deg); }
+        .gallery-card:nth-child(5) { transform: rotate(-1deg); }
+
+        .gallery-card:hover {
+            transform: translateY(-12px) rotate(0deg) scale(1.04);
+            border-color: var(--border-glass-glow);
+            box-shadow: var(--shadow-glow);
+            z-index: 10;
+        }
+
+        .card-visual {
+            width: 100%;
+            height: 170px;
+            border-radius: var(--radius-md);
+            background: linear-gradient(135deg, rgba(6, 78, 59, 0.8), rgba(15, 23, 42, 0.9));
+            border: 1px solid rgba(52, 211, 153, 0.25);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .card-visual-icon {
+            font-size: 3rem;
+        }
+
+        .card-body h3 {
+            font-family: var(--font-head);
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 0.35rem;
+        }
+
+        .card-body p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            line-height: 1.4;
+        }
+
+        /* Alternating Feature Showcase Sections (Pokerogue Split Layout) */
+        .alternating-features {
+            padding: 3rem 0;
+            display: flex;
+            flex-direction: column;
+            gap: 4rem;
+        }
+
+        .feature-split {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            align-items: center;
+            background: var(--bg-card);
+            border: 1px solid var(--border-glass);
+            border-radius: var(--radius-lg);
+            padding: 2.5rem;
+            backdrop-filter: blur(16px);
+            box-shadow: var(--shadow-card);
+        }
+
+        @media (min-width: 900px) {
+            .feature-split { grid-template-columns: 1fr 1fr; }
+            .feature-split.reverse .split-content { order: 2; }
+            .feature-split.reverse .split-visual { order: 1; }
+        }
+
+        .split-content h3 {
+            font-family: var(--font-head);
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #ffffff;
+            margin-bottom: 1rem;
+            line-height: 1.25;
+        }
+
+        .split-content p {
+            color: var(--text-muted);
+            font-size: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .btn-split-action {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--primary-glow);
+            font-family: var(--font-head);
+            font-weight: 700;
+            font-size: 0.95rem;
+            text-decoration: none;
+            background: rgba(16, 185, 129, 0.12);
+            padding: 0.6rem 1.25rem;
             border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            transition: all 0.25s ease;
+            cursor: pointer;
         }
 
-        @keyframes mesh-pulse {
-            0% { opacity: 0.7; transform: scale(1); }
-            100% { opacity: 1; transform: scale(1.1); }
+        .btn-split-action:hover {
+            background: rgba(16, 185, 129, 0.25);
+            transform: translateX(4px);
         }
 
-        @keyframes float-icon {
-            0% { transform: translateY(0px); }
-            100% { transform: translateY(-8px); }
+        .split-visual {
+            width: 100%;
+            aspect-ratio: 16 / 10;
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(9, 13, 22, 0.8));
+            border: 1px solid var(--border-glass-glow);
+            border-radius: var(--radius-md);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+            box-shadow: var(--shadow-glow);
+            text-align: center;
         }
 
-        @keyframes pulse-button {
-            0%, 100% { box-shadow: 0 0 25px rgba(16, 185, 129, 0.5); }
-            50% { box-shadow: 0 0 45px rgba(16, 185, 129, 0.85); }
+        /* 6-Grid Secondary Features Section */
+        .grid-features-section {
+            padding: 4rem 0;
         }
 
-        /* In-Page Glassmorphic Modal Overlay (100% SEO Dwell Time Score) */
+        .features-6grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .grid-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-glass);
+            border-radius: var(--radius-lg);
+            padding: 1.75rem;
+            backdrop-filter: blur(14px);
+            transition: all 0.3s ease;
+        }
+
+        .grid-card:hover {
+            border-color: rgba(16, 185, 129, 0.4);
+            transform: translateY(-4px);
+            background: var(--bg-card-hover);
+        }
+
+        .grid-icon-box {
+            width: 50px;
+            height: 50px;
+            background: rgba(16, 185, 129, 0.15);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 1.2rem;
+        }
+
+        .grid-card h3 {
+            font-family: var(--font-head);
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 0.5rem;
+        }
+
+        .grid-card p {
+            color: var(--text-muted);
+            font-size: 0.92rem;
+            line-height: 1.5;
+        }
+
+        /* Blog Preview Grid Section */
+        .blog-section {
+            padding: 4rem 0;
+        }
+
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.75rem;
+            margin-top: 2rem;
+        }
+
+        .blog-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-glass);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            backdrop-filter: blur(14px);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .blog-card:hover {
+            border-color: var(--border-glass-glow);
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-glow);
+        }
+
+        .blog-cover {
+            height: 180px;
+            background: linear-gradient(135deg, #059669, #0f172a);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3.5rem;
+            position: relative;
+        }
+
+        .blog-body {
+            padding: 1.5rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .blog-date {
+            font-size: 0.8rem;
+            color: var(--primary-glow);
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .blog-body h3 {
+            font-family: var(--font-head);
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 0.75rem;
+            line-height: 1.35;
+        }
+
+        .blog-body p {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 1.25rem;
+        }
+
+        .blog-link {
+            color: var(--primary-glow);
+            font-weight: 700;
+            font-size: 0.9rem;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        /* Collapsible Accordion FAQ Section */
+        .faq-section {
+            padding: 4rem 0;
+        }
+
+        .faq-accordion {
+            max-width: 860px;
+            margin: 2rem auto 0;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .faq-item {
+            background: var(--bg-card);
+            border: 1px solid var(--border-glass);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            transition: border-color 0.25s ease;
+        }
+
+        .faq-item.active {
+            border-color: rgba(16, 185, 129, 0.4);
+        }
+
+        .faq-question {
+            width: 100%;
+            padding: 1.25rem 1.5rem;
+            background: transparent;
+            border: none;
+            color: #ffffff;
+            font-family: var(--font-head);
+            font-size: 1.1rem;
+            font-weight: 700;
+            text-align: left;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            outline: none;
+        }
+
+        .faq-icon {
+            font-size: 1.2rem;
+            transition: transform 0.3s ease;
+            color: var(--primary-glow);
+        }
+
+        .faq-item.active .faq-icon {
+            transform: rotate(45deg);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.35s ease, padding 0.35s ease;
+            padding: 0 1.5rem;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 250px;
+            padding: 0 1.5rem 1.25rem;
+        }
+
+        /* Reserved AdSense Slot Banners */
+        .ad-banner-slot {
+            width: 100%;
+            max-width: 970px;
+            margin: 2.5rem auto;
+            min-height: 100px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px dashed rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-dim);
+            font-size: 0.8rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        /* In-Page Fullscreen Modal Overlay */
         .game-modal-overlay {
             position: fixed;
             inset: 0;
@@ -605,11 +842,6 @@
             transform: translateX(-3px);
         }
 
-        .btn-modal-fs:hover {
-            background: rgba(255, 255, 255, 0.18);
-            border-color: rgba(255, 255, 255, 0.3);
-        }
-
         .modal-game-title {
             display: flex;
             align-items: center;
@@ -644,341 +876,45 @@
             display: block;
         }
 
-        .overlay-card {
-            max-width: 480px;
-            background: rgba(15, 23, 42, 0.8);
-            border: 1px solid var(--border-glass-glow);
-            border-radius: var(--radius-md);
-            padding: 2rem;
-            box-shadow: var(--shadow-glow);
-        }
-
-        .overlay-icon {
-            font-size: 3rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .overlay-card h3 {
-            font-family: var(--font-head);
-            font-size: 1.4rem;
-            color: var(--text-main);
-            margin-bottom: 0.5rem;
-        }
-
-        .overlay-card p {
-            font-size: 0.9rem;
-            color: var(--text-muted);
-            margin-bottom: 1.5rem;
-        }
-
-        .overlay-actions {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.75rem;
-            justify-content: center;
-        }
-
-        /* Quick Action Bar under Game */
-        .game-quick-bar {
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            justify-content: space-between;
-            gap: 1rem;
-            margin-top: 10px;
-            padding: 0.6rem 0.5rem 0.2rem;
-        }
-
-        .features-pills {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.6rem;
-        }
-
-        .feature-pill {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.4rem;
-            font-size: 0.8rem;
-            font-weight: 600;
-            color: var(--text-muted);
-            background: rgba(255, 255, 255, 0.04);
-            padding: 0.3rem 0.75rem;
-            border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.06);
-        }
-
-        .feature-pill svg {
-            width: 14px;
-            height: 14px;
-            fill: var(--primary-glow);
-        }
-
-        /* Glassmorphic Content Layout */
-        .content-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-
-        @media (min-width: 900px) {
-            .content-grid {
-                grid-template-columns: 2fr 1fr;
-            }
-        }
-
-        .glass-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-glass);
-            border-radius: var(--radius-lg);
-            padding: 2rem;
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            box-shadow: var(--shadow-card);
-            transition: transform 0.3s ease, border-color 0.3s ease;
-        }
-
-        .glass-card:hover {
-            border-color: rgba(255, 255, 255, 0.15);
-        }
-
-        .section-title {
-            font-family: var(--font-head);
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 1.25rem;
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            color: var(--text-main);
-        }
-
-        .section-title svg {
-            width: 26px;
-            height: 26px;
-            fill: var(--primary-glow);
-        }
-
-        .content-text p {
-            margin-bottom: 1rem;
-            color: var(--text-muted);
-            font-size: 0.98rem;
-        }
-
-        .content-text p strong {
-            color: var(--text-main);
-        }
-
-        /* Keyboard Controls Visual Display */
-        .controls-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.25rem;
-            margin: 1.5rem 0;
-        }
-
-        .control-item {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.07);
-            border-radius: var(--radius-md);
-            padding: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            transition: all 0.25s ease;
-        }
-
-        .control-item:hover {
-            background: rgba(16, 185, 129, 0.05);
-            border-color: rgba(16, 185, 129, 0.3);
-        }
-
-        .key-badge {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            min-width: 44px;
-            height: 44px;
-            padding: 0 0.6rem;
-            background: linear-gradient(180deg, #1e293b, #0f172a);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            border-bottom: 3px solid var(--primary-dark);
-            border-radius: 8px;
-            font-family: var(--font-head);
-            font-weight: 800;
-            font-size: 1rem;
-            color: var(--primary-glow);
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-        }
-
-        .control-info h4 {
-            font-family: var(--font-head);
-            font-size: 0.95rem;
-            font-weight: 700;
-            color: var(--text-main);
-        }
-
-        .control-info p {
-            font-size: 0.82rem;
-            color: var(--text-muted);
-            margin: 0;
-        }
-
-        /* Tips Cards */
-        .tips-list {
-            list-style: none;
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-            margin-top: 1rem;
-        }
-
-        .tip-card {
-            display: flex;
-            align-items: flex-start;
-            gap: 1rem;
-            background: rgba(255, 255, 255, 0.03);
-            border-left: 3px solid var(--primary);
-            padding: 1rem 1.25rem;
-            border-radius: 0 var(--radius-md) var(--radius-md) 0;
-        }
-
-        .tip-number {
-            font-family: var(--font-head);
-            font-weight: 800;
-            font-size: 1.2rem;
-            color: var(--primary-glow);
-            line-height: 1;
-        }
-
-        .tip-text h5 {
-            font-family: var(--font-head);
-            font-size: 0.95rem;
-            font-weight: 700;
-            color: var(--text-main);
-            margin-bottom: 0.25rem;
-        }
-
-        .tip-text p {
-            font-size: 0.88rem;
-            color: var(--text-muted);
-            margin: 0;
-        }
-
-        /* FAQ Accordion Section */
-        .faq-section {
-            margin-top: 4rem;
-        }
-
-        .faq-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-            margin-top: 1.5rem;
-        }
-
-        .faq-item {
-            background: var(--bg-card);
-            border: 1px solid var(--border-glass);
-            border-radius: var(--radius-md);
-            overflow: hidden;
-            transition: border-color 0.3s ease;
-        }
-
-        .faq-item:hover {
-            border-color: rgba(16, 185, 129, 0.3);
-        }
-
-        .faq-question {
-            width: 100%;
-            padding: 1.25rem 1.5rem;
-            background: none;
-            border: none;
-            color: var(--text-main);
-            font-family: var(--font-head);
-            font-size: 1.05rem;
-            font-weight: 700;
-            text-align: left;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 1rem;
-            cursor: pointer;
-            outline: none;
-        }
-
-        .faq-icon {
-            width: 24px;
-            height: 24px;
-            fill: var(--primary-glow);
-            transition: transform 0.3s ease;
-            flex-shrink: 0;
-        }
-
-        .faq-item.active .faq-icon {
-            transform: rotate(180deg);
-        }
-
-        .faq-answer {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.35s ease-out, padding 0.35s ease-out;
-            padding: 0 1.5rem;
-            color: var(--text-muted);
-            font-size: 0.95rem;
-            line-height: 1.6;
-        }
-
-        .faq-item.active .faq-answer {
-            max-height: 200px;
-            padding: 0 1.5rem 1.25rem 1.5rem;
-        }
-
         /* Footer */
         footer {
-            margin-top: 5rem;
+            background: rgba(9, 13, 22, 0.95);
             border-top: 1px solid var(--border-glass);
-            background: rgba(7, 10, 18, 0.85);
-            padding: 2.5rem 0;
+            padding: 3rem 0 2rem;
+            margin-top: auto;
+        }
+
+        .footer-inner {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.5rem;
             text-align: center;
         }
 
-        .footer-content {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .footer-text {
-            color: var(--text-dim);
-            font-size: 0.88rem;
-        }
-
-        .footer-keywords {
+        .footer-nav {
             display: flex;
             flex-wrap: wrap;
+            gap: 1.5rem;
             justify-content: center;
-            gap: 0.75rem;
-            margin-top: 0.5rem;
+            list-style: none;
         }
 
-        .keyword-tag {
-            font-size: 0.78rem;
+        .footer-nav a {
             color: var(--text-muted);
             text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 600;
             transition: color 0.2s ease;
         }
 
-        .keyword-tag:hover {
+        .footer-nav a:hover {
             color: var(--primary-glow);
         }
 
-        /* Keyframe Animations */
-        @keyframes pulse-glow {
-            0% { box-shadow: 0 0 15px rgba(16, 185, 129, 0.3); }
-            100% { box-shadow: 0 0 25px rgba(16, 185, 129, 0.6); }
+        .copyright {
+            font-size: 0.85rem;
+            color: var(--text-dim);
         }
 
         @keyframes blink {
@@ -986,808 +922,471 @@
             50% { opacity: 0.3; }
         }
 
-        /* Responsive Design Rules */
-        @media (max-width: 768px) {
-            .header-inner {
-                flex-wrap: wrap;
-            }
-            .brand-text h1 {
-                font-size: 1.15rem;
-            }
-            .game-wrapper {
-                padding: 6px;
-                border-radius: var(--radius-md);
-            }
-            .btn {
-                padding: 0.5rem 0.85rem;
-                font-size: 0.82rem;
-            }
-            .glass-card {
-                padding: 1.25rem;
-            }
-            .controls-grid {
-                grid-template-columns: 1fr;
-            }
+        @keyframes pulse-button {
+            0%, 100% { box-shadow: 0 0 25px rgba(16, 185, 129, 0.5); }
+            50% { box-shadow: 0 0 45px rgba(16, 185, 129, 0.85); }
+        }
+
+        @keyframes cursor-blink {
+            0%, 100% { border-color: transparent; }
+            50% { border-color: var(--primary-glow); }
         }
     </style>
 </head>
 <body>
 
-    <!-- Header Section -->
+    <!-- Header Navigation -->
     <header>
         <div class="container header-inner">
-            <a href="#" class="brand" title="Slime Keyboard Escape Online">
+            <a href="index.html" class="brand">
                 <div class="brand-logo">
-                    <svg viewBox="0 0 24 24">
-                        <path d="M12 3c-4.97 0-9 3.58-9 8 0 2.92 1.76 5.47 4.41 6.83A6.97 6.97 0 0 0 12 21c3.87 0 7-3.13 7-7 0-4.42-4.03-8-9-8zm-3 7a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm6 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/>
-                    </svg>
+                    <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
                 </div>
                 <div class="brand-text">
                     <h1>Slime Keyboard Escape</h1>
-                    <span class="brand-badge">Play Online Free</span>
                 </div>
             </a>
 
-            <div class="header-actions">
-                <button id="btn-restart" class="btn btn-glass" title="Restart Game Session">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/>
-                    </svg>
-                    <span>Restart</span>
-                </button>
+            <ul class="nav-links">
+                <li><a href="#showcase">Features</a></li>
+                <li><a href="#features">Gameplay</a></li>
+                <li><a href="#blogs">Guides</a></li>
+                <li><a href="#faq">FAQ</a></li>
+                <li><a href="privacy.html">Privacy</a></li>
+                <li><a href="terms.html">Terms</a></li>
+            </ul>
 
-                <button id="btn-fullscreen" class="btn btn-primary" title="Enter Fullscreen Mode">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/>
-                    </svg>
-                    <span>Fullscreen</span>
+            <div class="header-actions">
+                <select class="lang-selector" id="lang-select">
+                    <option value="en">🌐 EN</option>
+                    <option value="zh">🌐 ZH</option>
+                </select>
+                <button type="button" class="btn btn-primary" id="btn-header-play">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                    <span>Play Game</span>
                 </button>
             </div>
         </div>
     </header>
 
-    <!-- Main Content Area -->
-    <main class="container">
-        <!-- Hero Title Section -->
-        <section class="hero-section">
+    <main>
+        <!-- Hero Banner Section -->
+        <section class="hero-section container">
             <div class="tagline-pill">
                 <span class="dot"></span>
-                <span>Instant Browser Play &bull; Unblocked HTML5 Game</span>
-            </div>
-            <h2 class="game-title">Slime Keyboard Escape <span>Online</span></h2>
-            <p class="hero-desc">
-                Survive the high-speed mechanical key switches! Dash, jump, and squish your way to freedom through an unforgiving keyboard obstacle course.
-            </p>
-        </section>
-
-        <!-- Main Game Container Section -->
-        <section id="game-container" class="game-wrapper">
-            <div class="game-header-bar">
-                <div class="game-status">
-                    <span class="game-status-icon"></span>
-                    <span>Ready to Play</span>
-                </div>
-                <div class="game-status" style="color: var(--primary-glow);">
-                    <span>⚡ HTML5 Accelerated</span>
-                </div>
+                <span>⚡ #1 UNBLOCKED HTML5 BROWSER GAME</span>
             </div>
 
-            <!-- 16:9 Responsive Game Frame -->
-            <div class="game-frame-container" id="iframe-holder">
-                <!-- Native 3D Perspective HTML5 Slime Canvas Engine -->
-                <canvas id="slime-canvas" style="width: 100%; height: 100%; display: none; background: #070a12;"></canvas>
+            <h1 class="game-title">Slime Keyboard Escape <span>3D</span></h1>
 
-                <!-- High-Conversion Glassmorphic Click-to-Play Cover Card -->
-                <div class="game-play-cover" id="game-play-cover">
-                    <div class="cover-mesh-bg"></div>
-                    <div class="cover-content">
-                        <div class="cover-badge">
-                            <span class="pulse-dot"></span>
-                            <span>POPULAR HTML5 UNBLOCKED GAME</span>
-                        </div>
-                        
-                        <div class="cover-icon-box">
-                            <svg viewBox="0 0 24 24" class="slime-hero-icon">
-                                <path d="M12 3c-4.97 0-9 3.58-9 8 0 2.92 1.76 5.47 4.41 6.83A6.97 6.97 0 0 0 12 21c3.87 0 7-3.13 7-7 0-4.42-4.03-8-9-8zm-3 7a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm6 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/>
-                            </svg>
-                        </div>
-
-                        <h3 class="cover-title">Slime Keyboard Escape</h3>
-                        <p class="cover-subtitle">Squish, leap, and dodge mechanical key switch traps!</p>
-
-                        <button type="button" class="btn-play-hero" id="btn-play-hero">
-                            <span class="play-icon">▶</span>
-                            <span>PLAY ONLINE FREE</span>
-                        </button>
-
-                        <div class="cover-features">
-                            <span class="cover-tag">⚡ Original 3D Keyboard Escape</span>
-                            <span class="cover-tag">🔒 100% Free Unblocked</span>
-                            <span class="cover-tag">🎮 PC & Mobile Compatible</span>
-                        </div>
-                    </div>
-                </div>
+            <div class="hero-subtitle-box">
+                Bounce, squish, and <span class="typewriter-text" id="typewriter">escape mechanical key switches!</span>
             </div>
 
-            <!-- Quick Action & Highlights Bar -->
-            <div class="game-quick-bar">
-                <div class="features-pills">
-                    <span class="feature-pill">
-                        <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-                        No Install Required
-                    </span>
-                    <span class="feature-pill">
-                        <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
-                        100% Free Unblocked
-                    </span>
-                    <span class="feature-pill">
-                        <svg viewBox="0 0 24 24"><path d="M4 6h16v12H4z"/></svg>
-                        PC & Mobile Friendly
-                    </span>
-                </div>
-                <div style="font-size: 0.8rem; color: var(--text-dim);">
-                    Tip: Press <kbd style="background: rgba(255,255,255,0.1); padding: 0.1rem 0.3rem; border-radius: 4px; color: var(--text-main);">F</kbd> for Fullscreen
-                </div>
+            <div class="hero-cta-group">
+                <button type="button" class="btn-play-hero" id="btn-hero-play">
+                    <span class="play-icon">▶</span>
+                    <span>PLAY GAME NOW</span>
+                </button>
+                <a href="#features" class="btn btn-secondary">
+                    <span>Explore Gameplay</span>
+                </a>
             </div>
         </section>
 
-        <!-- Information Grid: Game Features & Controls -->
-        <div class="content-grid">
-            <!-- Left Column: Intro & Controls -->
-            <article class="glass-card">
-                <h3 class="section-title">
-                    <svg viewBox="0 0 24 24">
-                        <path d="M21 6H3c-1.1 0-2 .9-2 2v8c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm-10 7H8v2H6v-2H4v-2h2V9h2v2h3v2zm4.5 2c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm3-3c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/>
-                    </svg>
-                    Keyboard Controls & How to Play
-                </h3>
-
-                <div class="content-text">
-                    <p>
-                        In <strong>Slime Keyboard Escape</strong>, you play as a resilient green slime trapped inside a giant mechanical keyboard universe! Keycaps drop down dynamically, springs act as launchers, and rogue switches threaten to crush you. Precision timing is everything.
-                    </p>
-                </div>
-
-                <div class="controls-grid">
-                    <div class="control-item">
-                        <div class="key-badge">W A S D</div>
-                        <div class="control-info">
-                            <h4>Move Slime</h4>
-                            <p>Steer left, right, or crouch across keycaps.</p>
-                        </div>
-                    </div>
-                    <div class="control-item">
-                        <div class="key-badge">ARR W</div>
-                        <div class="control-info">
-                            <h4>Arrow Keys</h4>
-                            <p>Alternative directional controls for PC.</p>
-                        </div>
-                    </div>
-                    <div class="control-item">
-                        <div class="key-badge">SPACE</div>
-                        <div class="control-info">
-                            <h4>Jump / Bounce</h4>
-                            <p>Leap over gaps and press switch triggers.</p>
-                        </div>
-                    </div>
-                    <div class="control-item">
-                        <div class="key-badge">TOUCH</div>
-                        <div class="control-info">
-                            <h4>Mobile Tap</h4>
-                            <p>Intuitive touch control overlay on mobile.</p>
-                        </div>
-                    </div>
-                </div>
-            </article>
-
-            <!-- Right Column: Tips & Tricks -->
-            <aside class="glass-card">
-                <h3 class="section-title">
-                    <svg viewBox="0 0 24 24">
-                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
-                    </svg>
-                    Tips & Tricks
-                </h3>
-
-                <ul class="tips-list">
-                    <li class="tip-card">
-                        <span class="tip-number">01</span>
-                        <div class="tip-text">
-                            <h5>Master Slime Physics</h5>
-                            <p>Hold the jump key to charge higher squish bounces off bouncy keycaps like Spacebar!</p>
-                        </div>
-                    </li>
-                    <li class="tip-card">
-                        <span class="tip-number">02</span>
-                        <div class="tip-text">
-                            <h5>Watch Key Switch Traps</h5>
-                            <p>Observe the keycap compression cycles before rushing through tight corridors.</p>
-                        </div>
-                    </li>
-                    <li class="tip-card">
-                        <span class="tip-number">03</span>
-                        <div class="tip-text">
-                            <h5>Collect Keycaps</h5>
-                            <p>Grab shiny key switch collectibles along the way to unlock special slime skins!</p>
-                        </div>
-                    </li>
-                </ul>
-            </aside>
+        <!-- Reserved Top Ad Banner -->
+        <div class="container">
+            <div class="ad-banner-slot">
+                <span>[ Google AdSense Banner Placement Area ]</span>
+            </div>
         </div>
 
-        <!-- FAQ Section for SEO & User Guidance -->
-        <section class="faq-section">
-            <div class="glass-card">
-                <h3 class="section-title">
-                    <svg viewBox="0 0 24 24">
-                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 16h-2v-2h2v2zm1.07-7.75l-.9.92C12.45 11.9 12 12.5 12 14h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H7c0-2.76 2.24-5 5-5s5 2.24 5 5c0 1.04-.42 1.99-1.07 2.75z"/>
-                    </svg>
-                    Frequently Asked Questions (FAQ)
-                </h3>
+        <!-- Rotated Image Showcase Gallery Section -->
+        <section class="showcase-section container" id="showcase">
+            <div class="section-header">
+                <h2>Explore Slime Keyboard World</h2>
+                <p>Traverse mint keycap platforms, dodge crushing switches, and trigger instant speed boosts.</p>
+            </div>
 
-                <div class="faq-grid">
-                    <!-- Q1 -->
-                    <div class="faq-item active">
-                        <button class="faq-question" aria-expanded="true">
-                            <span>1. Is Slime Keyboard Escape free to play online?</span>
-                            <svg class="faq-icon" viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6z"/></svg>
-                        </button>
-                        <div class="faq-answer">
-                            Yes! Slime Keyboard Escape is 100% free to play directly in your web browser. There are no hidden fees, paid downloads, or forced registrations required.
-                        </div>
+            <div class="rotated-gallery">
+                <div class="gallery-card">
+                    <div class="card-visual">
+                        <span class="card-visual-icon">🟢</span>
                     </div>
-
-                    <!-- Q2 -->
-                    <div class="faq-item">
-                        <button class="faq-question" aria-expanded="false">
-                            <span>2. How to play Slime Keyboard Escape on PC and Mobile?</span>
-                            <svg class="faq-icon" viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6z"/></svg>
-                        </button>
-                        <div class="faq-answer">
-                            On PC, use the W/A/S/D keys or Arrow Keys to steer your slime, and press the Spacebar to jump over key switches. On Mobile devices (phones and tablets), simply use the touch controls on your screen.
-                        </div>
+                    <div class="card-body">
+                        <h3>1:1 Roblox Obby</h3>
+                        <p>Smooth starting speed with safe spawn zones.</p>
                     </div>
+                </div>
 
-                    <!-- Q3 -->
-                    <div class="faq-item">
-                        <button class="faq-question" aria-expanded="false">
-                            <span>3. What is the goal of Slime Keyboard Escape?</span>
-                            <svg class="faq-icon" viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6z"/></svg>
-                        </button>
-                        <div class="faq-answer">
-                            The main goal is to navigate your cute slime through a matrix of moving mechanical keyboard keys, avoiding hazards like spikes and falling keycaps to reach the escape portal on every level.
-                        </div>
+                <div class="gallery-card">
+                    <div class="card-visual">
+                        <span class="card-visual-icon">🔊</span>
                     </div>
+                    <div class="card-body">
+                        <h3>ASMR Switches</h3>
+                        <p>Real-time Synthesized Blue, Red & Brown switch sounds.</p>
+                    </div>
+                </div>
 
-                    <!-- Q4 -->
-                    <div class="faq-item">
-                        <button class="faq-question" aria-expanded="false">
-                            <span>4. Is Slime Keyboard Escape unblocked at school or work?</span>
-                            <svg class="faq-icon" viewBox="0 0 24 24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6z"/></svg>
-                        </button>
-                        <div class="faq-answer">
-                            Yes! Slime Keyboard Escape is lightweight, standard HTML5 code that runs safely in any browser without plugins, making it unblocked and playable on school Chromebooks and restricted office networks.
+                <div class="gallery-card">
+                    <div class="card-visual">
+                        <span class="card-visual-icon">🎁</span>
+                    </div>
+                    <div class="card-body">
+                        <h3>Redeem Codes</h3>
+                        <p>Claim code <strong>BYP4SS1</strong> for +15,000 Speed Boost.</p>
+                    </div>
+                </div>
+
+                <div class="gallery-card">
+                    <div class="card-visual">
+                        <span class="card-visual-icon">⚡</span>
+                    </div>
+                    <div class="card-body">
+                        <h3>Combo Surges</h3>
+                        <p>Type key combos to trigger 5X Speed multipliers.</p>
+                    </div>
+                </div>
+
+                <div class="gallery-card">
+                    <div class="card-visual">
+                        <span class="card-visual-icon">🚀</span>
+                    </div>
+                    <div class="card-body">
+                        <h3>Zero Downloads</h3>
+                        <p>Play 100% free unblocked on PC & Mobile instantly.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Alternating Feature Showcase Split Sections -->
+        <section class="alternating-features container" id="features">
+            <!-- Feature 1 -->
+            <div class="feature-split">
+                <div class="split-content">
+                    <h3>Mechanical Keycap Traps & Obstacles</h3>
+                    <p>Navigate through giant mechanical keyboard keycaps. Time your jumps precisely over blue switch traps and avoid falling off the edge as speed continuously ramps up!</p>
+                    <button type="button" class="btn-split-action btn-trigger-play">
+                        <span>Play Game Now</span>
+                        <span>→</span>
+                    </button>
+                </div>
+                <div class="split-visual">
+                    <div style="font-size: 3rem; margin-bottom: 0.5rem;">⌨️</div>
+                    <h4 style="color: #fff; font-family: var(--font-head);">Dynamic Mechanical Grid</h4>
+                    <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.25rem;">Mint Green & Dark Switch Platforms</p>
+                </div>
+            </div>
+
+            <!-- Feature 2 -->
+            <div class="feature-split reverse">
+                <div class="split-content">
+                    <h3>Triple ASMR Switch Audio Synthesizer</h3>
+                    <p>Customize your mechanical keyboard sound environment! Switch effortlessly between clicky Blue Switches, smooth Red Linear Switches, and tactile Brown Switches powered by Web Audio API.</p>
+                    <button type="button" class="btn-split-action btn-trigger-play">
+                        <span>Experience ASMR Audio</span>
+                        <span>→</span>
+                    </button>
+                </div>
+                <div class="split-visual">
+                    <div style="font-size: 3rem; margin-bottom: 0.5rem;">🎵</div>
+                    <h4 style="color: #fff; font-family: var(--font-head);">Web Audio ASMR Sound Engine</h4>
+                    <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.25rem;">Clicky • Linear • Tactile</p>
+                </div>
+            </div>
+
+            <!-- Feature 3 -->
+            <div class="feature-split">
+                <div class="split-content">
+                    <h3>100% Free & Unblocked Browser Access</h3>
+                    <p>Designed as a ultra-lightweight HTML5 browser game. Play instantly on school Chromebooks, desktop PCs, and mobile smartphones without app store installations or signups.</p>
+                    <button type="button" class="btn-split-action btn-trigger-play">
+                        <span>Play Unblocked Free</span>
+                        <span>→</span>
+                    </button>
+                </div>
+                <div class="split-visual">
+                    <div style="font-size: 3rem; margin-bottom: 0.5rem;">🌐</div>
+                    <h4 style="color: #fff; font-family: var(--font-head);">Cross-Platform WebGL Engine</h4>
+                    <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.25rem;">PC • Mobile • Tablet Ready</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 6-Grid Secondary Features Section -->
+        <section class="grid-features-section container">
+            <div class="section-header">
+                <h2>Game Highlights & Features</h2>
+                <p>Everything you need for an immersive arcade keyboard escape experience.</p>
+            </div>
+
+            <div class="features-6grid">
+                <div class="grid-card">
+                    <div class="grid-icon-box">🎮</div>
+                    <h3>Zero Download Play</h3>
+                    <p>Runs natively inside any modern browser with hardware-accelerated WebGL graphics.</p>
+                </div>
+
+                <div class="grid-card">
+                    <div class="grid-icon-box">⚡</div>
+                    <h3>+1 Speed Progression</h3>
+                    <p>Start with easy smooth speed and earn progressive velocity boosts as you complete levels.</p>
+                </div>
+
+                <div class="grid-card">
+                    <div class="grid-icon-box">🔊</div>
+                    <h3>ASMR Audio Options</h3>
+                    <p>Real-time synthesized clicky mechanical key press sounds for satisfying feedback.</p>
+                </div>
+
+                <div class="grid-card">
+                    <div class="grid-icon-box">🎁</div>
+                    <h3>Redeemable Secret Codes</h3>
+                    <p>Unlock hidden speed rewards and special slime cosmetic surges instantly.</p>
+                </div>
+
+                <div class="grid-card">
+                    <div class="grid-icon-box">📱</div>
+                    <h3>Responsive Touch Controls</h3>
+                    <p>Seamlessly switch between WASD keyboard steering and mobile touch controls.</p>
+                </div>
+
+                <div class="grid-card">
+                    <div class="grid-icon-box">🛡️</div>
+                    <h3>Unblocked Accessibility</h3>
+                    <p>Optimized HTML5 web architecture unblocked on school and network firewalls.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Blog / Strategy Guides Section -->
+        <section class="blog-section container" id="blogs">
+            <div class="section-header">
+                <h2>Slime Keyboard Escape Strategy Guides</h2>
+                <p>Learn tips, tricks, and secret code cheats to reach maximum level speed.</p>
+            </div>
+
+            <div class="blog-grid">
+                <div class="blog-card">
+                    <div class="blog-cover">💡</div>
+                    <div class="blog-body">
+                        <div>
+                            <div class="blog-date">STRATEGY GUIDE • AUG 2026</div>
+                            <h3>Top 5 Tips to Master Slime Keyboard Escape 3D</h3>
+                            <p>Discover how to time your jumps on mint keycap switches and double your speed multiplier.</p>
                         </div>
+                        <a href="play.html" class="blog-link">Read Guide →</a>
+                    </div>
+                </div>
+
+                <div class="blog-card">
+                    <div class="blog-cover">🔑</div>
+                    <div class="blog-body">
+                        <div>
+                            <div class="blog-date">CODES & CHEATS • AUG 2026</div>
+                            <h3>All Active Slime Keyboard Escape Redeem Codes</h3>
+                            <p>Claim code <strong>BYP4SS1</strong> to instant unlock +15,000 speed boost and secret ASMR sound effects.</p>
+                        </div>
+                        <a href="play.html" class="blog-link">Claim Codes →</a>
+                    </div>
+                </div>
+
+                <div class="blog-card">
+                    <div class="blog-cover">⌨️</div>
+                    <div class="blog-body">
+                        <div>
+                            <div class="blog-date">GAME ANALYSIS • AUG 2026</div>
+                            <h3>Why Keyboard Escape Obby Games Are Sweeping the Web</h3>
+                            <p>Explore the rise of mechanical keyboard obstacle courses in HTML5 and Roblox gaming ecosystems.</p>
+                        </div>
+                        <a href="play.html" class="blog-link">Read Article →</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Reserved Bottom Ad Banner -->
+        <div class="container">
+            <div class="ad-banner-slot">
+                <span>[ Google AdSense Content Ad Slot ]</span>
+            </div>
+        </div>
+
+        <!-- Accordion FAQ Section -->
+        <section class="faq-section container" id="faq">
+            <div class="section-header">
+                <h2>Frequently Asked Questions</h2>
+                <p>Common questions about playing Slime Keyboard Escape Online.</p>
+            </div>
+
+            <div class="faq-accordion">
+                <div class="faq-item active">
+                    <button type="button" class="faq-question">
+                        <span>Is Slime Keyboard Escape 100% free to play?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Yes! Slime Keyboard Escape is completely free to play directly in your web browser. There are no paywalls, hidden in-app purchases, or registration requirements.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button type="button" class="faq-question">
+                        <span>How do I play on PC and Mobile devices?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>On PC, steer your slime using the WASD keys or Arrow Keys, and press Spacebar to jump over switches. On Mobile or Tablet devices, intuitive touch controls will automatically appear on screen.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button type="button" class="faq-question">
+                        <span>Is Slime Keyboard Escape unblocked at school or work?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>Yes! The game is built using standard lightweight HTML5 WebGL code that loads over HTTPS protocols, making it accessible on most restricted networks.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button type="button" class="faq-question">
+                        <span>What is the active secret reward code?</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer">
+                        <p>You can enter code <strong>BYP4SS1</strong> in the redeem code menu inside the game to claim an instant +15,000 speed boost reward!</p>
                     </div>
                 </div>
             </div>
         </section>
     </main>
 
-    <!-- Footer Section -->
-    <footer>
-        <div class="container footer-content">
-            <p class="footer-text">&copy; 2026 Slime Keyboard Escape Online. All rights reserved. Built for high performance HTML5 gaming.</p>
-            <div class="footer-keywords">
-                <a href="#game-container" class="keyword-tag">Slime Keyboard Escape</a> &bull;
-                <a href="#game-container" class="keyword-tag">Play Slime Keyboard Escape Online</a> &bull;
-                <a href="#game-container" class="keyword-tag">Slime Keyboard Escape Unblocked</a> &bull;
-                <a href="#game-container" class="keyword-tag">Free HTML5 Game</a>
-            </div>
-        </div>
-    <!-- In-Page Glassmorphic Fullscreen Overlay Modal (100% SEO Dwell Time Score) -->
-    <div id="game-modal-overlay" class="game-modal-overlay">
+    <!-- In-Page Fullscreen Modal Game Overlay -->
+    <div class="game-modal-overlay" id="game-modal-overlay">
         <div class="modal-top-bar">
             <button type="button" class="btn-modal-back" id="btn-modal-back">
-                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-                <span>Return to Slime Keyboard Escape</span>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                <span>Back to Site</span>
             </button>
+
             <div class="modal-game-title">
                 <span class="modal-live-dot"></span>
-                <span>Slime Keyboard Escape 3D</span>
+                <span>Slime Keyboard Escape 3D (Playing Live)</span>
             </div>
+
             <button type="button" class="btn-modal-fs" id="btn-modal-fs">
-                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H5a2 2 0 00-2 2v3m18 0V5a2 2 0 00-2-2h-3m0 18h3a2 2 0 002-2v-3M3 16v3a2 2 0 002 2h3"/></svg>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>
                 <span>Fullscreen</span>
             </button>
         </div>
-        <div class="modal-game-body" id="modal-game-body">
-            <iframe id="modal-iframe" src="/api/proxy" allow="autoplay; fullscreen; gamepad; keyboard-map; accelerometer; gyroscope" allowfullscreen></iframe>
+
+        <div class="modal-game-body">
+            <iframe id="modal-iframe" src="about:blank" allow="autoplay; fullscreen; keyboard"></iframe>
         </div>
     </div>
 
-    <!-- Interactive JavaScript -->
+    <!-- Footer -->
+    <footer>
+        <div class="container footer-inner">
+            <a href="index.html" class="brand">
+                <div class="brand-logo" style="width: 36px; height: 36px;">
+                    <svg viewBox="0 0 24 24" style="width: 22px; height: 22px;"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                </div>
+                <div class="brand-text">
+                    <h1 style="font-size: 1.2rem;">Slime Keyboard Escape</h1>
+                </div>
+            </a>
+
+            <ul class="footer-nav">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="#showcase">Features</a></li>
+                <li><a href="#blogs">Guides</a></li>
+                <li><a href="#faq">FAQ</a></li>
+                <li><a href="privacy.html">Privacy Policy</a></li>
+                <li><a href="terms.html">Terms of Service</a></li>
+            </ul>
+
+            <p class="copyright">&copy; 2026 Slime Keyboard Escape Online. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Interactive Scripts -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const gameContainer = document.getElementById('game-container');
-            const playCover = document.getElementById('game-play-cover');
-            const btnPlayHero = document.getElementById('btn-play-hero');
-            const btnFullscreen = document.getElementById('btn-fullscreen');
-            const btnRestart = document.getElementById('btn-restart');
-            const faqItems = document.querySelectorAll('.faq-item');
-            const canvas = document.getElementById('slime-canvas');
-            const ctx = canvas.getContext('2d');
+            // 1. Typewriter Animation Effect
+            const phrases = [
+                "escape mechanical key switches!",
+                "enjoy real ASMR keyboard sounds!",
+                "trigger +15,000 speed boost combos!",
+                "play 100% unblocked in your browser!"
+            ];
+            let pIdx = 0, charIdx = 0, isDeleting = false;
+            const typewriterEl = document.getElementById('typewriter');
 
-            let isGameRunning = false;
-            let animationFrameId = null;
-
-            // Audio Synth
-            const AudioContext = window.AudioContext || window.webkitAudioContext;
-            let audioCtx = null;
-            function playSynthSound(freq, duration, type = 'sine') {
-                try {
-                    if (!audioCtx) audioCtx = new AudioContext();
-                    if (audioCtx.state === 'suspended') audioCtx.resume();
-                    const osc = audioCtx.createOscillator();
-                    const gain = audioCtx.createGain();
-                    osc.type = type;
-                    osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
-                    gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
-                    gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
-                    osc.connect(gain);
-                    gain.connect(audioCtx.destination);
-                    osc.start();
-                    osc.stop(audioCtx.currentTime + duration);
-                } catch(e){}
-            }
-
-            // Game State
-            const state = {
-                lane: 1, // 0: Left, 1: Center, 2: Right
-                targetX: 0,
-                x: 0,
-                y: 0,
-                vy: 0,
-                isJumping: false,
-                squishX: 1,
-                squishY: 1,
-                speed: 8,
-                distance: 0,
-                score: 0,
-                stage: 1,
-                gameOver: false,
-                keysPressed: {},
-                keycaps: [],
-                particles: []
-            };
-
-            function resizeCanvas() {
-                const rect = canvas.getBoundingClientRect();
-                canvas.width = rect.width || 800;
-                canvas.height = rect.height || 450;
-            }
-
-            const KEYCAP_NAMES = ['SPACE', 'ENTER', 'ESC', 'SHIFT', 'CTRL', 'ALT', 'TAB', 'W', 'A', 'S', 'D', 'DEL'];
-
-            function spawnKeycap() {
-                const lane = Math.floor(Math.random() * 3);
-                const isTrap = Math.random() < 0.35;
-                state.keycaps.push({
-                    lane: lane,
-                    z: 1000,
-                    label: KEYCAP_NAMES[Math.floor(Math.random() * KEYCAP_NAMES.length)],
-                    isTrap: isTrap,
-                    pressed: false
-                });
-            }
-
-            function initGame() {
-                resizeCanvas();
-                state.lane = 1;
-                state.x = 0;
-                state.y = 0;
-                state.vy = 0;
-                state.isJumping = false;
-                state.speed = 9;
-                state.distance = 0;
-                state.score = 0;
-                state.gameOver = false;
-                state.keycaps = [];
-                state.particles = [];
-                for(let i=0; i<6; i++) {
-                    state.keycaps.push({
-                        lane: Math.floor(Math.random() * 3),
-                        z: 300 + i * 150,
-                        label: KEYCAP_NAMES[i % KEYCAP_NAMES.length],
-                        isTrap: i % 2 === 0,
-                        pressed: false
-                    });
-                }
-            }
-
-            function update() {
-                if (state.gameOver) return;
-
-                state.distance += state.speed * 0.1;
-                state.score = Math.floor(state.distance * 10);
-                state.speed += 0.002; // Gradually accelerate
-
-                // Lane X Position Smoothing
-                const laneWidth = canvas.width * 0.22;
-                state.targetX = (state.lane - 1) * laneWidth;
-                state.x += (state.targetX - state.x) * 0.25;
-
-                // Jump Physics
-                if (state.isJumping) {
-                    state.y += state.vy;
-                    state.vy -= 1.1; // Gravity
-                    if (state.y <= 0) {
-                        state.y = 0;
-                        state.isJumping = false;
-                        state.vy = 0;
-                        // Squish animation on landing
-                        state.squishX = 1.35;
-                        state.squishY = 0.65;
-                        playSynthSound(180, 0.1, 'triangle');
-                    }
-                }
-
-                // Recover Squish
-                state.squishX += (1 - state.squishX) * 0.15;
-                state.squishY += (1 - state.squishY) * 0.15;
-
-                // Keycaps Update
-                for (let i = state.keycaps.length - 1; i >= 0; i--) {
-                    const k = state.keycaps[i];
-                    k.z -= state.speed * 12;
-
-                    // Collision Check
-                    if (k.z < 80 && k.z > -20 && k.lane === state.lane) {
-                        if (k.isTrap && state.y < 35) {
-                            // Hit a mechanical key switch trap!
-                            state.gameOver = true;
-                            playSynthSound(120, 0.4, 'sawtooth');
-                        } else if (!k.pressed && state.y < 35) {
-                            k.pressed = true;
-                            playSynthSound(440, 0.1, 'sine');
-                            // Add score burst particles
-                            for (let p = 0; p < 8; p++) {
-                                state.particles.push({
-                                    x: state.x + (Math.random() - 0.5) * 40,
-                                    y: 50 + Math.random() * 20,
-                                    vx: (Math.random() - 0.5) * 6,
-                                    vy: Math.random() * 6 + 2,
-                                    life: 1
-                                });
-                            }
-                        }
-                    }
-
-                    if (k.z < -100) {
-                        state.keycaps.splice(i, 1);
-                        spawnKeycap();
-                    }
-                }
-
-                // Particles Update
-                for (let i = state.particles.length - 1; i >= 0; i--) {
-                    const p = state.particles[i];
-                    p.x += p.vx;
-                    p.y += p.vy;
-                    p.life -= 0.04;
-                    if (p.life <= 0) state.particles.splice(i, 1);
-                }
-            }
-
-            function draw() {
-                const w = canvas.width;
-                const h = canvas.height;
-                ctx.clearRect(0, 0, w, h);
-
-                // 1. Background Cyber Dark Gradient
-                const bgGrad = ctx.createLinearGradient(0, 0, 0, h);
-                bgGrad.addColorStop(0, '#04070d');
-                bgGrad.addColorStop(0.6, '#0b1120');
-                bgGrad.addColorStop(1, '#070a12');
-                ctx.fillStyle = bgGrad;
-                ctx.fillRect(0, 0, w, h);
-
-                // 2. Perspective 3D Keyboard Track Grid
-                const horizonY = h * 0.35;
-                const vanishingX = w * 0.5;
-
-                // Perspective grid lines
-                ctx.strokeStyle = 'rgba(16, 185, 129, 0.2)';
-                ctx.lineWidth = 1.5;
-
-                for (let l = -2.5; l <= 2.5; l += 1) {
-                    const startX = vanishingX + l * 20;
-                    const endX = vanishingX + l * (w * 0.32);
-                    ctx.beginPath();
-                    ctx.moveTo(startX, horizonY);
-                    ctx.lineTo(endX, h);
-                    ctx.stroke();
-                }
-
-                // Horizon neon glow bar
-                ctx.strokeStyle = 'rgba(16, 185, 129, 0.8)';
-                ctx.lineWidth = 3;
-                ctx.shadowColor = '#10b981';
-                ctx.shadowBlur = 15;
-                ctx.beginPath();
-                ctx.moveTo(0, horizonY);
-                ctx.lineTo(w, horizonY);
-                ctx.stroke();
-                ctx.shadowBlur = 0;
-
-                // 3. Render 3D Perspective Keycaps
-                state.keycaps.sort((a, b) => b.z - a.z); // Render back to front
-
-                state.keycaps.forEach(k => {
-                    const scale = 300 / (300 + k.z);
-                    const laneOffset = (k.lane - 1) * (w * 0.25);
-                    const kx = vanishingX + laneOffset * scale;
-                    const ky = horizonY + (h - horizonY) * (1 - scale);
-                    const kw = 110 * scale;
-                    const kh = 60 * scale;
-
-                    ctx.save();
-                    ctx.translate(kx, ky);
-
-                    // Keycap shadow
-                    ctx.fillStyle = 'rgba(0, 0, 0, 0.6)';
-                    ctx.beginPath();
-                    ctx.ellipse(0, kh * 0.5, kw * 0.6, kh * 0.25, 0, 0, Math.PI * 2);
-                    ctx.fill();
-
-                    // Keycap Body
-                    if (k.isTrap) {
-                        ctx.fillStyle = k.pressed ? '#ef4444' : '#b91c1c';
-                        ctx.strokeStyle = '#f87171';
-                    } else {
-                        ctx.fillStyle = k.pressed ? '#10b981' : '#1e293b';
-                        ctx.strokeStyle = k.pressed ? '#34d399' : '#334155';
-                    }
-                    ctx.lineWidth = Math.max(1, 3 * scale);
-
-                    ctx.beginPath();
-                    ctx.roundRect(-kw * 0.5, -kh * 0.5, kw, kh, 8 * scale);
-                    ctx.fill();
-                    ctx.stroke();
-
-                    // Keycap Label
-                    ctx.fillStyle = k.isTrap ? '#ffffff' : (k.pressed ? '#090d16' : '#94a3b8');
-                    ctx.font = `bold ${Math.max(10, Math.floor(18 * scale))}px Outfit, sans-serif`;
-                    ctx.textAlign = 'center';
-                    ctx.textBaseline = 'middle';
-                    ctx.fillText(k.label, 0, 0);
-
-                    ctx.restore();
-                });
-
-                // 4. Render Slime Player
-                const slimeX = vanishingX + state.x;
-                const slimeY = h * 0.82 - state.y;
-                const slimeRadius = 26;
-
-                ctx.save();
-                ctx.translate(slimeX, slimeY);
-
-                // Slime Shadow
-                ctx.fillStyle = 'rgba(0,0,0,0.45)';
-                ctx.beginPath();
-                ctx.ellipse(0, state.y + slimeRadius * 0.8, slimeRadius * (1 + state.y * 0.01), slimeRadius * 0.3, 0, 0, Math.PI * 2);
-                ctx.fill();
-
-                // Slime Body with Squish Deformation
-                ctx.scale(state.squishX, state.squishY);
-
-                ctx.shadowColor = '#10b981';
-                ctx.shadowBlur = 25;
-
-                const slimeGrad = ctx.createRadialGradient(-6, -8, 2, 0, 0, slimeRadius);
-                slimeGrad.addColorStop(0, '#a3e635');
-                slimeGrad.addColorStop(0.45, '#34d399');
-                slimeGrad.addColorStop(1, '#059669');
-
-                ctx.fillStyle = slimeGrad;
-                ctx.beginPath();
-                ctx.arc(0, 0, slimeRadius, 0, Math.PI * 2);
-                ctx.fill();
-                ctx.shadowBlur = 0;
-
-                // Slime Eyes
-                ctx.fillStyle = '#ffffff';
-                ctx.beginPath();
-                ctx.arc(-8, -6, 6, 0, Math.PI * 2);
-                ctx.arc(8, -6, 6, 0, Math.PI * 2);
-                ctx.fill();
-
-                ctx.fillStyle = '#090d16';
-                ctx.beginPath();
-                ctx.arc(-7, -5, 3, 0, Math.PI * 2);
-                ctx.arc(9, -5, 3, 0, Math.PI * 2);
-                ctx.fill();
-
-                // Eye Highlights
-                ctx.fillStyle = '#ffffff';
-                ctx.beginPath();
-                ctx.arc(-8, -7, 1.2, 0, Math.PI * 2);
-                ctx.arc(8, -7, 1.2, 0, Math.PI * 2);
-                ctx.fill();
-
-                ctx.restore();
-
-                // 5. Render Particles
-                state.particles.forEach(p => {
-                    ctx.fillStyle = `rgba(52, 211, 153, ${p.life})`;
-                    ctx.beginPath();
-                    ctx.arc(vanishingX + p.x, h * 0.82 - p.y, 4 * p.life, 0, Math.PI * 2);
-                    ctx.fill();
-                });
-
-                // 6. HUD Overlay
-                ctx.fillStyle = '#ffffff';
-                ctx.font = '700 18px Outfit, sans-serif';
-                ctx.textAlign = 'left';
-                ctx.fillText(`⚡ SPEED: ${Math.floor(state.speed * 15)} KM/H`, 20, 35);
-
-                ctx.textAlign = 'right';
-                ctx.fillText(`SCORE: ${state.score}`, w - 20, 35);
-
-                // Game Over Overlay
-                if (state.gameOver) {
-                    ctx.fillStyle = 'rgba(9, 13, 22, 0.85)';
-                    ctx.fillRect(0, 0, w, h);
-
-                    ctx.fillStyle = '#ef4444';
-                    ctx.font = '800 32px Outfit, sans-serif';
-                    ctx.textAlign = 'center';
-                    ctx.fillText('CRASHED ON KEY SWITCH!', w * 0.5, h * 0.4);
-
-                    ctx.fillStyle = '#ffffff';
-                    ctx.font = '600 18px Inter, sans-serif';
-                    ctx.fillText(`Final Score: ${state.score} Points`, w * 0.5, h * 0.52);
-
-                    ctx.fillStyle = '#10b981';
-                    ctx.font = '700 16px Inter, sans-serif';
-                    ctx.fillText('Press SPACEBAR or Click Restart to Play Again', w * 0.5, h * 0.65);
-                }
-            }
-
-            function gameLoop() {
-                if (isGameRunning) {
-                    update();
-                    draw();
-                    animationFrameId = requestAnimationFrame(gameLoop);
-                }
-            }
-
-            function startGame() {
-                if (isGameRunning) return;
-                isGameRunning = true;
-                playCover.style.display = 'none';
-                canvas.style.display = 'block';
-                initGame();
-                gameLoop();
-            }
-
-            // Controls
-            function handleJump() {
-                if (!state.isJumping && !state.gameOver) {
-                    state.isJumping = true;
-                    state.vy = 18; // Jump impulse
-                    state.squishX = 0.7;
-                    state.squishY = 1.3;
-                    playSynthSound(320, 0.15, 'sine');
-                } else if (state.gameOver) {
-                    initGame();
-                }
-            }
-
-            function handleMoveLeft() {
-                if (state.lane > 0 && !state.gameOver) {
-                    state.lane--;
-                    playSynthSound(240, 0.08, 'triangle');
-                }
-            }
-
-            function handleMoveRight() {
-                if (state.lane < 2 && !state.gameOver) {
-                    state.lane++;
-                    playSynthSound(240, 0.08, 'triangle');
-                }
-            }
-
-            window.addEventListener('keydown', (e) => {
-                if (['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName)) return;
-                if (e.key === 'a' || e.key === 'A' || e.key === 'ArrowLeft') handleMoveLeft();
-                if (e.key === 'd' || e.key === 'D' || e.key === 'ArrowRight') handleMoveRight();
-                if (e.key === 'w' || e.key === 'W' || e.key === 'ArrowUp' || e.key === ' ') handleJump();
-            });
-
-            // Touch / Mouse controls
-            canvas.addEventListener('click', (e) => {
-                const rect = canvas.getBoundingClientRect();
-                const clickX = e.clientX - rect.left;
-                if (clickX < rect.width * 0.35) handleMoveLeft();
-                else if (clickX > rect.width * 0.65) handleMoveRight();
-                else handleJump();
-            });
-
-            if (btnPlayHero) {
-                btnPlayHero.addEventListener('click', startGame);
-            }
-
-            window.addEventListener('resize', () => {
-                if (isGameRunning) resizeCanvas();
-            });
-
-            // 1. Fullscreen Toggle Handler
-            function toggleFullscreen() {
-                if (!document.fullscreenElement) {
-                    if (gameContainer.requestFullscreen) {
-                        gameContainer.requestFullscreen();
-                    } else if (gameContainer.webkitRequestFullscreen) {
-                        gameContainer.webkitRequestFullscreen();
-                    } else if (gameContainer.msRequestFullscreen) {
-                        gameContainer.msRequestFullscreen();
-                    }
+            function typeLoop() {
+                const current = phrases[pIdx];
+                if (isDeleting) {
+                    typewriterEl.textContent = current.substring(0, charIdx--);
                 } else {
-                    if (document.exitFullscreen) {
-                        document.exitFullscreen();
-                    }
+                    typewriterEl.textContent = current.substring(0, charIdx++);
                 }
+
+                let speed = isDeleting ? 40 : 80;
+                if (!isDeleting && charIdx === current.length + 1) {
+                    speed = 2200;
+                    isDeleting = true;
+                } else if (isDeleting && charIdx === 0) {
+                    isDeleting = false;
+                    pIdx = (pIdx + 1) % phrases.length;
+                    speed = 400;
+                }
+                setTimeout(typeLoop, speed);
             }
+            typeLoop();
 
-            btnFullscreen.addEventListener('click', toggleFullscreen);
-
-            document.addEventListener('fullscreenchange', () => {
-                const isFS = !!document.fullscreenElement;
-                btnFullscreen.querySelector('span').textContent = isFS ? 'Exit Fullscreen' : 'Fullscreen';
-                if (isGameRunning) setTimeout(resizeCanvas, 100);
-            });
-
-            // 2. Restart Game Session Handler
-            btnRestart.addEventListener('click', () => {
-                if (!isGameRunning) {
-                    startGame();
-                } else {
-                    initGame();
-                }
-            });
-
-            // 4. In-Page Fullscreen Modal Overlay (100% Dwell Time SEO Score)
+            // 2. Fullscreen In-Page Modal Play Trigger Strategy
             const modalOverlay = document.getElementById('game-modal-overlay');
             const modalIframe = document.getElementById('modal-iframe');
             const btnModalBack = document.getElementById('btn-modal-back');
             const btnModalFs = document.getElementById('btn-modal-fs');
 
-            if (btnPlayHero) {
-                btnPlayHero.addEventListener('click', () => {
-                    window.location.href = 'play.html';
-                });
+            function launchGameModal() {
+                modalIframe.src = 'play.html';
+                modalOverlay.classList.add('active');
             }
 
-            if (btnModalBack) {
-                btnModalBack.addEventListener('click', () => {
-                    modalOverlay.classList.remove('active');
-                    if (document.fullscreenElement) {
-                        document.exitFullscreen().catch(()=>{});
-                    }
-                });
-            }
+            document.getElementById('btn-header-play')?.addEventListener('click', launchGameModal);
+            document.getElementById('btn-hero-play')?.addEventListener('click', launchGameModal);
+            document.querySelectorAll('.btn-trigger-play').forEach(btn => btn.addEventListener('click', launchGameModal));
 
-            if (btnModalFs) {
-                btnModalFs.addEventListener('click', () => {
-                    if (!document.fullscreenElement) {
-                        if (modalOverlay.requestFullscreen) modalOverlay.requestFullscreen();
-                        else if (modalOverlay.webkitRequestFullscreen) modalOverlay.webkitRequestFullscreen();
-                    } else {
-                        if (document.exitFullscreen) document.exitFullscreen();
-                    }
+            btnModalBack?.addEventListener('click', () => {
+                modalOverlay.classList.remove('active');
+                modalIframe.src = 'about:blank';
+                if (document.fullscreenElement) document.exitFullscreen().catch(()=>{});
+            });
+
+            btnModalFs?.addEventListener('click', () => {
+                if (!document.fullscreenElement) {
+                    modalOverlay.requestFullscreen().catch(()=>{});
+                } else {
+                    document.exitFullscreen().catch(()=>{});
+                }
+            });
+
+            // 3. Collapsible Accordion FAQ
+            const faqItems = document.querySelectorAll('.faq-item');
+            faqItems.forEach(item => {
+                const btn = item.querySelector('.faq-question');
+                btn.addEventListener('click', () => {
+                    const isActive = item.classList.contains('active');
+                    faqItems.forEach(i => i.classList.remove('active'));
+                    if (!isActive) item.classList.add('active');
                 });
-            }
+            });
         });
     </script>
 </body>
