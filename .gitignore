@@ -6,3 +6,5 @@ scripts/config.ps1
 # System / OS files
 Thumbs.db
 .DS_Store
+
+backlink_plan.md
