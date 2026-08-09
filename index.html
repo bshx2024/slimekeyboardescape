@@ -635,16 +635,28 @@
         }
 
         .grid-icon-box {
-            width: 50px;
-            height: 50px;
-            background: rgba(16, 185, 129, 0.15);
-            border: 1px solid rgba(16, 185, 129, 0.3);
-            border-radius: 14px;
+            width: 52px;
+            height: 52px;
+            border-radius: 16px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.5rem;
             margin-bottom: 1.2rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .icon-emerald { background: linear-gradient(135deg, rgba(16, 185, 129, 0.25), rgba(6, 182, 212, 0.15)); border: 1px solid rgba(16, 185, 129, 0.4); color: #34d399; box-shadow: 0 0 20px rgba(16, 185, 129, 0.25); }
+        .icon-cyan { background: linear-gradient(135deg, rgba(6, 182, 212, 0.25), rgba(59, 130, 246, 0.15)); border: 1px solid rgba(6, 182, 212, 0.4); color: #22d3ee; box-shadow: 0 0 20px rgba(6, 182, 212, 0.25); }
+        .icon-pink { background: linear-gradient(135deg, rgba(236, 72, 153, 0.25), rgba(168, 85, 247, 0.15)); border: 1px solid rgba(236, 72, 153, 0.4); color: #f472b6; box-shadow: 0 0 20px rgba(236, 72, 153, 0.25); }
+        .icon-amber { background: linear-gradient(135deg, rgba(245, 158, 11, 0.25), rgba(239, 68, 68, 0.15)); border: 1px solid rgba(245, 158, 11, 0.4); color: #fbbf24; box-shadow: 0 0 20px rgba(245, 158, 11, 0.25); }
+        .icon-blue { background: linear-gradient(135deg, rgba(59, 130, 246, 0.25), rgba(99, 102, 241, 0.15)); border: 1px solid rgba(59, 130, 246, 0.4); color: #60a5fa; box-shadow: 0 0 20px rgba(59, 130, 246, 0.25); }
+        .icon-purple { background: linear-gradient(135deg, rgba(168, 85, 247, 0.25), rgba(236, 72, 153, 0.15)); border: 1px solid rgba(168, 85, 247, 0.4); color: #c084fc; box-shadow: 0 0 20px rgba(168, 85, 247, 0.25); }
+        .icon-lime { background: linear-gradient(135deg, rgba(132, 204, 22, 0.25), rgba(16, 185, 129, 0.15)); border: 1px solid rgba(132, 204, 22, 0.4); color: #a3e635; box-shadow: 0 0 20px rgba(132, 204, 22, 0.25); }
+        .icon-gold { background: linear-gradient(135deg, rgba(234, 179, 8, 0.25), rgba(245, 158, 11, 0.15)); border: 1px solid rgba(234, 179, 8, 0.4); color: #facc15; box-shadow: 0 0 20px rgba(234, 179, 8, 0.25); }
+
+        .grid-card:hover .grid-icon-box {
+            transform: translateY(-3px) scale(1.08);
         }
 
         .grid-card h3 {
@@ -1153,39 +1165,67 @@
 
             <div class="features-6grid">
                 <div class="grid-card">
-                    <div class="grid-icon-box">🎮</div>
+                    <div class="grid-icon-box icon-emerald">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="4"/><path d="M6 12h4m-2-2v4"/><circle cx="15" cy="11" r="1" fill="currentColor"/><circle cx="18" cy="13" r="1" fill="currentColor"/></svg>
+                    </div>
                     <h3>Zero Download Play</h3>
                     <p>Runs natively inside any modern browser with hardware-accelerated WebGL graphics.</p>
                 </div>
 
                 <div class="grid-card">
-                    <div class="grid-icon-box">⚡</div>
+                    <div class="grid-icon-box icon-lime">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+                    </div>
                     <h3>+1 Speed Progression</h3>
                     <p>Start with easy smooth speed and earn progressive velocity boosts as you complete levels.</p>
                 </div>
 
                 <div class="grid-card">
-                    <div class="grid-icon-box">🔊</div>
+                    <div class="grid-icon-box icon-pink">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-6a9 9 0 0 1 18 0v6"/><path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"/></svg>
+                    </div>
                     <h3>ASMR Audio Options</h3>
                     <p>Real-time synthesized clicky mechanical key press sounds for satisfying feedback.</p>
                 </div>
 
                 <div class="grid-card">
-                    <div class="grid-icon-box">🎁</div>
+                    <div class="grid-icon-box icon-amber">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg>
+                    </div>
                     <h3>Redeemable Secret Codes</h3>
-                    <p>Unlock hidden speed rewards and special slime cosmetic surges instantly.</p>
+                    <p>Unlock hidden speed rewards and special slime cosmetic surges instantly with secret codes.</p>
                 </div>
 
                 <div class="grid-card">
-                    <div class="grid-icon-box">📱</div>
+                    <div class="grid-icon-box icon-blue">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><path d="M12 18h.01"/></svg>
+                    </div>
                     <h3>Responsive Touch Controls</h3>
                     <p>Seamlessly switch between WASD keyboard steering and mobile touch controls.</p>
                 </div>
 
                 <div class="grid-card">
-                    <div class="grid-icon-box">🛡️</div>
+                    <div class="grid-icon-box icon-cyan">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
+                    </div>
                     <h3>Unblocked Accessibility</h3>
                     <p>Optimized HTML5 web architecture unblocked on school and network firewalls.</p>
+                </div>
+
+                <div class="grid-card">
+                    <div class="grid-icon-box icon-purple">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    </div>
+                    <h3>60 FPS WebGL Engine</h3>
+                    <p>Butter-smooth 60FPS hardware-accelerated 3D graphics with zero lag or frame drops.</p>
+                </div>
+
+                <div class="grid-card">
+                    <div class="grid-icon-box icon-gold">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2z"/></svg>
+                    </div>
+                    <h3>Global Speed Leaderboard</h3>
+                    <p>Compete for top velocity rankings against Obby speedrunners worldwide.</p>
                 </div>
             </div>
         </section>
