@@ -905,6 +905,65 @@
             line-height: 1.6;
         }
 
+        /* Controls Guide 4-Grid Section */
+        .controls-guide-section {
+            padding: 3rem 0 2rem;
+        }
+
+        .controls-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        @media (min-width: 768px) {
+            .controls-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .control-card {
+            background: linear-gradient(145deg, rgba(20, 27, 45, 0.9), rgba(15, 23, 42, 0.7));
+            border: 1px solid var(--border-glass);
+            border-radius: var(--radius-lg);
+            padding: 1.75rem;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .control-card:hover {
+            border-color: rgba(52, 211, 153, 0.4);
+            transform: translateY(-4px);
+            box-shadow: 0 10px 30px rgba(16, 185, 129, 0.15);
+        }
+
+        .control-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            background: rgba(16, 185, 129, 0.15);
+            border: 1px solid rgba(52, 211, 153, 0.3);
+            color: var(--primary-glow);
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.75rem;
+        }
+
+        .control-card h3 {
+            font-family: var(--font-head);
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 0.6rem;
+        }
+
+        .control-card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.6;
         }
 
         /* Reserved AdSense Slot Banners */
@@ -1388,6 +1447,40 @@
                         </div>
                         <a href="guides/how-to-play.html" class="blog-link">Read Article →</a>
                     </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Game Overview & Keyboard Controls Manual Section -->
+        <section class="controls-guide-section container" id="guide">
+            <div class="section-header">
+                <h2>Slime Keyboard Escape 3D Overview & Controls Manual</h2>
+                <p>Learn how to maneuver your slime character, master jump timing, and utilize active redeem codes for maximum speed multipliers.</p>
+            </div>
+
+            <div class="controls-grid">
+                <div class="control-card">
+                    <div class="control-badge">PC & Chromebook</div>
+                    <h3>Keyboard & Mouse Steering</h3>
+                    <p>On Desktop PCs, Laptops, and Chromebooks, use the <strong>WASD keys</strong> or <strong>Arrow Keys</strong> to steer your slime across mechanical keycaps. Press <strong>Spacebar</strong> to jump over blue switch traps, lava gaps, and moving key platforms. Hold Shift to stabilize your trajectory on high-speed runs.</p>
+                </div>
+
+                <div class="control-card">
+                    <div class="control-badge">Mobile & Tablet</div>
+                    <h3>Touch D-Pad & Gesture Controls</h3>
+                    <p>On iOS, Android, and Touchscreen devices, responsive virtual steering buttons automatically anchor to the bottom corners of your screen. Drag the left touch joystick to steer your slime and tap the right jump button to leap across keycap obstacles effortlessly.</p>
+                </div>
+
+                <div class="control-card">
+                    <div class="control-badge">Pro Speedrun Tip</div>
+                    <h3>+1 Speed Progression & Code Boosts</h3>
+                    <p>Your slime gains +1 speed multiplier every time you land on a new keycap switch. To gain a massive headstart on global leaderboards, open the in-game Code Menu and enter promo code <code>BYP4SS1</code> for an instant +15,000 velocity boost and exclusive cosmetic slime particle trails.</p>
+                </div>
+
+                <div class="control-card">
+                    <div class="control-badge">ASMR Soundscape</div>
+                    <h3>Synthesized Switch Audio Profiles</h3>
+                    <p>Immerse yourself in mechanical key soundscapes! Toggle between clicky <strong>Blue Switches</strong> for crisp auditory feedback, smooth linear <strong>Red Switches</strong> for silent speedruns, and tactile <strong>Brown Switches</strong> powered by Web Audio API real-time synthesis.</p>
                 </div>
             </div>
         </section>
