@@ -703,13 +703,25 @@
         }
 
         .blog-cover {
-            height: 180px;
-            background: linear-gradient(135deg, #059669, #0f172a);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 3.5rem;
+            height: 200px;
+            background: #090d16;
+            overflow: hidden;
             position: relative;
+            border-bottom: 1px solid rgba(52, 211, 153, 0.25);
+        }
+
+        .blog-cover img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            filter: brightness(1.02) contrast(1.08);
+            transition: transform 0.4s ease, filter 0.4s ease;
+        }
+
+        .blog-card:hover .blog-cover img {
+            transform: scale(1.06);
+            filter: brightness(1.12) contrast(1.12);
         }
 
         .blog-body {
@@ -1239,7 +1251,9 @@
 
             <div class="blog-grid">
                 <div class="blog-card">
-                    <div class="blog-cover">💡</div>
+                    <div class="blog-cover">
+                        <img src="assets/images/blog-cover-1.jpg" alt="Top 5 Tips to Master Slime Keyboard Escape 3D Guide" loading="lazy">
+                    </div>
                     <div class="blog-body">
                         <div>
                             <div class="blog-date">STRATEGY GUIDE • AUG 2026</div>
@@ -1251,7 +1265,9 @@
                 </div>
 
                 <div class="blog-card">
-                    <div class="blog-cover">🔑</div>
+                    <div class="blog-cover">
+                        <img src="assets/images/blog-cover-2.jpg" alt="All Active Slime Keyboard Escape Redeem Codes" loading="lazy">
+                    </div>
                     <div class="blog-body">
                         <div>
                             <div class="blog-date">CODES & CHEATS • AUG 2026</div>
@@ -1263,7 +1279,9 @@
                 </div>
 
                 <div class="blog-card">
-                    <div class="blog-cover">⌨️</div>
+                    <div class="blog-cover">
+                        <img src="assets/images/blog-cover-3.jpg" alt="Why Keyboard Escape Obby Games Are Sweeping the Web" loading="lazy">
+                    </div>
                     <div class="blog-body">
                         <div>
                             <div class="blog-date">GAME ANALYSIS • AUG 2026</div>
