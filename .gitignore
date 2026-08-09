@@ -1,0 +1,8 @@
+# Local secrets and environment variables
+.env
+.env.local
+scripts/config.ps1
+
+# System / OS files
+Thumbs.db
+.DS_Store

@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Slime Keyboard Escape Online - Play Unblocked Free HTML5 Game</title>
-    <meta name="description" content="Play Slime Keyboard Escape Online for Free! Guide your nimble slime through challenging mechanical keyboard traps in this addictive, high-speed unblocked HTML5 browser game. Play instantly on PC & Mobile!">
-    <meta name="keywords" content="Slime Keyboard Escape, Play Slime Keyboard Escape Online, Slime Keyboard Escape Unblocked, Free HTML5 Game, online slime game, browser games, unblocked games">
+    <title>Slime Keyboard Escape Online - Play Free Unblocked HTML5 Game</title>
+    <meta name="description" content="Play Slime Keyboard Escape Online for free! Guide your slime character through mechanical keyboard traps in this addictive, zero-download HTML5 browser game for PC, Mobile & Chromebook.">
+    <meta name="keywords" content="Slime Keyboard Escape, Play Slime Keyboard Escape Online, Slime Keyboard Escape Unblocked, Free HTML5 Game, online slime game, browser games, unblocked games, keyboard obby">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://slimekeyboardescape.com/">
 
@@ -474,6 +474,18 @@
             position: relative;
         }
 
+        .card-visual img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: var(--radius-md);
+            transition: transform 0.4s ease;
+        }
+
+        .gallery-card:hover .card-visual img {
+            transform: scale(1.08);
+        }
+
         .card-visual-icon {
             font-size: 3rem;
         }
@@ -566,9 +578,22 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 1.5rem;
+            overflow: hidden;
             box-shadow: var(--shadow-glow);
             text-align: center;
+            position: relative;
+        }
+
+        .split-visual img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: var(--radius-md);
+            transition: transform 0.4s ease;
+        }
+
+        .feature-split:hover .split-visual img {
+            transform: scale(1.04);
         }
 
         /* 6-Grid Secondary Features Section */
@@ -948,12 +973,11 @@
             </a>
 
             <ul class="nav-links">
-                <li><a href="#showcase">Features</a></li>
-                <li><a href="#features">Gameplay</a></li>
-                <li><a href="#blogs">Guides</a></li>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="unblocked.html">Unblocked</a></li>
+                <li><a href="guides/how-to-play.html">How to Play</a></li>
+                <li><a href="codes.html">Codes</a></li>
                 <li><a href="#faq">FAQ</a></li>
-                <li><a href="privacy.html">Privacy</a></li>
-                <li><a href="terms.html">Terms</a></li>
             </ul>
 
             <div class="header-actions">
@@ -974,13 +998,13 @@
         <section class="hero-section container">
             <div class="tagline-pill">
                 <span class="dot"></span>
-                <span>⚡ #1 UNBLOCKED HTML5 BROWSER GAME</span>
+                <span>⚡ #1 FREE UNBLOCKED HTML5 BROWSER GAME</span>
             </div>
 
-            <h1 class="game-title">Slime Keyboard Escape <span>3D</span></h1>
+            <h1 class="game-title">Slime Keyboard Escape <span>Online</span></h1>
 
             <div class="hero-subtitle-box">
-                Bounce, squish, and <span class="typewriter-text" id="typewriter">escape mechanical key switches!</span>
+                Bounce, squish, and <span class="typewriter-text" id="typewriter">play free online with zero downloads!</span>
             </div>
 
             <div class="hero-cta-group">
@@ -1004,34 +1028,44 @@
         <!-- Rotated Image Showcase Gallery Section -->
         <section class="showcase-section container" id="showcase">
             <div class="section-header">
-                <h2>Explore Slime Keyboard World</h2>
-                <p>Traverse mint keycap platforms, dodge crushing switches, and trigger instant speed boosts.</p>
+                <h2>Play Slime Keyboard Escape Online 3D</h2>
+                <p>Traverse mechanical keycap platforms, dodge crushing switch traps, and trigger instant speed boost combos in your browser.</p>
             </div>
 
             <div class="rotated-gallery">
                 <div class="gallery-card">
                     <div class="card-visual">
-                        <span class="card-visual-icon">🟢</span>
+                        <img src="assets/images/gameplay-showcase-1.jpg" alt="1:1 Slime Keyboard Escape Gameplay Showcase" loading="lazy" width="240" height="170">
                     </div>
                     <div class="card-body">
-                        <h3>1:1 Roblox Obby</h3>
+                        <h3>1:1 Obby Trap Grid</h3>
                         <p>Smooth starting speed with safe spawn zones.</p>
                     </div>
                 </div>
 
                 <div class="gallery-card">
                     <div class="card-visual">
-                        <span class="card-visual-icon">🔊</span>
+                        <img src="assets/images/gameplay-mobile.jpg" alt="Slime Keyboard Escape Mobile Touch Controls Preview" loading="lazy" width="240" height="170">
                     </div>
                     <div class="card-body">
-                        <h3>ASMR Switches</h3>
+                        <h3>Mobile & Chromebook</h3>
+                        <p>100% Responsive touch steering & PC keyboard support.</p>
+                    </div>
+                </div>
+
+                <div class="gallery-card">
+                    <div class="card-visual">
+                        <img src="assets/images/gameplay-showcase-1.jpg" alt="ASMR Switch Sound Synthesizer" loading="lazy" width="240" height="170">
+                    </div>
+                    <div class="card-body">
+                        <h3>ASMR Switch Sounds</h3>
                         <p>Real-time Synthesized Blue, Red & Brown switch sounds.</p>
                     </div>
                 </div>
 
                 <div class="gallery-card">
                     <div class="card-visual">
-                        <span class="card-visual-icon">🎁</span>
+                        <img src="assets/images/gameplay-mobile.jpg" alt="Redeem Promo Codes for Boost" loading="lazy" width="240" height="170">
                     </div>
                     <div class="card-body">
                         <h3>Redeem Codes</h3>
@@ -1041,17 +1075,7 @@
 
                 <div class="gallery-card">
                     <div class="card-visual">
-                        <span class="card-visual-icon">⚡</span>
-                    </div>
-                    <div class="card-body">
-                        <h3>Combo Surges</h3>
-                        <p>Type key combos to trigger 5X Speed multipliers.</p>
-                    </div>
-                </div>
-
-                <div class="gallery-card">
-                    <div class="card-visual">
-                        <span class="card-visual-icon">🚀</span>
+                        <img src="assets/images/gameplay-showcase-1.jpg" alt="Zero Download HTML5 Game" loading="lazy" width="240" height="170">
                     </div>
                     <div class="card-body">
                         <h3>Zero Downloads</h3>
@@ -1074,9 +1098,7 @@
                     </button>
                 </div>
                 <div class="split-visual">
-                    <div style="font-size: 3rem; margin-bottom: 0.5rem;">⌨️</div>
-                    <h4 style="color: #fff; font-family: var(--font-head);">Dynamic Mechanical Grid</h4>
-                    <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.25rem;">Mint Green & Dark Switch Platforms</p>
+                    <img src="assets/images/gameplay-showcase-1.jpg" alt="Slime Keyboard Escape Mechanical Keycap Traps Showcase" loading="lazy">
                 </div>
             </div>
 
@@ -1091,9 +1113,7 @@
                     </button>
                 </div>
                 <div class="split-visual">
-                    <div style="font-size: 3rem; margin-bottom: 0.5rem;">🎵</div>
-                    <h4 style="color: #fff; font-family: var(--font-head);">Web Audio ASMR Sound Engine</h4>
-                    <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.25rem;">Clicky • Linear • Tactile</p>
+                    <img src="assets/images/gameplay-mobile.jpg" alt="Slime Keyboard Escape Sound Effects & Mobile Preview" loading="lazy">
                 </div>
             </div>
 
@@ -1108,9 +1128,7 @@
                     </button>
                 </div>
                 <div class="split-visual">
-                    <div style="font-size: 3rem; margin-bottom: 0.5rem;">🌐</div>
-                    <h4 style="color: #fff; font-family: var(--font-head);">Cross-Platform WebGL Engine</h4>
-                    <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.25rem;">PC • Mobile • Tablet Ready</p>
+                    <img src="assets/images/gameplay-showcase-1.jpg" alt="Cross-Platform HTML5 Unblocked Game Play" loading="lazy">
                 </div>
             </div>
         </section>
@@ -1118,8 +1136,8 @@
         <!-- 6-Grid Secondary Features Section -->
         <section class="grid-features-section container">
             <div class="section-header">
-                <h2>Game Highlights & Features</h2>
-                <p>Everything you need for an immersive arcade keyboard escape experience.</p>
+                <h2>Slime Keyboard Escape Features & Highlights</h2>
+                <p>Everything you need for an immersive HTML5 arcade keyboard escape experience.</p>
             </div>
 
             <div class="features-6grid">
@@ -1164,7 +1182,7 @@
         <!-- Blog / Strategy Guides Section -->
         <section class="blog-section container" id="blogs">
             <div class="section-header">
-                <h2>Slime Keyboard Escape Strategy Guides</h2>
+                <h2>Slime Keyboard Escape Strategy Guides & Codes</h2>
                 <p>Learn tips, tricks, and secret code cheats to reach maximum level speed.</p>
             </div>
 
@@ -1303,8 +1321,9 @@
 
             <ul class="footer-nav">
                 <li><a href="index.html">Home</a></li>
-                <li><a href="#showcase">Features</a></li>
-                <li><a href="#blogs">Guides</a></li>
+                <li><a href="unblocked.html">Unblocked Game</a></li>
+                <li><a href="guides/how-to-play.html">How to Play Guide</a></li>
+                <li><a href="codes.html">Redeem Codes</a></li>
                 <li><a href="#faq">FAQ</a></li>
                 <li><a href="privacy.html">Privacy Policy</a></li>
                 <li><a href="terms.html">Terms of Service</a></li>
@@ -1319,10 +1338,10 @@
         document.addEventListener('DOMContentLoaded', () => {
             // 1. Typewriter Animation Effect
             const phrases = [
-                "escape mechanical key switches!",
-                "enjoy real ASMR keyboard sounds!",
-                "trigger +15,000 speed boost combos!",
-                "play 100% unblocked in your browser!"
+                "play free online with zero downloads!",
+                "escape mechanical keyboard switch traps!",
+                "experience real ASMR switch sound effects!",
+                "play unblocked on PC, Mobile & Chromebook!"
             ];
             let pIdx = 0, charIdx = 0, isDeleting = false;
             const typewriterEl = document.getElementById('typewriter');
