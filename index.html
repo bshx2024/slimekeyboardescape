@@ -466,37 +466,39 @@
             height: 170px;
             border-radius: var(--radius-md);
             background: #090d16;
-            border: 1px solid rgba(52, 211, 153, 0.3);
+            border: 1px solid rgba(52, 211, 153, 0.4);
             display: flex;
             align-items: center;
             justify-content: center;
             overflow: hidden;
             position: relative;
-        }
-
-        .card-visual::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(180deg, rgba(9, 13, 22, 0.15) 0%, rgba(9, 13, 22, 0.7) 100%);
-            pointer-events: none;
-            border-radius: var(--radius-md);
+            box-shadow: 0 0 20px rgba(16, 185, 129, 0.15);
         }
 
         .card-visual img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            object-position: center 25%;
             border-radius: var(--radius-md);
-            filter: brightness(0.92) contrast(1.05);
-            transition: transform 0.4s ease, filter 0.4s ease;
+            filter: brightness(1.05) contrast(1.1);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), filter 0.4s ease;
         }
 
+        /* 5 差异化镜头焦点配置 (图文完美契合) */
+        .card-visual-obby img { object-position: 50% 36%; transform: scale(1.35); }
+        .card-visual-mobile img { object-position: 50% 45%; transform: scale(1.15); }
+        .card-visual-asmr img { object-position: 25% 42%; transform: scale(1.5); }
+        .card-visual-codes img { object-position: 75% 38%; transform: scale(1.45); }
+        .card-visual-zerodl img { object-position: 50% 15%; transform: scale(1.1); }
+
         .gallery-card:hover .card-visual img {
-            transform: scale(1.08);
-            filter: brightness(1.02) contrast(1.1);
+            filter: brightness(1.15) contrast(1.15);
         }
+        .gallery-card:hover .card-visual-obby img { transform: scale(1.45); }
+        .gallery-card:hover .card-visual-mobile img { transform: scale(1.25); }
+        .gallery-card:hover .card-visual-asmr img { transform: scale(1.6); }
+        .gallery-card:hover .card-visual-codes img { transform: scale(1.55); }
+        .gallery-card:hover .card-visual-zerodl img { transform: scale(1.2); }
 
         .card-visual-icon {
             font-size: 3rem;
@@ -584,36 +586,37 @@
             width: 100%;
             aspect-ratio: 16 / 10;
             background: #090d16;
-            border: 1px solid var(--border-glass-glow);
+            border: 1px solid rgba(52, 211, 153, 0.4);
             border-radius: var(--radius-md);
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             overflow: hidden;
-            box-shadow: var(--shadow-glow);
+            box-shadow: 0 0 35px rgba(16, 185, 129, 0.25);
             text-align: center;
             position: relative;
-        }
-
-        .split-visual::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(180deg, rgba(9, 13, 22, 0.1) 0%, rgba(9, 13, 22, 0.65) 100%);
-            pointer-events: none;
-            border-radius: var(--radius-md);
         }
 
         .split-visual img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            object-position: center 20%;
             border-radius: var(--radius-md);
-            filter: brightness(0.92) contrast(1.05);
-            transition: transform 0.4s ease;
+            filter: brightness(1.05) contrast(1.1);
+            transition: transform 0.4s ease, filter 0.4s ease;
         }
+
+        .split-visual-track img { object-position: 50% 35%; transform: scale(1.25); }
+        .split-visual-asmr img { object-position: 30% 40%; transform: scale(1.35); }
+        .split-visual-mobile img { object-position: 50% 40%; transform: scale(1.1); }
+
+        .feature-split:hover .split-visual img {
+            filter: brightness(1.15) contrast(1.15);
+        }
+        .feature-split:hover .split-visual-track img { transform: scale(1.32); }
+        .feature-split:hover .split-visual-asmr img { transform: scale(1.42); }
+        .feature-split:hover .split-visual-mobile img { transform: scale(1.18); }
 
         .feature-split:hover .split-visual img {
             transform: scale(1.04);
@@ -1057,8 +1060,8 @@
 
             <div class="rotated-gallery">
                 <div class="gallery-card">
-                    <div class="card-visual">
-                        <img src="assets/images/gameplay-showcase-1.jpg" alt="1:1 Slime Keyboard Escape Gameplay Showcase" loading="lazy" width="240" height="170">
+                    <div class="card-visual card-visual-obby">
+                        <img src="assets/images/gameplay-showcase-1.jpg" alt="1:1 Slime Keyboard Escape 3D Obby Track" loading="lazy" width="240" height="170">
                     </div>
                     <div class="card-body">
                         <h3>1:1 Obby Trap Grid</h3>
@@ -1067,8 +1070,8 @@
                 </div>
 
                 <div class="gallery-card">
-                    <div class="card-visual">
-                        <img src="assets/images/gameplay-mobile.jpg" alt="Slime Keyboard Escape Mobile Touch Controls Preview" loading="lazy" width="240" height="170">
+                    <div class="card-visual card-visual-mobile">
+                        <img src="assets/images/gameplay-mobile.jpg" alt="Slime Keyboard Escape Mobile & Chromebook Touch Steering" loading="lazy" width="240" height="170">
                     </div>
                     <div class="card-body">
                         <h3>Mobile & Chromebook</h3>
@@ -1077,8 +1080,8 @@
                 </div>
 
                 <div class="gallery-card">
-                    <div class="card-visual">
-                        <img src="assets/images/gameplay-showcase-1.jpg" alt="ASMR Switch Sound Synthesizer" loading="lazy" width="240" height="170">
+                    <div class="card-visual card-visual-asmr">
+                        <img src="assets/images/gameplay-showcase-1.jpg" alt="ASMR Switch Sound Synthesizer Audio Keys" loading="lazy" width="240" height="170">
                     </div>
                     <div class="card-body">
                         <h3>ASMR Switch Sounds</h3>
@@ -1087,8 +1090,8 @@
                 </div>
 
                 <div class="gallery-card">
-                    <div class="card-visual">
-                        <img src="assets/images/gameplay-mobile.jpg" alt="Redeem Promo Codes for Boost" loading="lazy" width="240" height="170">
+                    <div class="card-visual card-visual-codes">
+                        <img src="assets/images/gameplay-showcase-1.jpg" alt="Redeem Promo Codes for +15,000 Speed Boost" loading="lazy" width="240" height="170">
                     </div>
                     <div class="card-body">
                         <h3>Redeem Codes</h3>
@@ -1097,8 +1100,8 @@
                 </div>
 
                 <div class="gallery-card">
-                    <div class="card-visual">
-                        <img src="assets/images/gameplay-showcase-1.jpg" alt="Zero Download HTML5 Game" loading="lazy" width="240" height="170">
+                    <div class="card-visual card-visual-zerodl">
+                        <img src="assets/images/gameplay-showcase-1.jpg" alt="Zero Download HTML5 Web Browser Play" loading="lazy" width="240" height="170">
                     </div>
                     <div class="card-body">
                         <h3>Zero Downloads</h3>
@@ -1120,7 +1123,7 @@
                         <span>→</span>
                     </button>
                 </div>
-                <div class="split-visual">
+                <div class="split-visual split-visual-track">
                     <img src="assets/images/gameplay-showcase-1.jpg" alt="Slime Keyboard Escape Mechanical Keycap Traps Showcase" loading="lazy">
                 </div>
             </div>
@@ -1135,8 +1138,8 @@
                         <span>→</span>
                     </button>
                 </div>
-                <div class="split-visual">
-                    <img src="assets/images/gameplay-mobile.jpg" alt="Slime Keyboard Escape Sound Effects & Mobile Preview" loading="lazy">
+                <div class="split-visual split-visual-asmr">
+                    <img src="assets/images/gameplay-showcase-1.jpg" alt="Slime Keyboard Escape Sound Effects & Switch Preview" loading="lazy">
                 </div>
             </div>
 
@@ -1150,8 +1153,8 @@
                         <span>→</span>
                     </button>
                 </div>
-                <div class="split-visual">
-                    <img src="assets/images/gameplay-showcase-1.jpg" alt="Cross-Platform HTML5 Unblocked Game Play" loading="lazy">
+                <div class="split-visual split-visual-mobile">
+                    <img src="assets/images/gameplay-mobile.jpg" alt="Cross-Platform HTML5 Unblocked Mobile & PC Game Play" loading="lazy">
                 </div>
             </div>
         </section>
