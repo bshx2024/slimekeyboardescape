@@ -1077,6 +1077,17 @@
             0%, 100% { border-color: transparent; }
             50% { border-color: var(--primary-glow); }
         }
+
+        /* Mouse Cursor Glow Particle Canvas */
+        #cursor-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 9999;
+        }
     </style>
 </head>
 <body>
@@ -1646,6 +1657,83 @@
                     if (!isActive) item.classList.add('active');
                 });
             });
+
+            // 4. Ultra-smooth Mouse Particle Glow Trail Effect
+            if (!('ontouchstart' in window)) {
+                const canvas = document.createElement('canvas');
+                canvas.id = 'cursor-canvas';
+                document.body.appendChild(canvas);
+                const ctx = canvas.getContext('2d');
+
+                let width = canvas.width = window.innerWidth;
+                let height = canvas.height = window.innerHeight;
+
+                window.addEventListener('resize', () => {
+                    width = canvas.width = window.innerWidth;
+                    height = canvas.height = window.innerHeight;
+                });
+
+                const particles = [];
+                const colors = ['#10b981', '#34d399', '#a3e635', '#38bdf8', '#6ee7b7'];
+
+                class Particle {
+                    constructor(x, y) {
+                        this.x = x;
+                        this.y = y;
+                        this.radius = Math.random() * 6 + 3;
+                        this.color = colors[Math.floor(Math.random() * colors.length)];
+                        this.vx = (Math.random() - 0.5) * 1.5;
+                        this.vy = (Math.random() - 0.5) * 1.5 - 0.8;
+                        this.alpha = 1;
+                        this.decay = Math.random() * 0.025 + 0.015;
+                    }
+
+                    update() {
+                        this.x += this.vx;
+                        this.y += this.vy;
+                        this.alpha -= this.decay;
+                        this.radius = Math.max(0, this.radius - 0.08);
+                    }
+
+                    draw() {
+                        ctx.save();
+                        ctx.globalAlpha = this.alpha;
+                        ctx.beginPath();
+                        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                        ctx.fillStyle = this.color;
+                        ctx.shadowColor = this.color;
+                        ctx.shadowBlur = 12;
+                        ctx.fill();
+                        ctx.restore();
+                    }
+                }
+
+                let lastX = 0, lastY = 0;
+                window.addEventListener('mousemove', (e) => {
+                    const dist = Math.hypot(e.clientX - lastX, e.clientY - lastY);
+                    if (dist > 6) {
+                        for (let i = 0; i < 2; i++) {
+                            particles.push(new Particle(e.clientX + (Math.random() - 0.5) * 4, e.clientY + (Math.random() - 0.5) * 4));
+                        }
+                        lastX = e.clientX;
+                        lastY = e.clientY;
+                    }
+                });
+
+                function loop() {
+                    ctx.clearRect(0, 0, width, height);
+                    for (let i = particles.length - 1; i >= 0; i--) {
+                        const p = particles[i];
+                        p.update();
+                        p.draw();
+                        if (p.alpha <= 0 || p.radius <= 0) {
+                            particles.splice(i, 1);
+                        }
+                    }
+                    requestAnimationFrame(loop);
+                }
+                loop();
+            }
         });
     </script>
 </body>
