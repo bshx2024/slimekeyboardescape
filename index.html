@@ -850,71 +850,61 @@
             gap: 0.4rem;
         }
 
-        /* Collapsible Accordion FAQ Section */
+        /* FAQ Card Grid (2-Column Expanded Modern UI) */
         .faq-section {
-            padding: 4rem 0;
+            padding: 3rem 0 4rem;
         }
 
-        .faq-accordion {
-            max-width: 860px;
-            margin: 2rem auto 0;
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
+        .faq-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+            margin-top: 2rem;
         }
 
-        .faq-item {
+        @media (min-width: 768px) {
+            .faq-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .faq-card {
             background: var(--bg-card);
             border: 1px solid var(--border-glass);
-            border-radius: var(--radius-md);
-            overflow: hidden;
-            transition: border-color 0.25s ease;
+            border-radius: var(--radius-lg);
+            padding: 1.75rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
         }
 
-        .faq-item.active {
-            border-color: rgba(16, 185, 129, 0.4);
+        .faq-card:hover {
+            border-color: rgba(52, 211, 153, 0.45);
+            transform: translateY(-4px);
+            box-shadow: 0 10px 30px rgba(16, 185, 129, 0.18);
         }
 
-        .faq-question {
-            width: 100%;
-            padding: 1.25rem 1.5rem;
-            background: transparent;
-            border: none;
-            color: #ffffff;
+        .faq-card-title {
             font-family: var(--font-head);
-            font-size: 1.1rem;
+            font-size: 1.15rem;
             font-weight: 700;
-            text-align: left;
+            color: #ffffff;
+            margin-bottom: 0.75rem;
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            cursor: pointer;
-            outline: none;
+            gap: 0.6rem;
         }
 
-        .faq-icon {
-            font-size: 1.2rem;
-            transition: transform 0.3s ease;
+        .faq-card-title span.faq-icon-tag {
             color: var(--primary-glow);
+            font-size: 1.2rem;
         }
 
-        .faq-item.active .faq-icon {
-            transform: rotate(45deg);
-        }
-
-        .faq-answer {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.35s ease, padding 0.35s ease;
-            padding: 0 1.5rem;
+        .faq-card p {
             color: var(--text-muted);
             font-size: 0.95rem;
             line-height: 1.6;
         }
 
-        .faq-item.active .faq-answer {
-            max-height: 250px;
-            padding: 0 1.5rem 1.25rem;
         }
 
         /* Reserved AdSense Slot Banners */
@@ -1409,127 +1399,77 @@
             </div>
         </div>
 
-        <!-- Accordion FAQ Section -->
+        <!-- Modern 2-Column FAQ Card Grid Section -->
         <section class="faq-section container" id="faq">
             <div class="section-header">
                 <h2>Frequently Asked Questions & Strategy Help</h2>
                 <p>Everything you need to know about playing Slime Keyboard Escape Online unblocked.</p>
             </div>
 
-            <div class="faq-accordion">
-                <div class="faq-item active">
-                    <button type="button" class="faq-question">
+            <div class="faq-grid">
+                <div class="faq-card">
+                    <div class="faq-card-title">
+                        <span class="faq-icon-tag">🎮</span>
                         <span>Is Slime Keyboard Escape 100% free to play?</span>
-                        <span class="faq-icon">+</span>
-                    </button>
-                    <div class="faq-answer">
-                        <p>Yes! Slime Keyboard Escape 3D is 100% free to play directly in your web browser. There are no paywalls, hidden in-app purchases, app store downloads, or mandatory account registration steps required.</p>
                     </div>
+                    <p>Yes! Slime Keyboard Escape 3D is 100% free to play directly in your web browser. There are no paywalls, hidden in-app purchases, app store downloads, or mandatory account registration steps required.</p>
                 </div>
 
-                <div class="faq-item">
-                    <button type="button" class="faq-question">
-                        <span>How do I play and control my slime on PC, Chromebook & Mobile?</span>
-                        <span class="faq-icon">+</span>
-                    </button>
-                    <div class="faq-answer">
-                        <p>On PC and Mac, use the <strong>WASD keys</strong> or <strong>Arrow Keys</strong> to steer your slime left and right across mechanical keyboard keycaps. Press <strong>Spacebar</strong> to jump over blue switch traps and lava pits. On Mobile devices (iOS & Android) and Chromebook touchscreens, intuitive virtual D-pad and jump controls will automatically appear on screen.</p>
+                <div class="faq-card">
+                    <div class="faq-card-title">
+                        <span class="faq-icon-tag">⌨️</span>
+                        <span>How do I play and control my slime on PC & Mobile?</span>
                     </div>
+                    <p>On PC and Mac, use the <strong>WASD keys</strong> or <strong>Arrow Keys</strong> to steer your slime left and right across mechanical keyboard keycaps. Press <strong>Spacebar</strong> to jump over blue switch traps and lava pits. On Mobile devices (iOS & Android) and Chromebook touchscreens, intuitive virtual D-pad and jump controls will automatically appear on screen.</p>
                 </div>
 
-                <div class="faq-item">
-                    <button type="button" class="faq-question">
+                <div class="faq-card">
+                    <div class="faq-card-title">
+                        <span class="faq-icon-tag">⚡</span>
                         <span>Is Slime Keyboard Escape unblocked at school or work?</span>
-                        <span class="faq-icon">+</span>
-                    </button>
-                    <div class="faq-answer">
-                        <p>Yes! The game is built as an ultra-lightweight HTML5 WebGL web application delivered over secure HTTPS protocol with Vercel CDN infrastructure. It bypasses common school firewall restrictions on Chromebooks and school computers without requiring software installations.</p>
                     </div>
+                    <p>Yes! The game is built as an ultra-lightweight HTML5 WebGL web application delivered over secure HTTPS protocol with Vercel CDN infrastructure. It bypasses common school firewall restrictions on Chromebooks and school computers without requiring software installations.</p>
                 </div>
 
-                <div class="faq-item">
-                    <button type="button" class="faq-question">
-                        <span>What is the active secret reward code and how do I redeem it?</span>
-                        <span class="faq-icon">+</span>
-                    </button>
-                    <div class="faq-answer">
-                        <p>You can enter secret code <strong>BYP4SS1</strong> in the Redeem Code menu inside the game to instantly claim a +15,000 speed boost multiplier and unlock special slime cosmetic trails!</p>
+                <div class="faq-card">
+                    <div class="faq-card-title">
+                        <span class="faq-icon-tag">🎁</span>
+                        <span>What is the active secret reward code and how to redeem?</span>
                     </div>
+                    <p>You can enter secret code <strong>BYP4SS1</strong> in the Redeem Code menu inside the game to instantly claim a +15,000 speed boost multiplier and unlock special slime cosmetic trails for your character!</p>
                 </div>
 
-                <div class="faq-item">
-                    <button type="button" class="faq-question">
+                <div class="faq-card">
+                    <div class="faq-card-title">
+                        <span class="faq-icon-tag">🚀</span>
                         <span>How does the +1 Speed Progression mechanic work?</span>
-                        <span class="faq-icon">+</span>
-                    </button>
-                    <div class="faq-answer">
-                        <p>In 1-Speed Keyboard Escape mode, your slime character starts at a manageable base velocity. Every time you successfully land on a new mechanical keycap switch platform, your speed multiplier increases by +1, creating an exhilarating speedrun challenge that tests your jump timing and reflexes.</p>
                     </div>
+                    <p>In 1-Speed Keyboard Escape mode, your slime character starts at a manageable base velocity. Every time you successfully land on a new mechanical keycap switch platform, your speed multiplier increases by +1, creating an exhilarating speedrun challenge that tests your jump timing and reflexes.</p>
                 </div>
 
-                <div class="faq-item">
-                    <button type="button" class="faq-question">
+                <div class="faq-card">
+                    <div class="faq-card-title">
+                        <span class="faq-icon-tag">🎧</span>
                         <span>What are ASMR Mechanical Switch sound options?</span>
-                        <span class="faq-icon">+</span>
-                    </button>
-                    <div class="faq-answer">
-                        <p>Our game features a real-time Web Audio API sound synthesizer allowing players to choose between clicky Blue Switches, smooth Red Linear Switches, and tactile Brown Switches. Each keypress triggers realistic mechanical keyboard ASMR sound feedback for maximum sensory satisfaction.</p>
                     </div>
+                    <p>Our game features a real-time Web Audio API sound synthesizer allowing players to choose between clicky Blue Switches, smooth Red Linear Switches, and tactile Brown Switches. Each keypress triggers realistic mechanical keyboard ASMR sound feedback for maximum sensory satisfaction.</p>
                 </div>
 
-                <div class="faq-item">
-                    <button type="button" class="faq-question">
-                        <span>Does Slime Keyboard Escape support 60 FPS WebGL graphics?</span>
-                        <span class="faq-icon">+</span>
-                    </button>
-                    <div class="faq-answer">
-                        <p>Yes! The game engine is optimized for 60 FPS hardware acceleration using Three.js and WebGL. It renders smooth 3D keycap obstacles and fluid slime physics on integrated GPUs, low-spec laptops, and mobile web browsers.</p>
+                <div class="faq-card">
+                    <div class="faq-card-title">
+                        <span class="faq-icon-tag">🏆</span>
+                        <span>How does Slime Keyboard Escape compare to Roblox Obbies?</span>
                     </div>
+                    <p>While traditional Roblox Obby obstacle games require downloading desktop clients and creating player accounts, Slime Keyboard Escape Online runs 100% natively inside any web browser. Powered by HTML5 and Three.js WebGL graphics, players enjoy zero-loading friction, instant unblocked access on school networks, and built-in mechanical key sound effects without needing external plugins.</p>
                 </div>
 
-                <div class="faq-item">
-                    <button type="button" class="faq-question">
-                        <span>How can I reach the top of the global speedrunner leaderboard?</span>
-                        <span class="faq-icon">+</span>
-                    </button>
-                    <div class="faq-answer">
-                        <p>Mastering jump timing on keycap edges, maintaining continuous momentum without bumping into switch walls, and utilizing early code boosts are key to outrunning rival players and securing a top ranking on the leaderboards.</p>
+                <div class="faq-card">
+                    <div class="faq-card-title">
+                        <span class="faq-icon-tag">🥇</span>
+                        <span>How can I reach the top of global speedrunner leaderboards?</span>
                     </div>
+                    <p>Mastering jump timing on keycap edges, maintaining continuous momentum without bumping into switch walls, and utilizing early code boosts like code <strong>BYP4SS1</strong> are key to outrunning rival players and securing a top ranking on the global leaderboards.</p>
                 </div>
-            </div>
-        </section>
-
-        <!-- Deep Keyword Content Section (SEO Text Boosting to 1,450+ Words) -->
-        <section class="seo-content-section container">
-            <div class="seo-content-box">
-                <h2>Ultimate Guide to Slime Keyboard Escape 3D</h2>
-                <p>Welcome to <strong>Slime Keyboard Escape Online</strong>, the ultimate 3D HTML5 browser obby game where agility, jump timing, and mechanical keyboard mastery come together! In this free-to-play browser adventure, players guide a lively, squishy slime character across giant 3D mechanical keyboard keycaps while dodging crushing switch traps and hazardous lava pits.</p>
-
-                <h3>Why Slime Keyboard Escape 3D is a Web Gaming Sensation</h3>
-                <p>Mechanical keyboard obby games have taken the web gaming world by storm. Blending the iconic aesthetic of custom mechanical keyboards—from pastel mint keycaps to RGB backlight effects—with fast-paced 3D platformer mechanics, <strong>Slime Keyboard Escape</strong> offers an addictive arcade experience that requires zero downloads or installations.</p>
-
-                <h3>Key Gameplay Features & Speedrun Mechanics</h3>
-                <ul>
-                    <li><strong>+1 Speed Progression:</strong> Feel the thrill as your character speeds up with every platform landed. Precision jumping becomes essential as velocity ramps up to extreme multipliers.</li>
-                    <li><strong>ASMR Switch Sound Synthesizer:</strong> Immerse yourself in satisfying mechanical key click sounds with customizable Blue, Red, and Brown switch audio profiles.</li>
-                    <li><strong>Unblocked HTML5 Browser Access:</strong> Enjoy seamless, unblocked gaming sessions on school Chromebooks, desktop PCs, and mobile devices over secure HTTPS protocols.</li>
-                    <li><strong>Redeemable Secret Codes:</strong> Unlock hidden speed boosts like code <code>BYP4SS1</code> for an instant +15,000 velocity surge and special cosmetic slime skins.</li>
-                </ul>
-
-                <h3>Comparing Slime Keyboard Escape 3D vs Roblox Obbies</h3>
-                <p>While traditional <em>Roblox Obby</em> obstacle games require downloading desktop clients and creating player accounts, <strong>Slime Keyboard Escape Online</strong> runs 100% natively inside any web browser. Powered by HTML5 and Three.js WebGL graphics, players enjoy zero-loading friction, instant unblocked access on school networks, and built-in mechanical key sound effects without needing external plugins.</p>
-
-                <h3>Pro Tips for Mastering High-Velocity Keyboard Escape Runs</h3>
-                <p>To outrun rival players and top the global speedrunner leaderboards, keep these essential strategies in mind:</p>
-                <ol>
-                    <li><strong>Time Jumps on Keycap Edges:</strong> Jumping from the front lip of mechanical keycaps provides maximum leap trajectory to clear wide switch gaps.</li>
-                    <li><strong>Utilize Early Code Boosts:</strong> Enter active secret codes like <code>BYP4SS1</code> at the start of your run to claim an immediate +15,000 speed boost multiplier.</li>
-                    <li><strong>Master WASD Steering Precision:</strong> Maintain continuous forward momentum with the W key while making subtle directional adjustments with A and D to avoid switch walls.</li>
-                    <li><strong>Enable WebGL Hardware Acceleration:</strong> Ensure hardware acceleration is enabled in your Chrome, Edge, or Safari browser settings for butter-smooth 60 FPS gameplay.</li>
-                </ol>
-
-                <h3>Cross-Platform Support for PC, Mobile & Chromebook</h3>
-                <p>Whether you prefer traditional WASD keyboard controls on desktop PCs or intuitive touch D-pad controls on mobile smartphones and Chromebook touchscreens, Slime Keyboard Escape delivers responsive, 60 FPS hardware-accelerated WebGL performance for players worldwide.</p>
             </div>
         </section>
     </main>
