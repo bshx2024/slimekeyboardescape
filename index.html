@@ -305,9 +305,85 @@
 
         /* Hero Section (Pokerogue Style) */
         .hero-section {
-            padding: 3.5rem 0 2rem;
-            text-align: center;
+            padding: 3.5rem 0 2.5rem;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2.5rem;
+            align-items: center;
+        }
+
+        @media (min-width: 960px) {
+            .hero-section {
+                grid-template-columns: 1.05fr 0.95fr;
+                text-align: left;
+                padding: 4.5rem 0 3rem;
+            }
+            .hero-subtitle-box {
+                margin: 0 0 2.25rem 0;
+            }
+            .hero-cta-group {
+                justify-content: flex-start;
+            }
+        }
+
+        .hero-preview-container {
             position: relative;
+            width: 100%;
+            aspect-ratio: 16 / 10;
+            background: #090d16;
+            border: 1px solid rgba(52, 211, 153, 0.45);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 0 45px rgba(16, 185, 129, 0.3), 0 15px 35px rgba(0, 0, 0, 0.5);
+            cursor: pointer;
+            transition: all 0.4s ease;
+        }
+
+        .hero-preview-container:hover {
+            transform: scale(1.025);
+            box-shadow: 0 0 65px rgba(16, 185, 129, 0.5), 0 20px 45px rgba(0, 0, 0, 0.6);
+            border-color: var(--accent-lime);
+        }
+
+        .hero-preview-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(1.05) contrast(1.08);
+            transition: transform 0.4s ease;
+        }
+
+        .hero-preview-container:hover img {
+            transform: scale(1.05);
+        }
+
+        .hero-play-badge {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(9, 13, 22, 0.85);
+            backdrop-filter: blur(8px);
+            border: 2px solid var(--primary-glow);
+            padding: 0.8rem 1.75rem;
+            border-radius: 30px;
+            color: #ffffff;
+            font-family: var(--font-head);
+            font-weight: 800;
+            font-size: 1.05rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            box-shadow: 0 0 25px rgba(16, 185, 129, 0.6);
+            pointer-events: none;
+            transition: all 0.3s ease;
+        }
+
+        .hero-preview-container:hover .hero-play-badge {
+            background: var(--primary-glow);
+            color: #090d16;
+            box-shadow: 0 0 35px rgba(16, 185, 129, 0.9);
+        }    position: relative;
         }
 
         .tagline-pill {
@@ -1039,27 +1115,38 @@
     </header>
 
     <main>
-        <!-- Hero Banner Section -->
+        <!-- Hero Banner Section (PokéRogue Split Layout) -->
         <section class="hero-section container">
-            <div class="tagline-pill">
-                <span class="dot"></span>
-                <span>⚡ #1 FREE UNBLOCKED HTML5 BROWSER GAME</span>
+            <div class="hero-content">
+                <div class="tagline-pill">
+                    <span class="dot"></span>
+                    <span>⚡ #1 FREE UNBLOCKED HTML5 BROWSER GAME</span>
+                </div>
+
+                <h1 class="game-title">Slime Keyboard Escape <span>Online</span></h1>
+
+                <div class="hero-subtitle-box">
+                    Bounce, squish, and <span class="typewriter-text" id="typewriter">play free online with zero downloads!</span>
+                </div>
+
+                <div class="hero-cta-group">
+                    <button type="button" class="btn-play-hero" id="btn-hero-play">
+                        <span class="play-icon">▶</span>
+                        <span>PLAY GAME NOW</span>
+                    </button>
+                    <a href="#features" class="btn btn-secondary">
+                        <span>Explore Gameplay</span>
+                    </a>
+                </div>
             </div>
 
-            <h1 class="game-title">Slime Keyboard Escape <span>Online</span></h1>
-
-            <div class="hero-subtitle-box">
-                Bounce, squish, and <span class="typewriter-text" id="typewriter">play free online with zero downloads!</span>
-            </div>
-
-            <div class="hero-cta-group">
-                <button type="button" class="btn-play-hero" id="btn-hero-play">
-                    <span class="play-icon">▶</span>
-                    <span>PLAY GAME NOW</span>
-                </button>
-                <a href="#features" class="btn btn-secondary">
-                    <span>Explore Gameplay</span>
-                </a>
+            <!-- Right Side 3D Game Screenshot Container (Click to Play) -->
+            <div class="hero-preview-container btn-trigger-play" id="hero-preview-card">
+                <img src="assets/images/showcase-1.jpg" alt="Slime Keyboard Escape 3D Gameplay Preview" width="600" height="375">
+                <div class="hero-play-badge">
+                    <span class="play-dot">▶</span>
+                    <span>CLICK TO PLAY LIVE</span>
+                </div>
             </div>
         </section>
 
