@@ -1558,11 +1558,16 @@
                 if (['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName)) return;
                 
                 // Prevent browser page scroll when playing with keyboard controls
-                if (['Space', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'KeyW', 'KeyA', 'KeyS', 'KeyD'].includes(e.code)) {
+                if (['Space', 'Enter', 'KeyR', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'KeyW', 'KeyA', 'KeyS', 'KeyD'].includes(e.code)) {
                     e.preventDefault();
                 }
 
-                if (isGameOver) return;
+                if (isGameOver) {
+                    if (['Space', 'Enter', 'KeyR'].includes(e.code)) {
+                        restartGame();
+                    }
+                    return;
+                }
                 if (['ArrowLeft', 'KeyA'].includes(e.code)) {
                     if (currentLane > 0) {
                         currentLane--;
