@@ -1525,6 +1525,7 @@
                 isGameOver = false;
                 currentLane = 4;
                 targetX = 0;
+                playerGroup.position.set(0, 0, 0);
                 playerY = 0;
                 playerVy = 0;
                 isJumping = false;
@@ -1536,10 +1537,18 @@
                 if (hudLevel) hudLevel.textContent = `Level 1`;
                 if (gameOverModal) gameOverModal.style.display = 'none';
 
-                keycaps.forEach(k => {
-                    k.userData.pressed = false;
-                    k.position.y = 0;
-                });
+                // Reset keycaps to initial grid layout with safe spawn zone
+                let idx = 0;
+                for (let row = 0; row < 25; row++) {
+                    for (let col = 0; col < LANES.length; col++) {
+                        const k = keycaps[idx++];
+                        if (k) {
+                            const isTrap = row > 8 && Math.random() < 0.14;
+                            updateKeycapTrapState(k, isTrap);
+                            k.position.set(LANES[col], 0, -row * 6.5);
+                        }
+                    }
+                }
             }
 
             if (btnRestart) btnRestart.addEventListener('click', restartGame);
