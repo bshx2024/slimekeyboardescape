@@ -40,6 +40,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 
+    <!-- Three.js 3D WebGL Engine -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
     <!-- JSON-LD FAQ Schema -->
     <script type="application/ld+json">
     {
@@ -333,25 +336,281 @@
             border-radius: 20px;
             border: 1px solid rgba(16, 185, 129, 0.3);
             font-weight: 600;
+            display: inline-flex;
+            align-items: center;
         }
 
+        /* 16:9 Responsive Game Embedded Player Styles */
         .embed-frame-wrapper {
             position: relative;
             width: 100%;
             aspect-ratio: 16 / 9;
             max-height: 680px;
-            background: #000000;
+            background: #022c22;
             border: 2px solid rgba(52, 211, 153, 0.5);
             border-radius: var(--radius-lg);
             overflow: hidden;
             box-shadow: 0 0 45px rgba(16, 185, 129, 0.3), 0 15px 35px rgba(0, 0, 0, 0.6);
+            user-select: none;
         }
 
-        .embed-frame-wrapper iframe {
+        #webgl-canvas {
             width: 100%;
             height: 100%;
-            border: none;
             display: block;
+        }
+
+        /* 1:1 Roblox HUD Overlay (Adapted for Embedded View) */
+        .hud-overlay {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            right: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            pointer-events: none;
+            z-index: 100;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .hud-group {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            pointer-events: auto;
+        }
+
+        .hud-card {
+            background: rgba(6, 78, 59, 0.9);
+            border: 2px solid rgba(52, 211, 153, 0.6);
+            backdrop-filter: blur(12px);
+            padding: 0.45rem 1.1rem;
+            border-radius: 14px;
+            font-family: var(--font-head);
+            font-weight: 900;
+            font-size: 1.1rem;
+            color: #ffffff;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .hud-card span.value {
+            color: #a3e635;
+            text-shadow: 0 0 12px rgba(163, 230, 53, 0.8);
+        }
+
+        .level-bar-card {
+            background: rgba(15, 23, 42, 0.9);
+            border: 2px solid var(--accent-cyan);
+            padding: 0.35rem 1.1rem;
+            border-radius: 20px;
+            font-family: var(--font-head);
+            font-weight: 900;
+            font-size: 0.95rem;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .switch-selector {
+            background: rgba(6, 78, 59, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(12px);
+            padding: 0.3rem 0.5rem;
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            pointer-events: auto;
+        }
+
+        .switch-btn {
+            background: transparent;
+            border: none;
+            color: #9ca3af;
+            padding: 0.35rem 0.75rem;
+            border-radius: 20px;
+            font-family: var(--font-body);
+            font-size: 0.82rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .switch-btn.active {
+            background: rgba(52, 211, 153, 0.3);
+            color: var(--primary-glow);
+            border: 1px solid var(--primary-glow);
+        }
+
+        .btn-code-trigger {
+            background: linear-gradient(135deg, #00f0ff, #10b981);
+            border: none;
+            color: #090d16;
+            font-family: var(--font-head);
+            font-weight: 900;
+            font-size: 0.9rem;
+            padding: 0.55rem 1.2rem;
+            border-radius: 30px;
+            cursor: pointer;
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.6);
+            transition: all 0.2s ease;
+            pointer-events: auto;
+        }
+
+        .btn-code-trigger:hover {
+            transform: scale(1.05);
+        }
+
+        .combo-surge-banner {
+            position: absolute;
+            top: 75px;
+            left: 50%;
+            transform: translateX(-50%) scale(0.8);
+            background: linear-gradient(135deg, #00f0ff, #a3e635);
+            border: 2px solid #ffffff;
+            padding: 0.5rem 1.8rem;
+            border-radius: 40px;
+            font-family: var(--font-head);
+            font-weight: 900;
+            font-size: 1.15rem;
+            color: #090d16;
+            box-shadow: 0 0 40px rgba(0, 240, 255, 0.8);
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 200;
+            width: max-content;
+            max-width: 90%;
+            text-align: center;
+        }
+
+        .combo-surge-banner.active {
+            opacity: 1;
+            transform: translateX(-50%) scale(1);
+        }
+
+        .modal-wrapper {
+            position: absolute;
+            inset: 0;
+            background: rgba(2, 44, 34, 0.85);
+            backdrop-filter: blur(14px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 600;
+        }
+
+        .modal-card {
+            background: rgba(6, 78, 59, 0.95);
+            border: 2px solid var(--primary-glow);
+            padding: 2rem 2.5rem;
+            border-radius: 24px;
+            text-align: center;
+            box-shadow: 0 0 50px rgba(16, 185, 129, 0.4);
+            max-width: 420px;
+            width: 90%;
+        }
+
+        .modal-card h3 {
+            font-family: var(--font-head);
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: #ffffff;
+            margin-bottom: 0.5rem;
+        }
+
+        .modal-card p {
+            font-size: 0.9rem;
+            color: #d1fae5;
+            margin-bottom: 1.25rem;
+        }
+
+        .code-input-box {
+            width: 100%;
+            padding: 0.85rem 1.2rem;
+            border-radius: 12px;
+            background: rgba(2, 44, 34, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #ffffff;
+            font-family: var(--font-head);
+            font-size: 1.2rem;
+            font-weight: 800;
+            text-align: center;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            margin-bottom: 1.25rem;
+            outline: none;
+        }
+
+        .btn-submit-code {
+            width: 100%;
+            padding: 0.85rem;
+            border-radius: 30px;
+            background: linear-gradient(135deg, var(--primary-glow), var(--primary));
+            color: #090d16;
+            font-family: var(--font-head);
+            font-size: 1.05rem;
+            font-weight: 900;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 0 20px rgba(16, 185, 129, 0.5);
+        }
+
+        .gameover-modal {
+            position: absolute;
+            inset: 0;
+            background: rgba(2, 44, 34, 0.9);
+            backdrop-filter: blur(14px);
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 500;
+        }
+
+        .gameover-card {
+            background: rgba(6, 78, 59, 0.95);
+            border: 3px solid #ef4444;
+            padding: 2.5rem 3rem;
+            border-radius: 28px;
+            text-align: center;
+            box-shadow: 0 0 60px rgba(239, 68, 68, 0.4);
+            max-width: 440px;
+            width: 90%;
+        }
+
+        .gameover-title {
+            font-family: var(--font-head);
+            font-size: 2.4rem;
+            font-weight: 900;
+            color: #ef4444;
+            margin-bottom: 0.5rem;
+        }
+
+        .gameover-score {
+            font-size: 1.25rem;
+            color: #f3f4f6;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+
+        .btn-restart-game {
+            padding: 0.9rem 2.5rem;
+            border-radius: 40px;
+            background: linear-gradient(135deg, var(--primary-glow), var(--primary));
+            color: #090d16;
+            font-family: var(--font-head);
+            font-size: 1.15rem;
+            font-weight: 900;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 0 30px rgba(16, 185, 129, 0.7);
         }
 
         .embed-notice {
@@ -678,10 +937,60 @@
         <section class="embed-section">
             <div class="embed-header">
                 <h2>Play Directly on This Page</h2>
-                <span class="embed-info-pill">⚡ HTML5 WebGL Engine • Ready to Play</span>
+                <div style="display: flex; align-items: center; gap: 0.75rem;">
+                    <span class="embed-info-pill">⚡ HTML5 WebGL Engine • Ready to Play</span>
+                    <button type="button" class="embed-info-pill" id="btn-fullscreen-toggle" style="cursor: pointer; background: rgba(255, 255, 255, 0.08); border-color: rgba(255, 255, 255, 0.2); color: #ffffff;">
+                        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" style="margin-right: 4px; vertical-align: middle;"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>
+                        <span>Fullscreen</span>
+                    </button>
+                </div>
             </div>
-            <div class="embed-frame-wrapper">
-                <iframe src="https://playgama.com/export/game/1-speed-keyboard-escape-obby" title="Slime Keyboard Escape Unblocked Game" allow="autoplay; fullscreen; keyboard"></iframe>
+
+            <!-- Self-Hosted Three.js 3D Embedded Game Container -->
+            <div class="embed-frame-wrapper" id="game-embed">
+                <div class="hud-overlay">
+                    <div class="hud-group">
+                        <div class="hud-card">
+                            <span>⚡ SPEED:</span>
+                            <span class="value" id="hud-speed">1 Speed</span>
+                        </div>
+                        <div class="level-bar-card">
+                            <span id="hud-level">Level 1</span>
+                        </div>
+                    </div>
+
+                    <div class="hud-group">
+                        <div class="switch-selector">
+                            <button type="button" class="switch-btn active" data-type="blue">🔊 Blue Switch</button>
+                            <button type="button" class="switch-btn" data-type="red">🔴 Red Switch</button>
+                            <button type="button" class="switch-btn" data-type="brown">🟤 Brown Switch</button>
+                        </div>
+                        <button type="button" class="btn-code-trigger" id="btn-open-code">🎁 Redeem Code</button>
+                    </div>
+                </div>
+
+                <div class="combo-surge-banner" id="combo-banner">
+                    ⚡ KEYBOARD COMBO SURGE! +5X SPEED BOOST!
+                </div>
+
+                <div class="modal-wrapper" id="code-modal">
+                    <div class="modal-card">
+                        <h3>Redeem Social Code</h3>
+                        <p>Enter code <strong>BYP4SS1</strong> to get instant +15,000 Speed Boost!</p>
+                        <input type="text" class="code-input-box" id="code-input" placeholder="ENTER CODE" value="BYP4SS1">
+                        <button type="button" class="btn-submit-code" id="btn-claim-code">CLAIM REWARD</button>
+                    </div>
+                </div>
+
+                <div class="gameover-modal" id="gameover-modal">
+                    <div class="gameover-card">
+                        <div class="gameover-title">FELL OFF KEYBOARD!</div>
+                        <div class="gameover-score" id="gameover-score-text">Final Level: 1</div>
+                        <button type="button" class="btn-restart-game" id="btn-restart-3d">RESTART OBBY</button>
+                    </div>
+                </div>
+
+                <canvas id="webgl-canvas"></canvas>
             </div>
             <p class="embed-notice">🎮 Controls: Use WASD or Arrow Keys to move your slime, Spacebar to jump over key switches. Enter code <strong>BYP4SS1</strong> in-game for +15k speed!</p>
         </section>
@@ -784,7 +1093,7 @@
             <div class="faq-grid">
                 <div class="faq-item">
                     <h3 class="faq-question">Is this game really unblocked at school?</h3>
-                    <p class="faq-answer">Yes, absolutely! Slime Keyboard Escape Unblocked is hosted on clean, lightweight HTTPS web servers operating over standard web ports. Unlike major gaming sites that are frequently blacklisted by school or workplace filters, our dedicated mirror stays accessible so you can enjoy safe, uninterrupted keyboard obby gameplay without needing a proxy or VPN.</p>
+                    <p class="faq-answer">Yes, absolutely! This unblocked edition is hosted on clean, lightweight HTTPS web servers operating over standard web ports. Unlike major gaming sites that are frequently blacklisted by school or workplace filters, our dedicated mirror stays accessible so you can enjoy safe, uninterrupted keyboard obby gameplay without needing a proxy or VPN.</p>
                 </div>
                 <div class="faq-item">
                     <h3 class="faq-question">Does it work on school Chromebooks?</h3>
@@ -796,7 +1105,7 @@
                 </div>
                 <div class="faq-item">
                     <h3 class="faq-question">Can I play at work?</h3>
-                    <p class="faq-answer">Yes! Slime Keyboard Escape Unblocked is ideal for taking quick mental breaks during study sessions or office work hours. The game loads quietly, features instant pause controls, and requires zero software installation, making it the perfect browser game to relax and recharge on your work computer during break time.</p>
+                    <p class="faq-answer">Yes! Playing browser games unblocked is ideal for taking quick mental breaks during study sessions or office work hours. The game loads quietly, features instant pause controls, and requires zero software installation, making it the perfect browser game to relax and recharge on your work computer during break time.</p>
                 </div>
                 <div class="faq-item">
                     <h3 class="faq-question">Do I need a VPN or proxy server to play?</h3>
@@ -840,5 +1149,537 @@
         </div>
     </footer>
 
+    <!-- Three.js Self-Hosted Game Engine Integration Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const container = document.getElementById('game-embed');
+            const canvas = document.getElementById('webgl-canvas');
+            if (!container || !canvas) return;
+
+            const hudSpeed = document.getElementById('hud-speed');
+            const hudLevel = document.getElementById('hud-level');
+            const comboBanner = document.getElementById('combo-banner');
+            const codeModal = document.getElementById('code-modal');
+            const btnOpenCode = document.getElementById('btn-open-code');
+            const btnClaimCode = document.getElementById('btn-claim-code');
+            const codeInput = document.getElementById('code-input');
+            const gameOverModal = document.getElementById('gameover-modal');
+            const btnRestart = document.getElementById('btn-restart-3d');
+            const btnFs = document.getElementById('btn-fullscreen-toggle');
+            const switchBtns = document.querySelectorAll('.switch-btn');
+
+            let currentSwitchType = 'blue';
+
+            switchBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    switchBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    currentSwitchType = btn.dataset.type;
+                    playASMRSwitchSound();
+                });
+            });
+
+            if (btnFs) {
+                btnFs.addEventListener('click', () => {
+                    if (!document.fullscreenElement) {
+                        if (container.requestFullscreen) container.requestFullscreen();
+                        else if (container.webkitRequestFullscreen) container.webkitRequestFullscreen();
+                    } else {
+                        if (document.exitFullscreen) document.exitFullscreen();
+                        else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
+                    }
+                });
+            }
+
+            if (btnOpenCode) btnOpenCode.addEventListener('click', () => codeModal.style.display = 'flex');
+            if (btnClaimCode) {
+                btnClaimCode.addEventListener('click', () => {
+                    const val = codeInput.value.trim().toUpperCase();
+                    if (val === 'BYP4SS1') {
+                        speedMultiplier += 50;
+                        playASMRSwitchSound(880, 0.4);
+                        codeModal.style.display = 'none';
+                        triggerComboSurgeBanner('🎁 CODE CLAIMED! +15,000 SPEED!');
+                    } else {
+                        alert('Invalid Code! Try BYP4SS1');
+                    }
+                });
+            }
+            if (codeModal) {
+                codeModal.addEventListener('click', (e) => { if (e.target === codeModal) codeModal.style.display = 'none'; });
+            }
+
+            // Web Audio ASMR Switch Synthesizer
+            const AudioContext = window.AudioContext || window.webkitAudioContext;
+            let audioCtx = null;
+
+            function playASMRSwitchSound(overrideFreq, duration = 0.08) {
+                try {
+                    if (!audioCtx) audioCtx = new AudioContext();
+                    if (audioCtx.state === 'suspended') audioCtx.resume();
+
+                    let freq = overrideFreq;
+                    let type = 'sine';
+
+                    if (!overrideFreq) {
+                        if (currentSwitchType === 'blue') {
+                            freq = 750;
+                            type = 'square';
+                        } else if (currentSwitchType === 'red') {
+                            freq = 320;
+                            type = 'sine';
+                        } else {
+                            freq = 520;
+                            type = 'triangle';
+                        }
+                    }
+
+                    const osc = audioCtx.createOscillator();
+                    const gain = audioCtx.createGain();
+                    osc.type = type;
+                    osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+                    gain.gain.setValueAtTime(0.25, audioCtx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+                    osc.connect(gain);
+                    gain.connect(audioCtx.destination);
+                    osc.start();
+                    osc.stop(audioCtx.currentTime + duration);
+                } catch(e){}
+            }
+
+            // Real Keyboard Word Combo Detector
+            let typedBuffer = '';
+            window.addEventListener('keydown', (e) => {
+                if (['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName)) return;
+                const char = e.key.toUpperCase();
+                if (/^[A-Z]$/.test(char)) {
+                    typedBuffer += char;
+                    if (typedBuffer.length > 10) typedBuffer = typedBuffer.slice(-10);
+
+                    if (typedBuffer.includes('SPEED') || typedBuffer.includes('ESCAPE')) {
+                        typedBuffer = '';
+                        speedMultiplier += 10;
+                        triggerComboSurgeBanner('⚡ KEYBOARD COMBO SURGE! +5X SPEED!');
+                        playASMRSwitchSound(900, 0.3);
+                    }
+                }
+            });
+
+            function triggerComboSurgeBanner(text) {
+                if (!comboBanner) return;
+                comboBanner.textContent = text;
+                comboBanner.classList.add('active');
+                setTimeout(() => comboBanner.classList.remove('active'), 2500);
+            }
+
+            // Three.js 3D WebGL Engine Setup
+            const scene = new THREE.Scene();
+            scene.background = new THREE.Color(0x022c22);
+            scene.fog = new THREE.FogExp2(0x022c22, 0.006);
+
+            const getAspect = () => (container.clientWidth && container.clientHeight) ? container.clientWidth / container.clientHeight : 16 / 9;
+
+            const camera = new THREE.PerspectiveCamera(65, getAspect(), 0.1, 1000);
+            camera.position.set(0, 9, 14);
+            camera.lookAt(0, 3, -12);
+
+            const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            renderer.shadowMap.enabled = true;
+            renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
+            function fitGame() {
+                const w = container.clientWidth;
+                const h = container.clientHeight;
+                if (w && h) {
+                    camera.aspect = w / h;
+                    camera.updateProjectionMatrix();
+                    renderer.setSize(w, h);
+                }
+            }
+            fitGame();
+
+            // Lights
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.7);
+            scene.add(ambientLight);
+
+            const dirLight = new THREE.DirectionalLight(0xffffff, 1.4);
+            dirLight.position.set(15, 35, 15);
+            dirLight.castShadow = true;
+            scene.add(dirLight);
+
+            const pointLight = new THREE.PointLight(0x34d399, 1.8, 45);
+            pointLight.position.set(0, 6, 0);
+            scene.add(pointLight);
+
+            // Screenshot 1:1 Roblox Character Model
+            const playerGroup = new THREE.Group();
+
+            // Hair
+            const hairGeo = new THREE.BoxGeometry(1.3, 0.4, 1.3);
+            const hairMat = new THREE.MeshPhongMaterial({ color: 0x0f172a });
+            const hairMesh = new THREE.Mesh(hairGeo, hairMat);
+            hairMesh.position.y = 3.0;
+            playerGroup.add(hairMesh);
+
+            // Head
+            const headGeo = new THREE.BoxGeometry(1.2, 1.2, 1.2);
+            const headMat = new THREE.MeshPhongMaterial({ color: 0xfacc15 });
+            const headMesh = new THREE.Mesh(headGeo, headMat);
+            headMesh.position.y = 2.4;
+            headMesh.castShadow = true;
+            playerGroup.add(headMesh);
+
+            // Torso (Electric Cyan Blue Jacket)
+            const torsoGeo = new THREE.BoxGeometry(1.4, 1.4, 0.8);
+            const torsoMat = new THREE.MeshPhongMaterial({ color: 0x00f0ff, emissive: 0x0284c7 });
+            const torsoMesh = new THREE.Mesh(torsoGeo, torsoMat);
+            torsoMesh.position.y = 1.1;
+            torsoMesh.castShadow = true;
+            playerGroup.add(torsoMesh);
+
+            // Arms
+            const armGeo = new THREE.BoxGeometry(0.5, 1.3, 0.6);
+            const armMat = new THREE.MeshPhongMaterial({ color: 0x00f0ff });
+            const armL = new THREE.Mesh(armGeo, armMat);
+            armL.position.set(-1.05, 1.1, 0);
+            armL.castShadow = true;
+            const armR = new THREE.Mesh(armGeo, armMat);
+            armR.position.set(1.05, 1.1, 0);
+            armR.castShadow = true;
+            playerGroup.add(armL);
+            playerGroup.add(armR);
+
+            // Legs
+            const legGeo = new THREE.BoxGeometry(0.65, 1.3, 0.65);
+            const legMat = new THREE.MeshPhongMaterial({ color: 0x0f172a });
+            const legL = new THREE.Mesh(legGeo, legMat);
+            legL.position.set(-0.35, -0.2, 0);
+            legL.castShadow = true;
+            const legR = new THREE.Mesh(legGeo, legMat);
+            legR.position.set(0.35, -0.2, 0);
+            legR.castShadow = true;
+            playerGroup.add(legL);
+            playerGroup.add(legR);
+
+            playerGroup.position.set(0, 0, 0);
+            scene.add(playerGroup);
+
+            // Background Emerald Slime Walls & Safe Zone Gate
+            const wallGeo = new THREE.BoxGeometry(2, 25, 300);
+            const wallMat = new THREE.MeshPhongMaterial({ color: 0x064e3b, shininess: 40 });
+            const wallL = new THREE.Mesh(wallGeo, wallMat);
+            wallL.position.set(-22, 10, -100);
+            const wallR = new THREE.Mesh(wallGeo, wallMat);
+            wallR.position.set(22, 10, -100);
+            scene.add(wallL);
+            scene.add(wallR);
+
+            // Safe Zone Archway
+            const gateGeo = new THREE.BoxGeometry(26, 8, 2);
+            const gateMat = new THREE.MeshPhongMaterial({ color: 0x22c55e, emissive: 0x15803d });
+            const gateMesh = new THREE.Mesh(gateGeo, gateMat);
+            gateMesh.position.set(0, 12, -180);
+            scene.add(gateMesh);
+
+            const MINT_PALETTE = [0x2dd4bf, 0x059669, 0x1e293b, 0x6ee7b7, 0x34d399, 0x047857];
+            const KEY_LETTERS = ['M', 'A', 'O', 'Z', 'Q', 'C', 'E', 'K', 'V', 'B', 'X', 'U', 'N', 'P', 'R'];
+
+            const LANES = [-12, -9, -6, -3, 0, 3, 6, 9, 12];
+            let currentLane = 4;
+            let targetX = 0;
+            let playerY = 0;
+            let playerVy = 0;
+            let isJumping = false;
+
+            const keycaps = [];
+
+            function createMintKeycapTexture(letter, isTrap) {
+                const canvas = document.createElement('canvas');
+                canvas.width = 256;
+                canvas.height = 256;
+                const ctx = canvas.getContext('2d');
+                
+                ctx.fillStyle = isTrap ? '#ef4444' : '#1e293b';
+                ctx.fillRect(0, 0, 256, 256);
+
+                ctx.strokeStyle = isTrap ? '#f87171' : '#2dd4bf';
+                ctx.lineWidth = 14;
+                ctx.strokeRect(10, 10, 236, 236);
+
+                ctx.fillStyle = '#ffffff';
+                ctx.font = '900 110px Outfit, sans-serif';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(letter, 128, 128);
+
+                return new THREE.CanvasTexture(canvas);
+            }
+
+            function createKeycapMesh(label, isTrap, colorHex) {
+                const group = new THREE.Group();
+
+                const keyGeo = new THREE.BoxGeometry(2.7, 1.2, 2.7);
+                const keyMat = new THREE.MeshPhongMaterial({
+                    color: isTrap ? 0xb91c1c : colorHex,
+                    shininess: 80
+                });
+                const keyMesh = new THREE.Mesh(keyGeo, keyMat);
+                keyMesh.castShadow = true;
+                keyMesh.receiveShadow = true;
+                group.add(keyMesh);
+
+                const labelTex = createMintKeycapTexture(label, isTrap);
+                const topGeo = new THREE.BoxGeometry(2.3, 0.35, 2.3);
+                const topMat = new THREE.MeshPhongMaterial({
+                    map: labelTex,
+                    color: isTrap ? 0xef4444 : 0xffffff
+                });
+                const topMesh = new THREE.Mesh(topGeo, topMat);
+                topMesh.position.y = 0.65;
+                group.add(topMesh);
+
+                group.userData = { isTrap: isTrap, pressed: false, label: label };
+                return group;
+            }
+
+            // Safe Spawn Zone: First 8 rows have 0 Traps!
+            for (let row = 0; row < 25; row++) {
+                for (let col = 0; col < LANES.length; col++) {
+                    const isTrap = row > 8 && Math.random() < 0.12; // 0 Traps at start!
+                    const colorHex = MINT_PALETTE[(row + col) % MINT_PALETTE.length];
+                    const letter = KEY_LETTERS[(row * 9 + col) % KEY_LETTERS.length];
+                    const keyMesh = createKeycapMesh(letter, isTrap, colorHex);
+
+                    keyMesh.position.set(LANES[col], 0, -row * 6.5);
+                    scene.add(keyMesh);
+                    keycaps.push(keyMesh);
+                }
+            }
+
+            // Floating +1 Shoe Sprites & Sparks
+            const particles = [];
+            const floatingTexts = [];
+
+            function spawnFloatingShoeSprite(x, y, z) {
+                const canvas = document.createElement('canvas');
+                canvas.width = 256;
+                canvas.height = 128;
+                const ctx = canvas.getContext('2d');
+                ctx.fillStyle = '#ffffff';
+                ctx.font = '900 60px Outfit, sans-serif';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText('👟 +1', 128, 64);
+
+                const tex = new THREE.CanvasTexture(canvas);
+                const mat = new THREE.SpriteMaterial({ map: tex, transparent: true });
+                const sprite = new THREE.Sprite(mat);
+                sprite.scale.set(3.5, 1.75, 1);
+                sprite.position.set(x, y + 2.5, z);
+                scene.add(sprite);
+
+                floatingTexts.push({ sprite: sprite, life: 1.0 });
+            }
+
+            function spawnSparks(x, z) {
+                for (let i = 0; i < 15; i++) {
+                    const pGeo = new THREE.BoxGeometry(0.2, 0.2, 0.2);
+                    const pMat = new THREE.MeshBasicMaterial({ color: 0x2dd4bf });
+                    const pMesh = new THREE.Mesh(pGeo, pMat);
+                    pMesh.position.set(x, 1.2, z);
+                    scene.add(pMesh);
+                    particles.push({
+                        mesh: pMesh,
+                        vx: (Math.random() - 0.5) * 0.4,
+                        vy: Math.random() * 0.4 + 0.2,
+                        vz: (Math.random() - 0.5) * 0.4,
+                        life: 1.0
+                    });
+                }
+            }
+
+            // Gentle Starting Speed: 1 Speed
+            let speedMultiplier = 1;
+            let playerLevel = 1;
+            let isGameOver = false;
+            let runningDistance = 0;
+
+            function restartGame() {
+                isGameOver = false;
+                currentLane = 4;
+                targetX = 0;
+                playerY = 0;
+                playerVy = 0;
+                isJumping = false;
+                speedMultiplier = 1;
+                playerLevel = 1;
+                runningDistance = 0;
+
+                if (hudSpeed) hudSpeed.textContent = `1 Speed`;
+                if (hudLevel) hudLevel.textContent = `Level 1`;
+                if (gameOverModal) gameOverModal.style.display = 'none';
+
+                keycaps.forEach(k => k.userData.pressed = false);
+            }
+
+            if (btnRestart) btnRestart.addEventListener('click', restartGame);
+
+            // Controls
+            window.addEventListener('keydown', (e) => {
+                if (isGameOver) return;
+                if (['ArrowLeft', 'KeyA'].includes(e.code)) {
+                    if (currentLane > 0) {
+                        currentLane--;
+                        playASMRSwitchSound();
+                    }
+                } else if (['ArrowRight', 'KeyD'].includes(e.code)) {
+                    if (currentLane < LANES.length - 1) {
+                        currentLane++;
+                        playASMRSwitchSound();
+                    }
+                } else if (['Space', 'ArrowUp', 'KeyW'].includes(e.code)) {
+                    if (!isJumping) {
+                        isJumping = true;
+                        playerVy = 0.48;
+                        playASMRSwitchSound(800, 0.1);
+                    }
+                }
+            });
+
+            // Touch Controls
+            let touchStartX = 0;
+            window.addEventListener('touchstart', (e) => {
+                touchStartX = e.touches[0].clientX;
+            });
+            window.addEventListener('touchend', (e) => {
+                if (isGameOver) return;
+                const diff = e.changedTouches[0].clientX - touchStartX;
+                if (Math.abs(diff) > 25) {
+                    if (diff > 0 && currentLane < LANES.length - 1) currentLane++;
+                    else if (diff < 0 && currentLane > 0) currentLane--;
+                } else {
+                    if (!isJumping) {
+                        isJumping = true;
+                        playerVy = 0.48;
+                    }
+                }
+            });
+
+            // Main Animation & Render Loop
+            let clock = new THREE.Clock();
+
+            function animate() {
+                requestAnimationFrame(animate);
+
+                const time = clock.getElapsedTime();
+
+                if (!isGameOver) {
+                    runningDistance += (speedMultiplier + 10) * 0.05;
+                    playerLevel = Math.floor(runningDistance / 80) + 1;
+
+                    if (hudSpeed) hudSpeed.textContent = `${Math.floor(speedMultiplier)} Speed`;
+                    if (hudLevel) hudLevel.textContent = `Level ${playerLevel}`;
+
+                    // Dynamic Camera Steering
+                    targetX = LANES[currentLane];
+                    playerGroup.position.x += (targetX - playerGroup.position.x) * 0.25;
+
+                    // Jump Physics
+                    if (isJumping) {
+                        playerY += playerVy;
+                        playerVy -= 0.026;
+                        if (playerY <= 0) {
+                            playerY = 0;
+                            playerVy = 0;
+                            isJumping = false;
+                            playASMRSwitchSound(200, 0.08);
+                        }
+                    }
+                    playerGroup.position.y = playerY;
+
+                    // Roblox Limb Running Motion
+                    armL.rotation.x = Math.sin(time * 16) * 0.8;
+                    armR.rotation.x = -Math.sin(time * 16) * 0.8;
+                    legL.rotation.x = -Math.sin(time * 16) * 0.8;
+                    legR.rotation.x = Math.sin(time * 16) * 0.8;
+
+                    // Smooth Manageable Scroll Speed
+                    const scrollSpeed = (speedMultiplier + 12) * 0.015;
+
+                    keycaps.forEach(k => {
+                        k.position.z += scrollSpeed;
+
+                        // Collision Check with Key Switch
+                        if (k.position.z > -1.2 && k.position.z < 1.2 && Math.abs(k.position.x - playerGroup.position.x) < 1.4) {
+                            if (k.userData.isTrap && playerY < 0.8) {
+                                isGameOver = true;
+                                playASMRSwitchSound(100, 0.5);
+                                const scoreEl = document.getElementById('gameover-score-text');
+                                if (scoreEl) scoreEl.textContent = `Final Level: ${playerLevel} (${Math.floor(speedMultiplier)} Speed)`;
+                                if (gameOverModal) gameOverModal.style.display = 'flex';
+                            } else if (!k.userData.pressed) {
+                                k.userData.pressed = true;
+                                speedMultiplier += 1; // Gain +1 Speed smoothly
+                                playASMRSwitchSound();
+                                spawnSparks(k.position.x, k.position.z);
+                                spawnFloatingShoeSprite(k.position.x, playerGroup.position.y, k.position.z);
+                                k.position.y = -0.3;
+                            }
+                        }
+
+                        // Bounce key back up
+                        if (k.position.y < 0) {
+                            k.position.y += 0.06;
+                        }
+
+                        // Recycle Keycaps behind camera
+                        if (k.position.z > 16) {
+                            k.position.z = -146;
+                            k.userData.pressed = false;
+                            k.position.y = 0;
+                        }
+                    });
+
+                    // Update Floating Sprites
+                    for (let i = floatingTexts.length - 1; i >= 0; i--) {
+                        const ft = floatingTexts[i];
+                        ft.sprite.position.y += 0.08;
+                        ft.life -= 0.04;
+                        ft.sprite.material.opacity = ft.life;
+                        if (ft.life <= 0) {
+                            scene.remove(ft.sprite);
+                            floatingTexts.splice(i, 1);
+                        }
+                    }
+
+                    // Update Particles
+                    for (let i = particles.length - 1; i >= 0; i--) {
+                        const p = particles[i];
+                        p.mesh.position.x += p.vx;
+                        p.mesh.position.y += p.vy;
+                        p.mesh.position.z += p.vz;
+                        p.life -= 0.04;
+                        p.mesh.scale.setScalar(p.life);
+                        if (p.life <= 0) {
+                            scene.remove(p.mesh);
+                            particles.splice(i, 1);
+                        }
+                    }
+
+                    pointLight.position.x = playerGroup.position.x;
+                }
+
+                renderer.render(scene, camera);
+            }
+
+            window.addEventListener('resize', fitGame);
+            if (window.ResizeObserver) {
+                new ResizeObserver(fitGame).observe(container);
+            }
+
+            animate();
+        });
+    </script>
 </body>
 </html>
