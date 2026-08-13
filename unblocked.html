@@ -1394,26 +1394,13 @@
 
             const keycaps = [];
 
-            function createMintKeycapTexture(letter, isTrap) {
-                const canvas = document.createElement('canvas');
-                canvas.width = 256;
-                canvas.height = 256;
-                const ctx = canvas.getContext('2d');
-                
-                ctx.fillStyle = isTrap ? '#ef4444' : '#1e293b';
-                ctx.fillRect(0, 0, 256, 256);
-
-                ctx.strokeStyle = isTrap ? '#f87171' : '#2dd4bf';
-                ctx.lineWidth = 14;
-                ctx.strokeRect(10, 10, 236, 236);
-
-                ctx.fillStyle = '#ffffff';
-                ctx.font = '900 110px Outfit, sans-serif';
-                ctx.textAlign = 'center';
-                ctx.textBaseline = 'middle';
-                ctx.fillText(letter, 128, 128);
-
-                return new THREE.CanvasTexture(canvas);
+            const textureCache = {};
+            function getKeycapTexture(letter, isTrap) {
+                const key = `${letter}_${isTrap ? '1' : '0'}`;
+                if (!textureCache[key]) {
+                    textureCache[key] = createMintKeycapTexture(letter, isTrap);
+                }
+                return textureCache[key];
             }
 
             function createKeycapMesh(label, isTrap, colorHex) {
@@ -1429,7 +1416,7 @@
                 keyMesh.receiveShadow = true;
                 group.add(keyMesh);
 
-                const labelTex = createMintKeycapTexture(label, isTrap);
+                const labelTex = getKeycapTexture(label, isTrap);
                 const topGeo = new THREE.BoxGeometry(2.3, 0.35, 2.3);
                 const topMat = new THREE.MeshPhongMaterial({
                     map: labelTex,
@@ -1439,14 +1426,32 @@
                 topMesh.position.y = 0.65;
                 group.add(topMesh);
 
-                group.userData = { isTrap: isTrap, pressed: false, label: label };
+                group.userData = { isTrap: isTrap, pressed: false, label: label, colorHex: colorHex };
                 return group;
+            }
+
+            function updateKeycapTrapState(k, isTrap) {
+                k.userData.isTrap = isTrap;
+                k.userData.pressed = false;
+                k.position.y = 0;
+
+                const keyMesh = k.children[0];
+                const topMesh = k.children[1];
+
+                if (keyMesh && keyMesh.material) {
+                    keyMesh.material.color.setHex(isTrap ? 0xb91c1c : k.userData.colorHex);
+                }
+                if (topMesh && topMesh.material) {
+                    topMesh.material.map = getKeycapTexture(k.userData.label, isTrap);
+                    topMesh.material.color.setHex(isTrap ? 0xef4444 : 0xffffff);
+                    topMesh.material.needsUpdate = true;
+                }
             }
 
             // Safe Spawn Zone: First 8 rows have 0 Traps!
             for (let row = 0; row < 25; row++) {
                 for (let col = 0; col < LANES.length; col++) {
-                    const isTrap = row > 8 && Math.random() < 0.12; // 0 Traps at start!
+                    const isTrap = row > 8 && Math.random() < 0.14; // 0 Traps at start!
                     const colorHex = MINT_PALETTE[(row + col) % MINT_PALETTE.length];
                     const letter = KEY_LETTERS[(row * 9 + col) % KEY_LETTERS.length];
                     const keyMesh = createKeycapMesh(letter, isTrap, colorHex);
@@ -1520,13 +1525,23 @@
                 if (hudLevel) hudLevel.textContent = `Level 1`;
                 if (gameOverModal) gameOverModal.style.display = 'none';
 
-                keycaps.forEach(k => k.userData.pressed = false);
+                keycaps.forEach(k => {
+                    k.userData.pressed = false;
+                    k.position.y = 0;
+                });
             }
 
             if (btnRestart) btnRestart.addEventListener('click', restartGame);
 
             // Controls
             window.addEventListener('keydown', (e) => {
+                if (['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName)) return;
+                
+                // Prevent browser page scroll when playing with keyboard controls
+                if (['Space', 'ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'KeyW', 'KeyA', 'KeyS', 'KeyD'].includes(e.code)) {
+                    e.preventDefault();
+                }
+
                 if (isGameOver) return;
                 if (['ArrowLeft', 'KeyA'].includes(e.code)) {
                     if (currentLane > 0) {
@@ -1610,15 +1625,18 @@
                     keycaps.forEach(k => {
                         k.position.z += scrollSpeed;
 
+                        // Speed-adaptive Z threshold so high velocity never skips collision
+                        const zWindowFront = Math.max(1.4, scrollSpeed + 0.8);
+
                         // Collision Check with Key Switch
-                        if (k.position.z > -1.2 && k.position.z < 1.2 && Math.abs(k.position.x - playerGroup.position.x) < 1.4) {
+                        if (k.position.z > -zWindowFront && k.position.z < 1.4 && Math.abs(k.position.x - playerGroup.position.x) < 1.4) {
                             if (k.userData.isTrap && playerY < 0.8) {
                                 isGameOver = true;
                                 playASMRSwitchSound(100, 0.5);
                                 const scoreEl = document.getElementById('gameover-score-text');
                                 if (scoreEl) scoreEl.textContent = `Final Level: ${playerLevel} (${Math.floor(speedMultiplier)} Speed)`;
                                 if (gameOverModal) gameOverModal.style.display = 'flex';
-                            } else if (!k.userData.pressed) {
+                            } else if (!k.userData.pressed && !k.userData.isTrap) {
                                 k.userData.pressed = true;
                                 speedMultiplier += 1; // Gain +1 Speed smoothly
                                 playASMRSwitchSound();
@@ -1633,11 +1651,11 @@
                             k.position.y += 0.06;
                         }
 
-                        // Recycle Keycaps behind camera
+                        // Recycle Keycaps behind camera with new randomized trap state
                         if (k.position.z > 16) {
-                            k.position.z = -146;
-                            k.userData.pressed = false;
-                            k.position.y = 0;
+                            k.position.z -= 162.5; // (25 rows * 6.5)
+                            const newIsTrap = Math.random() < 0.14;
+                            updateKeycapTrapState(k, newIsTrap);
                         }
                     });
 
