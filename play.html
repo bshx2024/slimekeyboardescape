@@ -687,13 +687,26 @@
 
             const keycaps = [];
 
-            const textureCache = {};
-            function getKeycapTexture(letter, isTrap) {
-                const key = `${letter}_${isTrap ? '1' : '0'}`;
-                if (!textureCache[key]) {
-                    textureCache[key] = createMintKeycapTexture(letter, isTrap);
-                }
-                return textureCache[key];
+            function createMintKeycapTexture(letter, isTrap) {
+                const canvas = document.createElement('canvas');
+                canvas.width = 256;
+                canvas.height = 256;
+                const ctx = canvas.getContext('2d');
+                
+                ctx.fillStyle = isTrap ? '#ef4444' : '#1e293b';
+                ctx.fillRect(0, 0, 256, 256);
+
+                ctx.strokeStyle = isTrap ? '#f87171' : '#2dd4bf';
+                ctx.lineWidth = 14;
+                ctx.strokeRect(10, 10, 236, 236);
+
+                ctx.fillStyle = '#ffffff';
+                ctx.font = '900 110px Outfit, sans-serif';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(letter, 128, 128);
+
+                return new THREE.CanvasTexture(canvas);
             }
 
             function createKeycapMesh(label, isTrap, colorHex) {
@@ -709,7 +722,7 @@
                 keyMesh.receiveShadow = true;
                 group.add(keyMesh);
 
-                const labelTex = getKeycapTexture(label, isTrap);
+                const labelTex = createMintKeycapTexture(label, isTrap);
                 const topGeo = new THREE.BoxGeometry(2.3, 0.35, 2.3);
                 const topMat = new THREE.MeshPhongMaterial({
                     map: labelTex,
@@ -735,7 +748,7 @@
                     keyMesh.material.color.setHex(isTrap ? 0xb91c1c : k.userData.colorHex);
                 }
                 if (topMesh && topMesh.material) {
-                    topMesh.material.map = getKeycapTexture(k.userData.label, isTrap);
+                    topMesh.material.map = createMintKeycapTexture(k.userData.label, isTrap);
                     topMesh.material.color.setHex(isTrap ? 0xef4444 : 0xffffff);
                     topMesh.material.needsUpdate = true;
                 }
