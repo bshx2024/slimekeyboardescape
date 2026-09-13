@@ -1,6 +1,11 @@
 {
   "version": 2,
   "cleanUrls": true,
+  "redirects": [
+    { "source": "/unblocked.html", "destination": "/unblocked", "permanent": true },
+    { "source": "/terms.html", "destination": "/terms", "permanent": true },
+    { "source": "/privacy.html", "destination": "/privacy", "permanent": true }
+  ],
   "headers": [
     {
       "source": "/(.*)",
